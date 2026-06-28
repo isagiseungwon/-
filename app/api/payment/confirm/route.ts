@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '필수 항목 누락' }, { status: 400 })
   }
 
-  const reservation = getReservationByOrderId(orderId)
+  const reservation = await getReservationByOrderId(orderId)
   if (!reservation) {
     return NextResponse.json({ error: '예약을 찾을 수 없습니다.' }, { status: 404 })
   }
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: tossData.message ?? '결제 승인 실패' }, { status: 400 })
   }
 
-  const updated = updateReservation(orderId, {
+  const updated = await updateReservation(orderId, {
     paymentKey,
     status: 'paid',
   })
