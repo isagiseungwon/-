@@ -8,13 +8,20 @@ export default function HomePage() {
   return (
     <main className="text-[#1a1a2e]">
       {/* ───────── Hero ───────── */}
-      <section className="px-6 pt-24 pb-20 max-w-xl mx-auto text-center">
+      <section className="relative px-6 pt-24 pb-20 overflow-hidden">
+        {/* 은은한 글로우 */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute left-1/2 -translate-x-1/2 -top-24 w-72 h-72 rounded-full blur-3xl opacity-25 bg-[#e9c46a]" />
+          <div className="absolute -left-20 top-40 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#2a9d8f]" />
+          <div className="absolute -right-16 top-24 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#e76f51]" />
+        </div>
+        <div className="relative max-w-xl mx-auto text-center">
         <Reveal>
           <div className="text-3xl mb-8">🌿</div>
           <p className="text-xs tracking-[0.25em] text-gray-400 uppercase mb-6">
             시간 단위 몰입 공간
           </p>
-          <h1 className="text-[2rem] leading-[1.35] font-semibold tracking-tight mb-6">
+          <h1 className="serif text-[2.4rem] leading-[1.3] font-semibold tracking-tight mb-6">
             몰입, 흐름<br />그리고 나
           </h1>
           <p className="text-[17px] leading-[1.8] text-[#1a1a2e] font-medium mb-3">
@@ -34,6 +41,7 @@ export default function HomePage() {
             24시간 영업 · 음료와 간식 무료 · 쌍문역 3번 출구
           </p>
         </Reveal>
+        </div>
       </section>
 
       <div className="max-w-[60px] mx-auto border-t border-gray-200" />
@@ -64,7 +72,7 @@ export default function HomePage() {
       <section className="px-6 py-20 bg-white border-y border-gray-100">
         <div className="max-w-xl mx-auto text-center">
           <Reveal>
-            <h2 className="text-xl font-medium mb-5 tracking-tight">
+            <h2 className="serif text-xl font-medium mb-5 tracking-tight">
               그래서, 환경을 만들었습니다
             </h2>
             <p className="text-[15px] leading-[1.9] text-gray-500">
@@ -90,7 +98,7 @@ export default function HomePage() {
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
               Essay
             </p>
-            <h2 className="text-xl font-medium text-center mb-14 tracking-tight">
+            <h2 className="serif text-xl font-medium text-center mb-14 tracking-tight">
               시간을 비싸게 쓰는 법
             </h2>
           </Reveal>
@@ -131,7 +139,7 @@ export default function HomePage() {
 
           <Reveal>
             <blockquote className="mt-16 text-center">
-              <p className="text-lg font-medium leading-relaxed tracking-tight text-[#1a1a2e]">
+              <p className="serif text-lg font-medium leading-relaxed tracking-tight text-[#1a1a2e]">
                 &ldquo;오늘, 내가 할 수 있는<br />의도적 몰입은 무엇인가?&rdquo;
               </p>
             </blockquote>
@@ -273,7 +281,7 @@ export default function HomePage() {
             <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-6">
               Instagram
             </p>
-            <h2 className="text-xl font-medium tracking-tight mb-4 leading-relaxed">
+            <h2 className="serif text-xl font-medium tracking-tight mb-4 leading-relaxed">
               이 공간의 이야기를<br />
               <span className="text-2xl font-semibold">
                 <CountUp to={13000} />명
@@ -316,7 +324,7 @@ export default function HomePage() {
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
               FAQ
             </p>
-            <h2 className="text-xl font-medium text-center mb-12 tracking-tight">
+            <h2 className="serif text-xl font-medium text-center mb-12 tracking-tight">
               자주 묻는 질문
             </h2>
           </Reveal>
@@ -376,7 +384,7 @@ export default function HomePage() {
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
                 예약하기
               </p>
-              <h2 className="text-xl font-medium tracking-tight mb-4">
+              <h2 className="serif text-xl font-medium tracking-tight mb-4">
                 오늘, 한 시간만<br />나에게 선물하세요
               </h2>
               <p className="text-sm text-gray-500">
