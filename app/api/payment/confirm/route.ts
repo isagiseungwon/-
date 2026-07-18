@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getReservationByOrderId, updateReservation } from '@/lib/db'
+import { notifyOwner } from '@/lib/notify'
 
 export async function POST(req: NextRequest) {
   const { paymentKey, orderId, amount } = await req.json()
@@ -39,6 +40,15 @@ export async function POST(req: NextRequest) {
     paymentKey,
     status: 'paid',
   })
+
+  if (updated) {
+    await notifyOwner(
+      '💰 결제 완료!',
+      `${updated.name}님 결제 완료\n` +
+        `📅 ${updated.date} ${updated.time} · ${updated.duration}시간 · ${updated.amount.toLocaleString()}원\n` +
+        `📞 ${updated.phone}`
+    )
+  }
 
   return NextResponse.json({ success: true, reservation: updated })
 }

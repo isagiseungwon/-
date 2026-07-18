@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createReservation, getReservedSlots } from '@/lib/db'
+import { notifyOwner } from '@/lib/notify'
 
 // 공개 엔드포인트: 특정 날짜의 "예약된 시간대"만 반환한다.
 // 개인정보(이름·연락처 등)는 절대 반환하지 않으며, 전체 목록은
@@ -35,6 +36,15 @@ export async function POST(req: NextRequest) {
       orderId,
       status: 'pending',
     })
+
+    await notifyOwner(
+      '🌿 새 예약 신청!',
+      `${name}님 예약\n` +
+        `📅 ${date} ${time} · ${duration}시간 · ${Number(amount).toLocaleString()}원\n` +
+        `📞 ${phone}\n` +
+        `상태: 결제 대기`
+    )
+
     return NextResponse.json({ reservation })
   } catch (e) {
     console.error('[reservations] 저장 실패:', e)
