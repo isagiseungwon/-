@@ -24,6 +24,9 @@ export default function HomePage() {
           >
             예약하기
           </a>
+          <p className="text-xs text-gray-400 mt-6 tracking-wide">
+            24시간 영업 · 음료와 간식 무료 · 쌍문역 3번 출구
+          </p>
         </Reveal>
       </section>
 
@@ -161,12 +164,55 @@ export default function HomePage() {
             </div>
             <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
               〈몰입, 흐름 그리고 나〉는<br />
-              <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span> 부근에 있습니다.
+              <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span>에서 도보 8분,<br />
+              조용한 골목에 있습니다.
             </p>
-            <p className="text-sm leading-relaxed text-gray-500">
+            <p className="text-sm leading-relaxed text-gray-500 mb-10">
               혼자, 혹은 친구와 단둘이 오셔서<br />
               평온한 럭셔리를 누리시길 바라요.
             </p>
+
+            {/* 이용 안내 카드 */}
+            <div className="rounded-2xl border border-gray-100 bg-[#f8f7f4] p-6 text-left mb-8">
+              <ul className="space-y-3.5 text-sm text-gray-600">
+                <li className="flex gap-3">
+                  <span className="shrink-0">🕐</span>
+                  <span>
+                    <strong className="text-[#1a1a2e] font-medium">24시간 영업</strong> · 연중무휴
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0">☕</span>
+                  <span>음료와 간식 <strong className="text-[#1a1a2e] font-medium">무료</strong></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0">🚪</span>
+                  <span>자유로운 외출과 출입 가능</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0">📍</span>
+                  <span>서울 도봉구 도봉로103길 23-13 B02호</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* 연락/길찾기 버튼 */}
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href="tel:0507-1348-9410"
+                className="py-3.5 rounded-xl border border-gray-200 bg-white text-sm font-medium text-[#1a1a2e] hover:border-gray-400 transition"
+              >
+                📞 전화하기
+              </a>
+              <a
+                href="https://map.naver.com/p/search/%EB%AA%B0%EC%9E%85%2C%20%ED%9D%90%EB%A6%84%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20%EB%82%98"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-3.5 rounded-xl bg-[#03c75a] text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                🗺️ 네이버 길찾기
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -192,11 +238,18 @@ export default function HomePage() {
       </section>
 
       {/* ───────── 푸터 ───────── */}
-      <footer className="px-6 py-10 text-center border-t border-gray-100 bg-white">
+      <footer className="px-6 py-12 text-center border-t border-gray-100 bg-white">
         <div className="text-base mb-3">🌿</div>
-        <p className="text-sm font-medium mb-1">몰입, 흐름 그리고 나</p>
-        <p className="text-xs text-gray-400">
-          쌍문역 3번 출구 부근 · <a href="/admin" className="underline">관리자</a>
+        <p className="text-sm font-medium mb-3">몰입, 흐름 그리고 나</p>
+        <p className="text-xs text-gray-400 leading-relaxed mb-1">
+          서울 도봉구 도봉로103길 23-13 B02호 · 쌍문역 3번 출구 도보 8분
+        </p>
+        <p className="text-xs text-gray-400 leading-relaxed mb-4">
+          24시간 영업 · 연중무휴 ·{' '}
+          <a href="tel:0507-1348-9410" className="underline">0507-1348-9410</a>
+        </p>
+        <p className="text-xs text-gray-300">
+          <a href="/admin" className="underline">관리자</a>
         </p>
       </footer>
     </main>
