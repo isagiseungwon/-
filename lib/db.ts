@@ -10,10 +10,42 @@ import path from 'path'
  * - 로컬 개발: 환경변수가 없으면 data/reservations.json 파일에 저장(폴백).
  */
 
-const REDIS_URL =
-  process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL
-const REDIS_TOKEN =
-  process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
+/**
+ * Redis REST 접속 정보 자동 탐지.
+ * Upstash/Vercel이 주입하는 환경변수 이름은 연동 방식·프리픽스에 따라
+ * 제각각(KV_*, UPSTASH_*, STORAGE_* 등)이라, 알려진 이름을 먼저 보고
+ * 없으면 REST URL/TOKEN 패턴에 맞는 변수를 통째로 스캔한다.
+ */
+function detectRedisCreds(): { url?: string; token?: string } {
+  const env = process.env
+
+  // 1) 알려진 이름 우선
+  const url =
+    env.KV_REST_API_URL ||
+    env.UPSTASH_REDIS_REST_URL ||
+    env.REDIS_REST_API_URL
+  const token =
+    env.KV_REST_API_TOKEN ||
+    env.UPSTASH_REDIS_REST_TOKEN ||
+    env.REDIS_REST_API_TOKEN
+  if (url && token) return { url, token }
+
+  // 2) 패턴 스캔 (프리픽스가 붙은 경우까지 대응)
+  let scannedUrl: string | undefined
+  let scannedToken: string | undefined
+  for (const [key, value] of Object.entries(env)) {
+    if (!value) continue
+    if (!scannedUrl && /REST.*URL$/i.test(key) && /^https?:\/\//i.test(value)) {
+      scannedUrl = value
+    }
+    if (!scannedToken && /REST.*TOKEN$/i.test(key)) {
+      scannedToken = value
+    }
+  }
+  return { url: url || scannedUrl, token: token || scannedToken }
+}
+
+const { url: REDIS_URL, token: REDIS_TOKEN } = detectRedisCreds()
 
 const HASH_KEY = 'reservations'
 const hasRedis = Boolean(REDIS_URL && REDIS_TOKEN)
