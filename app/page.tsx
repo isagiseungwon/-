@@ -14,6 +14,9 @@ export default function HomePage() {
           <h1 className="text-[2rem] leading-[1.35] font-semibold tracking-tight mb-6">
             몰입, 흐름<br />그리고 나
           </h1>
+          <p className="text-[17px] leading-[1.8] text-[#1a1a2e] font-medium mb-3">
+            오늘, 3분 이상<br />무언가에 집중해 본 적 있나요?
+          </p>
           <p className="text-[15px] leading-relaxed text-gray-500 mb-10">
             알림도, 시선도 없는 곳에서<br />
             온전히 나에게 집중하는 시간
@@ -32,20 +35,53 @@ export default function HomePage() {
 
       <div className="max-w-[60px] mx-auto border-t border-gray-200" />
 
-      {/* ───────── 컨셉 ───────── */}
+      {/* ───────── 공감 (문제 제기) ───────── */}
       <section className="px-6 py-20 max-w-xl mx-auto text-center">
         <Reveal>
-          <h2 className="text-xl font-medium mb-5 tracking-tight">생각이 흐르도록</h2>
-          <p className="text-[15px] leading-[1.9] text-gray-500">
-            흩어진 생각을 하나로 모으는 일에는<br />
-            방해받지 않는 시간과 공간이 필요합니다.<br />
-            잠시 머물며, 오롯이 몰입해 보세요.
+          <p className="text-[15px] leading-[2.1] text-gray-600">
+            해야 할 일을 펼쳐 놓고도<br />
+            5분마다 폰을 집어 들고,
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <p className="text-[15px] leading-[2.1] text-gray-600 mt-8">
+            카페에 가면 소음과 시선에,<br />
+            집에 있으면 침대의 유혹에 무너지고.
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="text-[15px] leading-[2.1] text-[#1a1a2e] font-medium mt-8">
+            의지가 약해서가 아닙니다.<br />
+            몰입할 수 있는 <u className="underline-offset-4">환경</u>이 없었을 뿐.
           </p>
         </Reveal>
       </section>
 
-      {/* ───────── 브랜드 스토리: 시간을 비싸게 쓰는 법 ───────── */}
+      {/* ───────── 해결책 (컨셉) ───────── */}
       <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <div className="max-w-xl mx-auto text-center">
+          <Reveal>
+            <h2 className="text-xl font-medium mb-5 tracking-tight">
+              그래서, 환경을 만들었습니다
+            </h2>
+            <p className="text-[15px] leading-[1.9] text-gray-500">
+              흩어진 생각을 하나로 모으는 일에는<br />
+              방해받지 않는 시간과 공간이 필요합니다.<br />
+              잠시 머물며, 오롯이 몰입해 보세요.
+            </p>
+            <p className="text-[15px] leading-[1.9] text-gray-500 mt-6">
+              일기, 독서, 생각 정리, 아이디어 —<br />
+              무엇이든 좋습니다.{' '}
+              <span className="text-[#1a1a2e] font-medium">
+                한 호흡에 하나만.
+              </span>
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ───────── 브랜드 스토리: 시간을 비싸게 쓰는 법 ───────── */}
+      <section className="px-6 py-20">
         <div className="max-w-xl mx-auto">
           <Reveal>
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -96,6 +132,14 @@ export default function HomePage() {
                 &ldquo;오늘, 내가 할 수 있는<br />의도적 몰입은 무엇인가?&rdquo;
               </p>
             </blockquote>
+            <div className="text-center mt-10">
+              <a
+                href="#booking"
+                className="inline-block px-8 py-3.5 rounded-full border border-[#1a1a2e] text-[#1a1a2e] text-sm font-medium hover:bg-[#1a1a2e] hover:text-white transition"
+              >
+                커피 한 잔 값으로 시작하기
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -248,6 +292,65 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ───────── FAQ ───────── */}
+      <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <div className="max-w-xl mx-auto">
+          <Reveal>
+            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+              FAQ
+            </p>
+            <h2 className="text-xl font-medium text-center mb-12 tracking-tight">
+              자주 묻는 질문
+            </h2>
+          </Reveal>
+          <Reveal>
+            <div className="space-y-3">
+              {[
+                {
+                  q: '어떤 걸 하는 공간인가요?',
+                  a: '일기 쓰기, 독서, 생각 정리, 아이디어 스케치 — 무엇이든 좋아요. 오로지 한 호흡에 하나에 몰입할 수 있도록 조용한 환경을 준비했습니다.',
+                },
+                {
+                  q: '예약 없이 방문해도 되나요?',
+                  a: '네! 예약 없이 편히 방문하실 수 있어요. 다만 자리를 확실히 보장받고 싶다면 미리 예약을 추천드려요.',
+                },
+                {
+                  q: '음료나 간식을 가져가야 하나요?',
+                  a: '아니요, 음료와 간식이 무료로 준비되어 있어요. 편하게 몸만 오세요.',
+                },
+                {
+                  q: '중간에 나갔다 와도 되나요?',
+                  a: '네, 이용 시간 내 자유로운 외출과 출입이 가능합니다.',
+                },
+                {
+                  q: '혼자 가도 어색하지 않을까요?',
+                  a: '혼자 오시는 분들을 위해 만든 공간이에요. 각자의 몰입을 존중하는 조용한 분위기라 오히려 혼자일 때 가장 편안합니다. 친구와 단둘이 오셔도 좋아요.',
+                },
+                {
+                  q: '몇 시까지 하나요?',
+                  a: '24시간, 연중무휴로 운영됩니다. 새벽의 고요함이 필요할 때도 언제든 오세요.',
+                },
+              ].map((item) => (
+                <details
+                  key={item.q}
+                  className="group rounded-2xl border border-gray-100 bg-[#f8f7f4] overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between gap-4 px-6 py-4.5 cursor-pointer list-none text-[15px] font-medium text-[#1a1a2e] py-4">
+                    {item.q}
+                    <span className="text-gray-300 transition-transform group-open:rotate-45 text-lg leading-none">
+                      +
+                    </span>
+                  </summary>
+                  <p className="px-6 pb-5 text-sm leading-relaxed text-gray-500">
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── 예약 폼 ───────── */}
       <section id="booking" className="px-6 py-20 scroll-mt-4">
         <div className="max-w-md mx-auto">
@@ -256,9 +359,12 @@ export default function HomePage() {
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
                 예약하기
               </p>
-              <h2 className="text-xl font-medium tracking-tight">
-                지금 시간을 예약하세요
+              <h2 className="text-xl font-medium tracking-tight mb-4">
+                오늘, 한 시간만<br />나에게 선물하세요
               </h2>
+              <p className="text-sm text-gray-500">
+                커피 한 잔 값이면 충분합니다
+              </p>
             </div>
           </Reveal>
           <BookingForm />
