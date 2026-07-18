@@ -5,62 +5,68 @@ import path from 'path'
 /**
  * 예약 저장소.
  *
- * - Vercel 등 배포 환경: Upstash Redis(=Vercel KV)에 저장.
- *   KV 스토어를 프로젝트에 연결하면 아래 환경변수가 자동으로 주입됩니다.
- * - 로컬 개발: 환경변수가 없으면 data/reservations.json 파일에 저장(폴백).
+ * 지원하는 백엔드(자동 감지):
+ *  - ioredis   : REDIS_URL 등 redis:// · rediss:// 연결 문자열 (Redis Cloud 등)
+ *  - upstash   : *_REST_API_URL + *_REST_API_TOKEN (Upstash / Vercel KV)
+ *  - file      : 위 둘 다 없으면 로컬 파일(data/reservations.json)로 폴백
  */
 
-/**
- * Redis REST 접속 정보 자동 탐지.
- * Upstash/Vercel이 주입하는 환경변수 이름은 연동 방식·프리픽스에 따라
- * 제각각(KV_*, UPSTASH_*, STORAGE_* 등)이라, 알려진 이름을 먼저 보고
- * 없으면 REST URL/TOKEN 패턴에 맞는 변수를 통째로 스캔한다.
- */
-function detectRedisCreds(): { url?: string; token?: string } {
+const HASH_KEY = 'reservations'
+
+// ---- 연결 정보 감지 ----
+function detectConnectionUrl(): string | undefined {
   const env = process.env
+  const known = env.REDIS_URL || env.KV_URL || env.REDIS_URI
+  if (known && /^rediss?:\/\//i.test(known)) return known
+  for (const value of Object.values(env)) {
+    if (value && /^rediss?:\/\//i.test(value)) return value
+  }
+  return undefined
+}
 
-  // 1) 알려진 이름 우선
+function detectRestCreds(): { url?: string; token?: string } {
+  const env = process.env
   const url =
-    env.KV_REST_API_URL ||
-    env.UPSTASH_REDIS_REST_URL ||
-    env.REDIS_REST_API_URL
+    env.KV_REST_API_URL || env.UPSTASH_REDIS_REST_URL || env.REDIS_REST_API_URL
   const token =
     env.KV_REST_API_TOKEN ||
     env.UPSTASH_REDIS_REST_TOKEN ||
     env.REDIS_REST_API_TOKEN
-  if (url && token) return { url, token }
-
-  // 2) 패턴 스캔 (프리픽스가 붙은 경우까지 대응)
-  let scannedUrl: string | undefined
-  let scannedToken: string | undefined
-  for (const [key, value] of Object.entries(env)) {
-    if (!value) continue
-    if (!scannedUrl && /REST.*URL$/i.test(key) && /^https?:\/\//i.test(value)) {
-      scannedUrl = value
-    }
-    if (!scannedToken && /REST.*TOKEN$/i.test(key)) {
-      scannedToken = value
-    }
-  }
-  return { url: url || scannedUrl, token: token || scannedToken }
+  return { url, token }
 }
 
-const { url: REDIS_URL, token: REDIS_TOKEN } = detectRedisCreds()
+const CONN_URL = detectConnectionUrl()
+const REST = detectRestCreds()
 
-const HASH_KEY = 'reservations'
-const hasRedis = Boolean(REDIS_URL && REDIS_TOKEN)
+type Backend = 'ioredis' | 'upstash' | 'file'
+const backend: Backend = CONN_URL
+  ? 'ioredis'
+  : REST.url && REST.token
+  ? 'upstash'
+  : 'file'
 
-// ---- Redis 클라이언트 (지연 로딩) ----
-let redisClient: import('@upstash/redis').Redis | null = null
-async function getRedis() {
-  if (redisClient) return redisClient
+// ---- ioredis (redis:// 연결) ----
+async function getIoRedis() {
+  const g = globalThis as unknown as { __ioredis?: import('ioredis').Redis }
+  if (g.__ioredis) return g.__ioredis
+  const IORedis = (await import('ioredis')).default
+  g.__ioredis = new IORedis(CONN_URL!, {
+    maxRetriesPerRequest: 3,
+    connectTimeout: 10000,
+  })
+  return g.__ioredis
+}
+
+// ---- Upstash (REST 연결) ----
+let upstashClient: import('@upstash/redis').Redis | null = null
+async function getUpstash() {
+  if (upstashClient) return upstashClient
   const { Redis } = await import('@upstash/redis')
-  redisClient = new Redis({ url: REDIS_URL!, token: REDIS_TOKEN! })
-  return redisClient
+  upstashClient = new Redis({ url: REST.url!, token: REST.token! })
+  return upstashClient
 }
 
-function normalize(value: unknown): Reservation {
-  // Upstash는 JSON을 자동 파싱하지만, 문자열로 올 수도 있어 양쪽 대응
+function parseRow(value: unknown): Reservation {
   if (typeof value === 'string') return JSON.parse(value) as Reservation
   return value as Reservation
 }
@@ -81,16 +87,42 @@ function fileWriteAll(rows: Reservation[]) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(rows, null, 2))
 }
 
+// ---- 내부 통합 접근자 ----
+async function readAll(): Promise<Reservation[]> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const all = await r.hgetall(HASH_KEY)
+    return Object.values(all).map((v) => parseRow(v))
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    const all = await r.hgetall<Record<string, unknown>>(HASH_KEY)
+    return all ? Object.values(all).map(parseRow) : []
+  }
+  return fileReadAll()
+}
+
+async function writeOne(reservation: Reservation) {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    await r.hset(HASH_KEY, reservation.orderId, JSON.stringify(reservation))
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    await r.hset(HASH_KEY, { [reservation.orderId]: reservation })
+    return
+  }
+  const rows = fileReadAll()
+  const idx = rows.findIndex((x) => x.orderId === reservation.orderId)
+  if (idx === -1) rows.push(reservation)
+  else rows[idx] = reservation
+  fileWriteAll(rows)
+}
+
 // ---- 공개 API ----
 export async function getAllReservations(): Promise<Reservation[]> {
-  let rows: Reservation[]
-  if (hasRedis) {
-    const redis = await getRedis()
-    const all = await redis.hgetall<Record<string, unknown>>(HASH_KEY)
-    rows = all ? Object.values(all).map(normalize) : []
-  } else {
-    rows = fileReadAll()
-  }
+  const rows = await readAll()
   return rows.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
@@ -99,26 +131,24 @@ export async function getAllReservations(): Promise<Reservation[]> {
 export async function getReservationByOrderId(
   orderId: string
 ): Promise<Reservation | null> {
-  if (hasRedis) {
-    const redis = await getRedis()
-    const row = await redis.hget<unknown>(HASH_KEY, orderId)
-    return row ? normalize(row) : null
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const row = await r.hget(HASH_KEY, orderId)
+    return row ? parseRow(row) : null
   }
-  return fileReadAll().find((r) => r.orderId === orderId) ?? null
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    const row = await r.hget<unknown>(HASH_KEY, orderId)
+    return row ? parseRow(row) : null
+  }
+  return fileReadAll().find((x) => x.orderId === orderId) ?? null
 }
 
 export async function createReservation(
   data: Omit<Reservation, 'createdAt'>
 ): Promise<Reservation> {
   const reservation: Reservation = { ...data, createdAt: new Date().toISOString() }
-  if (hasRedis) {
-    const redis = await getRedis()
-    await redis.hset(HASH_KEY, { [reservation.orderId]: reservation })
-  } else {
-    const rows = fileReadAll()
-    rows.push(reservation)
-    fileWriteAll(rows)
-  }
+  await writeOne(reservation)
   return reservation
 }
 
@@ -129,17 +159,7 @@ export async function updateReservation(
   const existing = await getReservationByOrderId(orderId)
   if (!existing) return null
   const updated = { ...existing, ...updates }
-  if (hasRedis) {
-    const redis = await getRedis()
-    await redis.hset(HASH_KEY, { [orderId]: updated })
-  } else {
-    const rows = fileReadAll()
-    const idx = rows.findIndex((r) => r.orderId === orderId)
-    if (idx !== -1) {
-      rows[idx] = updated
-      fileWriteAll(rows)
-    }
-  }
+  await writeOne(updated)
   return updated
 }
 
