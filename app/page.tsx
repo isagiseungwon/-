@@ -217,6 +217,37 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ───────── 인스타그램 ───────── */}
+      <section className="px-6 py-20">
+        <div className="max-w-md mx-auto text-center">
+          <Reveal>
+            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
+              Instagram
+            </p>
+            <h2 className="text-xl font-medium tracking-tight mb-4">
+              공간의 일상은 인스타에서
+            </h2>
+            <p className="text-[15px] leading-[1.9] text-gray-500 mb-3">
+              찾아오는 법부터 공간의 순간들까지,<br />
+              <span className="text-[#1a1a2e] font-medium">1.3만 명</span>이 함께 보고 있어요.
+            </p>
+            <p className="text-sm text-gray-400 mb-8">@macha_ver._ · 이상한 마차</p>
+            <a
+              href="https://www.instagram.com/macha_ver._"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-3.5 rounded-full text-sm font-medium text-white transition hover:opacity-90"
+              style={{
+                background:
+                  'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+              }}
+            >
+              📷 인스타그램 보러가기
+            </a>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── 예약 폼 ───────── */}
       <section id="booking" className="px-6 py-20 scroll-mt-4">
         <div className="max-w-md mx-auto">
@@ -244,9 +275,19 @@ export default function HomePage() {
         <p className="text-xs text-gray-400 leading-relaxed mb-1">
           서울 도봉구 도봉로103길 23-13 B02호 · 쌍문역 3번 출구 도보 8분
         </p>
-        <p className="text-xs text-gray-400 leading-relaxed mb-4">
+        <p className="text-xs text-gray-400 leading-relaxed mb-1">
           24시간 영업 · 연중무휴 ·{' '}
           <a href="tel:0507-1348-9410" className="underline">0507-1348-9410</a>
+        </p>
+        <p className="text-xs text-gray-400 leading-relaxed mb-4">
+          <a
+            href="https://www.instagram.com/macha_ver._"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            📷 @macha_ver._
+          </a>
         </p>
         <p className="text-xs text-gray-300">
           <a href="/admin" className="underline">관리자</a>
