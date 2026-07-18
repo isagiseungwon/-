@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '금액이 일치하지 않습니다.' }, { status: 400 })
   }
 
-  const secretKey = process.env.TOSS_SECRET_KEY ?? 'test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R'
+  const secretKey = process.env.TOSS_SECRET_KEY ?? 'test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6'
   const encoded = Buffer.from(`${secretKey}:`).toString('base64')
 
   const tossRes = await fetch(`https://api.tosspayments.com/v1/payments/confirm`, {

@@ -18,7 +18,7 @@ function PaymentWidget() {
   useEffect(() => {
     if (!orderId || !amount) return
 
-    const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY ?? 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+    const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY ?? 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm'
 
     const script = document.createElement('script')
     script.src = 'https://js.tosspayments.com/v2/standard'
