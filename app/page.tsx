@@ -1,6 +1,7 @@
 import BookingForm from './components/BookingForm'
 import Reveal from './components/Reveal'
 import InstaMarquee from './components/InstaMarquee'
+import CountUp from './components/CountUp'
 
 export default function HomePage() {
   return (
@@ -271,7 +272,10 @@ export default function HomePage() {
             </p>
             <h2 className="text-xl font-medium tracking-tight mb-4 leading-relaxed">
               이 공간의 이야기를<br />
-              <span className="text-white">1.3만 명</span>이 보고 있습니다
+              <span className="text-2xl font-semibold">
+                <CountUp to={13000} />명
+              </span>
+              이 보고 있습니다
             </h2>
             <p className="text-sm text-white/50">@macha_ver._ · 이상한 마차</p>
           </Reveal>
