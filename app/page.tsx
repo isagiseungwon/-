@@ -1,5 +1,6 @@
 import BookingForm from './components/BookingForm'
 import Reveal from './components/Reveal'
+import InstaMarquee from './components/InstaMarquee'
 
 export default function HomePage() {
   return (
@@ -261,21 +262,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ───────── 인스타그램 ───────── */}
-      <section className="px-6 py-20">
-        <div className="max-w-md mx-auto text-center">
+      {/* ───────── 인스타그램 쇼케이스 ───────── */}
+      <section className="py-20 bg-[#12122a] text-white overflow-hidden">
+        <div className="px-6 max-w-md mx-auto text-center mb-10">
           <Reveal>
-            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
+            <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-6">
               Instagram
             </p>
-            <h2 className="text-xl font-medium tracking-tight mb-4">
-              공간의 일상은 인스타에서
+            <h2 className="text-xl font-medium tracking-tight mb-4 leading-relaxed">
+              이 공간의 이야기를<br />
+              <span className="text-white">1.3만 명</span>이 보고 있습니다
             </h2>
-            <p className="text-[15px] leading-[1.9] text-gray-500 mb-3">
-              찾아오는 법부터 공간의 순간들까지,<br />
-              <span className="text-[#1a1a2e] font-medium">1.3만 명</span>이 함께 보고 있어요.
+            <p className="text-sm text-white/50">@macha_ver._ · 이상한 마차</p>
+          </Reveal>
+        </div>
+
+        <Reveal>
+          <InstaMarquee />
+        </Reveal>
+
+        <div className="text-center mt-10 px-6">
+          <Reveal>
+            <p className="text-xs text-white/40 mb-6">
+              카드를 누르면 인스타그램으로 이동해요
             </p>
-            <p className="text-sm text-gray-400 mb-8">@macha_ver._ · 이상한 마차</p>
             <a
               href="https://www.instagram.com/macha_ver._"
               target="_blank"

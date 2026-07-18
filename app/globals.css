@@ -35,3 +35,46 @@ input, select, textarea {
     transition: none;
   }
 }
+
+/* 인스타 카드 무한 흐름(마퀴) */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 36s linear infinite;
+}
+.marquee-track.reverse {
+  animation-name: marquee-right;
+  animation-duration: 42s;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
