@@ -1,50 +1,89 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Reservation } from '@/lib/types'
 
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? 'admin1234'
-
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false)
+  const [authed, setAuthed] = useState<boolean | null>(null) // null = 확인 중
   const [pw, setPw] = useState('')
+  const [loggingIn, setLoggingIn] = useState(false)
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'all' | 'paid' | 'pending'>('all')
 
-  function handleLogin(e: React.FormEvent) {
+  const loadReservations = useCallback(async () => {
+    setLoading(true)
+    const res = await fetch('/api/admin/reservations')
+    if (res.status === 401) {
+      setAuthed(false)
+      setLoading(false)
+      return
+    }
+    const data = await res.json()
+    setReservations(data.reservations ?? [])
+    setAuthed(true)
+    setLoading(false)
+  }, [])
+
+  // 최초 진입 시 세션 확인
+  useEffect(() => {
+    loadReservations()
+  }, [loadReservations])
+
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    if (pw === ADMIN_PASSWORD) setAuthed(true)
-    else alert('비밀번호가 틀렸습니다.')
+    setLoggingIn(true)
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    })
+    setLoggingIn(false)
+    if (!res.ok) {
+      alert('비밀번호가 올바르지 않습니다.')
+      return
+    }
+    setPw('')
+    await loadReservations()
   }
 
-  useEffect(() => {
-    if (!authed) return
-    setLoading(true)
-    fetch('/api/reservations')
-      .then((r) => r.json())
-      .then((d) => setReservations(d.reservations ?? []))
-      .finally(() => setLoading(false))
-  }, [authed])
+  async function handleLogout() {
+    await fetch('/api/admin/logout', { method: 'POST' })
+    setReservations([])
+    setAuthed(false)
+  }
 
+  // 세션 확인 중
+  if (authed === null) {
+    return (
+      <main className="flex items-center justify-center min-h-screen text-sm text-gray-400">
+        불러오는 중...
+      </main>
+    )
+  }
+
+  // 로그인 필요
   if (!authed) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4">
         <div className="bg-white rounded-2xl border border-gray-100 p-8 max-w-sm w-full">
-          <h1 className="text-lg font-bold text-[#1a1a2e] mb-6">관리자 로그인</h1>
+          <h1 className="text-lg font-bold text-[#1a1a2e] mb-1">관리자 로그인</h1>
+          <p className="text-xs text-gray-400 mb-6">몰입, 흐름 그리고 나</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
               value={pw}
               onChange={(e) => setPw(e.target.value)}
               placeholder="비밀번호"
+              autoFocus
               className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e]"
             />
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#1a1a2e] text-white font-bold text-sm"
+              disabled={loggingIn || !pw}
+              className="w-full py-3 rounded-xl bg-[#1a1a2e] text-white font-bold text-sm disabled:opacity-40"
             >
-              로그인
+              {loggingIn ? '확인 중...' : '로그인'}
             </button>
           </form>
         </div>
@@ -53,7 +92,9 @@ export default function AdminPage() {
   }
 
   const filtered = reservations.filter((r) => filter === 'all' || r.status === filter)
-  const totalRevenue = reservations.filter((r) => r.status === 'paid').reduce((sum, r) => sum + r.amount, 0)
+  const totalRevenue = reservations
+    .filter((r) => r.status === 'paid')
+    .reduce((sum, r) => sum + r.amount, 0)
   const todayRevenue = reservations
     .filter((r) => r.status === 'paid' && r.date === new Date().toISOString().split('T')[0])
     .reduce((sum, r) => sum + r.amount, 0)
@@ -63,9 +104,17 @@ export default function AdminPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-xl font-bold text-[#1a1a2e]">관리자 대시보드</h1>
-          <p className="text-sm text-gray-500 mt-0.5">몰입공간 예약 현황</p>
+          <p className="text-sm text-gray-500 mt-0.5">몰입, 흐름 그리고 나</p>
         </div>
-        <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 예약 페이지</a>
+        <div className="flex items-center gap-3">
+          <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 예약 페이지</a>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-gray-400 hover:text-gray-600 underline"
+          >
+            로그아웃
+          </button>
+        </div>
       </div>
 
       {/* 매출 요약 */}

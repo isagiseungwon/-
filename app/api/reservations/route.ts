@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createReservation, getAllReservations, getReservedSlots } from '@/lib/db'
+import { createReservation, getReservedSlots } from '@/lib/db'
 
+// 공개 엔드포인트: 특정 날짜의 "예약된 시간대"만 반환한다.
+// 개인정보(이름·연락처 등)는 절대 반환하지 않으며, 전체 목록은
+// 인증이 필요한 /api/admin/reservations 로 분리했다.
 export async function GET(req: NextRequest) {
   const date = req.nextUrl.searchParams.get('date')
 
-  if (date) {
-    const reservedSlots = await getReservedSlots(date)
-    return NextResponse.json({ reservedSlots })
+  if (!date) {
+    return NextResponse.json({ error: 'date 파라미터가 필요합니다.' }, { status: 400 })
   }
 
-  const reservations = await getAllReservations()
-  return NextResponse.json({ reservations })
+  const reservedSlots = await getReservedSlots(date)
+  return NextResponse.json({ reservedSlots })
 }
 
 export async function POST(req: NextRequest) {
