@@ -200,13 +200,25 @@ export default function HomePage() {
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
               Space
             </p>
-            <div className="overflow-hidden rounded-2xl mb-8 border border-gray-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/story/room.jpg"
-                alt="몰입, 흐름 그리고 나 공간 내부"
-                className="w-full h-auto block"
-              />
+            {/* 공간 갤러리 (2열 매소너리) */}
+            <div className="columns-2 gap-3 mb-8">
+              {[
+                { src: '/story/gallery/sign-chair.jpg', alt: '몰입 흐름 그리고 나 손글씨 팻말' },
+                { src: '/story/gallery/night-lamp.jpg', alt: '조명이 켜진 저녁의 책장' },
+                { src: '/story/gallery/room-window.jpg', alt: '창가와 블라인드가 있는 공간 전경' },
+                { src: '/story/gallery/alley.jpg', alt: '공간으로 향하는 골목길' },
+                { src: '/story/gallery/desk-chair.jpg', alt: '원목 책상과 의자' },
+                { src: '/story/gallery/desk-close.jpg', alt: '책상 클로즈업' },
+              ].map((g) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={g.src}
+                  src={g.src}
+                  alt={g.alt}
+                  loading="lazy"
+                  className="w-full h-auto block rounded-2xl border border-gray-100 mb-3"
+                />
+              ))}
             </div>
             <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
               〈몰입, 흐름 그리고 나〉는<br />
