@@ -2,6 +2,7 @@ import BookingForm from './components/BookingForm'
 import Reveal from './components/Reveal'
 import InstaMarquee from './components/InstaMarquee'
 import CountUp from './components/CountUp'
+import GalleryMarquee from './components/GalleryMarquee'
 
 export default function HomePage() {
   return (
@@ -194,32 +195,22 @@ export default function HomePage() {
       </section>
 
       {/* ───────── 공간 & 위치 ───────── */}
-      <section className="px-6 py-20 mt-8 bg-white border-y border-gray-100">
-        <div className="max-w-md mx-auto text-center">
+      <section className="py-20 mt-8 bg-white border-y border-gray-100 overflow-hidden">
+        <div className="max-w-md mx-auto text-center px-6">
           <Reveal>
-            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
+            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-2">
               Space
             </p>
-            {/* 공간 갤러리 (2열 매소너리) */}
-            <div className="columns-2 gap-3 mb-8">
-              {[
-                { src: '/story/gallery/sign-chair.jpg', alt: '몰입 흐름 그리고 나 손글씨 팻말' },
-                { src: '/story/gallery/night-lamp.jpg', alt: '조명이 켜진 저녁의 책장' },
-                { src: '/story/gallery/room-window.jpg', alt: '창가와 블라인드가 있는 공간 전경' },
-                { src: '/story/gallery/alley.jpg', alt: '공간으로 향하는 골목길' },
-                { src: '/story/gallery/desk-chair.jpg', alt: '원목 책상과 의자' },
-                { src: '/story/gallery/desk-close.jpg', alt: '책상 클로즈업' },
-              ].map((g) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={g.src}
-                  src={g.src}
-                  alt={g.alt}
-                  loading="lazy"
-                  className="w-full h-auto block rounded-2xl border border-gray-100 mb-3"
-                />
-              ))}
-            </div>
+          </Reveal>
+        </div>
+
+        {/* 공간 갤러리: 폴라로이드 마퀴 (풀폭) */}
+        <Reveal>
+          <GalleryMarquee />
+        </Reveal>
+
+        <div className="max-w-md mx-auto text-center px-6 mt-8">
+          <Reveal>
             <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
               〈몰입, 흐름 그리고 나〉는<br />
               <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span>에서 도보 8분,<br />
