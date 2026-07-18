@@ -1,8 +1,17 @@
 const INSTA_URL = 'https://www.instagram.com/macha_ver._'
 
-const CARDS = [
-  { src: '/story/insta/findway.jpg', alt: '찾아오는 법' },
-  { src: '/story/insta/expensive.jpg', alt: '시간을 비싸게 쓰는 법' },
+// href가 있으면 해당 게시물로, 없으면 계정 홈으로 이동
+const CARDS: { src: string; alt: string; href?: string }[] = [
+  {
+    src: '/story/insta/findway.jpg',
+    alt: '찾아오는 법',
+    href: 'https://www.instagram.com/p/DXN--dNEoPT/',
+  },
+  {
+    src: '/story/insta/expensive.jpg',
+    alt: '시간을 비싸게 쓰는 법',
+    href: 'https://www.instagram.com/p/DYmfB1BEgA4/',
+  },
   { src: '/story/insta/space.jpg', alt: '공간 소개' },
   { src: '/story/insta/essay1.jpg', alt: '몰입 에세이 1' },
   { src: '/story/insta/seat.jpg', alt: '여유 자리' },
@@ -19,7 +28,7 @@ function Row({ reverse = false }: { reverse?: boolean }) {
         {items.map((c, i) => (
           <a
             key={`${c.src}-${i}`}
-            href={INSTA_URL}
+            href={c.href ?? INSTA_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="block shrink-0 w-[140px] mr-3 rounded-xl overflow-hidden border border-white/10 hover:border-white/40 transition-colors"
