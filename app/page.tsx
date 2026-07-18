@@ -24,7 +24,6 @@ export default function HomePage() {
         </a>
       </section>
 
-      {/* 얇은 구분선 */}
       <div className="max-w-[60px] mx-auto border-t border-gray-200" />
 
       {/* ───────── 컨셉 ───────── */}
@@ -37,8 +36,54 @@ export default function HomePage() {
         </p>
       </section>
 
+      {/* ───────── 브랜드 스토리: 시간을 비싸게 쓰는 법 ───────── */}
+      <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <div className="max-w-xl mx-auto">
+          <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+            Essay
+          </p>
+          <h2 className="text-xl font-medium text-center mb-14 tracking-tight">
+            시간을 비싸게 쓰는 법
+          </h2>
+
+          <div className="space-y-14 text-center">
+            <p className="text-[15px] leading-[2] text-gray-600">
+              일기를 쓰든, 오늘의 생각을 적든,<br />
+              흩어진 아이디어를 정리하든, 책을 훑어보든 —<br />
+              <span className="text-[#1a1a2e]">
+                그 순간부터 시간은 느리고 여유롭게 흐릅니다.
+              </span>
+            </p>
+
+            <div className="max-w-[40px] mx-auto border-t border-gray-200" />
+
+            <p className="text-[15px] leading-[2] text-gray-600">
+              오로지 한 호흡에 하나를 몰입할 수 있는,<br />
+              <span className="text-[#1a1a2e] font-medium">
+                누구도 값을 매길 수 없는 럭셔리한 시간.
+              </span>
+            </p>
+
+            <div className="max-w-[40px] mx-auto border-t border-gray-200" />
+
+            <p className="text-[15px] leading-[2] text-gray-600">
+              디지털과 멀어진 시간이지만,<br />
+              아이러니하게도 본질을 꿰뚫으며<br />
+              나를 더 잘 살게 하는 세련된 시야로<br />
+              변모하게 하는 시간입니다.
+            </p>
+          </div>
+
+          <blockquote className="mt-16 text-center">
+            <p className="text-lg font-medium leading-relaxed tracking-tight text-[#1a1a2e]">
+              &ldquo;오늘, 내가 할 수 있는<br />의도적 몰입은 무엇인가?&rdquo;
+            </p>
+          </blockquote>
+        </div>
+      </section>
+
       {/* ───────── 이용 방법 ───────── */}
-      <section className="px-6 py-16 bg-white border-y border-gray-100">
+      <section className="px-6 py-16">
         <div className="max-w-xl mx-auto">
           <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-12">
             이용 방법
@@ -62,12 +107,12 @@ export default function HomePage() {
       </section>
 
       {/* ───────── 특징 ───────── */}
-      <section className="px-6 py-20 max-w-xl mx-auto">
+      <section className="px-6 pb-4 pt-8 max-w-xl mx-auto">
         <div className="space-y-10">
           {[
             { t: '온전한 고요', d: '방해 없는 환경에서 깊이 몰입할 수 있어요.' },
             { t: '합리적인 가격', d: '커피 한 잔 값으로 누리는 나만의 시간.' },
-            { t: '1분 예약', d: '복잡한 절차 없이 폰으로 바로 예약하세요.' },
+            { t: '편한 방문', d: '예약 없이도, 혼자 또는 단둘이 오셔도 좋아요.' },
           ].map((f) => (
             <div key={f.t} className="flex gap-5 items-start">
               <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1a1a2e] shrink-0" />
@@ -80,8 +125,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ───────── 공간 & 위치 ───────── */}
+      <section className="px-6 py-20 mt-8 bg-white border-y border-gray-100">
+        <div className="max-w-md mx-auto text-center">
+          <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
+            Space
+          </p>
+          <div className="overflow-hidden rounded-2xl mb-8 border border-gray-100">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/story/room.jpg"
+              alt="몰입, 흐름 그리고 나 공간 내부"
+              className="w-full h-auto block"
+            />
+          </div>
+          <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
+            〈몰입, 흐름 그리고 나〉는<br />
+            <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span> 부근에 있습니다.
+          </p>
+          <p className="text-sm leading-relaxed text-gray-500">
+            혼자, 혹은 친구와 단둘이 오셔서<br />
+            평온한 럭셔리를 누리시길 바라요.
+          </p>
+        </div>
+      </section>
+
       {/* ───────── 예약 폼 ───────── */}
-      <section id="booking" className="px-6 py-20 bg-white border-t border-gray-100 scroll-mt-4">
+      <section id="booking" className="px-6 py-20 scroll-mt-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
@@ -99,11 +169,11 @@ export default function HomePage() {
       </section>
 
       {/* ───────── 푸터 ───────── */}
-      <footer className="px-6 py-10 text-center border-t border-gray-100">
+      <footer className="px-6 py-10 text-center border-t border-gray-100 bg-white">
         <div className="text-base mb-3">🌿</div>
         <p className="text-sm font-medium mb-1">몰입, 흐름 그리고 나</p>
         <p className="text-xs text-gray-400">
-          시간 단위 몰입 공간 · <a href="/admin" className="underline">관리자</a>
+          쌍문역 3번 출구 부근 · <a href="/admin" className="underline">관리자</a>
         </p>
       </footer>
     </main>
