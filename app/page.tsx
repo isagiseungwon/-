@@ -3,10 +3,12 @@ import Reveal from './components/Reveal'
 import InstaMarquee from './components/InstaMarquee'
 import CountUp from './components/CountUp'
 import GalleryMarquee from './components/GalleryMarquee'
+import StickyCTA from './components/StickyCTA'
 
 export default function HomePage() {
   return (
     <main className="text-[#1a1a2e]">
+      <StickyCTA />
       {/* ───────── Hero ───────── */}
       <section className="relative px-6 pt-24 pb-20 overflow-hidden">
         {/* 은은한 글로우 */}
@@ -276,6 +278,40 @@ export default function HomePage() {
 
       {/* ───────── 인스타그램 쇼케이스 ───────── */}
       <section className="py-20 bg-[#12122a] text-white overflow-hidden">
+        {/* 초대형 숫자 블록 */}
+        <div className="px-6 max-w-md mx-auto text-center mb-16">
+          <Reveal>
+            <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-10">
+              숫자로 보는 이 공간
+            </p>
+            <div className="space-y-10">
+              <div>
+                <p className="text-sm text-white/50 mb-2">함께 보는 사람들</p>
+                <p className="serif text-5xl font-bold tracking-tight">
+                  <CountUp to={13000} />
+                  <span className="text-[#e9c46a]">+</span>
+                </p>
+              </div>
+              <div className="max-w-[80px] mx-auto border-t border-dotted border-white/20" />
+              <div>
+                <p className="text-sm text-white/50 mb-2">쌓인 공간의 기록</p>
+                <p className="serif text-5xl font-bold tracking-tight">
+                  <CountUp to={1290} />
+                  <span className="text-[#e9c46a]">+</span>
+                </p>
+              </div>
+              <div className="max-w-[80px] mx-auto border-t border-dotted border-white/20" />
+              <div>
+                <p className="text-sm text-white/50 mb-2">언제든 열려있는 시간</p>
+                <p className="serif text-5xl font-bold tracking-tight">
+                  <CountUp to={24} />
+                  <span className="text-[#e9c46a]">h</span>
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
         <div className="px-6 max-w-md mx-auto text-center mb-10">
           <Reveal>
             <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-6">
@@ -283,10 +319,7 @@ export default function HomePage() {
             </p>
             <h2 className="serif text-xl font-medium tracking-tight mb-4 leading-relaxed">
               이 공간의 이야기를<br />
-              <span className="text-2xl font-semibold">
-                <CountUp to={13000} />명
-              </span>
-              이 보고 있습니다
+              함께 보고 있습니다
             </h2>
             <p className="text-sm text-white/50">@macha_ver._ · 이상한 마차</p>
           </Reveal>
