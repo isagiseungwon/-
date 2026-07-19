@@ -1,45 +1,133 @@
-// 공간 사진 폴라로이드 마퀴: 살짝 기울어진 폴라로이드 카드들이
-// 알록달록한 글로우를 두르고 옆으로 흘러간다.
+'use client'
+
+import { useEffect, useRef } from 'react'
+
+// 공간 사진 폴라로이드 마퀴:
+// - 평소엔 자동으로 흐르고
+// - 누르고 드래그하면 손으로 넘길 수 있음 (관성 포함, 놓으면 다시 자동)
 const PHOTOS = [
   {
     src: '/story/gallery/sign-chair.jpg',
     cap: '몰입, 흐름 그리고 나',
     rot: '-rotate-2',
-    glow: '0 12px 32px rgba(231, 111, 81, 0.35)', // coral
+    glow: '0 12px 32px rgba(231, 111, 81, 0.35)',
   },
   {
     src: '/story/gallery/night-lamp.jpg',
     cap: '저녁의 조명',
     rot: 'rotate-2',
-    glow: '0 12px 32px rgba(233, 196, 106, 0.45)', // warm yellow
+    glow: '0 12px 32px rgba(233, 196, 106, 0.45)',
   },
   {
     src: '/story/gallery/room-window.jpg',
     cap: '오후의 창가',
     rot: '-rotate-1',
-    glow: '0 12px 32px rgba(42, 157, 143, 0.35)', // teal
+    glow: '0 12px 32px rgba(42, 157, 143, 0.35)',
   },
   {
     src: '/story/gallery/alley.jpg',
     cap: '찾아오는 골목',
     rot: 'rotate-3',
-    glow: '0 12px 32px rgba(69, 123, 157, 0.35)', // dusty blue
+    glow: '0 12px 32px rgba(69, 123, 157, 0.35)',
   },
   {
     src: '/story/gallery/desk-chair.jpg',
     cap: '여유 자리',
     rot: '-rotate-3',
-    glow: '0 12px 32px rgba(188, 108, 37, 0.35)', // amber wood
+    glow: '0 12px 32px rgba(188, 108, 37, 0.35)',
   },
   {
     src: '/story/gallery/desk-close.jpg',
     cap: '몰입 책상',
     rot: 'rotate-1',
-    glow: '0 12px 32px rgba(204, 35, 102, 0.25)', // pink
+    glow: '0 12px 32px rgba(204, 35, 102, 0.25)',
   },
 ]
 
+const AUTO_SPEED = 100 // 자동 흐름 속도 (px/초)
+
 export default function GalleryMarquee() {
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const s = {
+      offset: 0,
+      half: 0,
+      dragging: false,
+      lastX: 0,
+      lastMoveT: 0,
+      velocity: 0,
+      raf: 0,
+      lastT: 0,
+    }
+
+    const measure = () => {
+      s.half = track.scrollWidth / 2
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(track)
+
+    const tick = (t: number) => {
+      const dt = s.lastT ? Math.min((t - s.lastT) / 1000, 0.05) : 0
+      s.lastT = t
+      if (!s.dragging && dt > 0) {
+        s.offset -= AUTO_SPEED * dt // 기본 흐름 (왼쪽으로)
+        if (Math.abs(s.velocity) > 30) {
+          s.offset += s.velocity * dt // 드래그 관성
+          s.velocity *= Math.pow(0.02, dt) // 부드럽게 감쇠
+        } else {
+          s.velocity = 0
+        }
+      }
+      if (s.half > 0) {
+        while (s.offset <= -s.half) s.offset += s.half
+        while (s.offset > 0) s.offset -= s.half
+      }
+      track.style.transform = `translate3d(${s.offset}px,0,0)`
+      s.raf = requestAnimationFrame(tick)
+    }
+    s.raf = requestAnimationFrame(tick)
+
+    const down = (e: PointerEvent) => {
+      s.dragging = true
+      s.lastX = e.clientX
+      s.lastMoveT = performance.now()
+      s.velocity = 0
+    }
+    const move = (e: PointerEvent) => {
+      if (!s.dragging) return
+      const now = performance.now()
+      const dx = e.clientX - s.lastX
+      const dt = (now - s.lastMoveT) / 1000
+      s.lastX = e.clientX
+      s.lastMoveT = now
+      s.offset += dx
+      if (dt > 0) s.velocity = dx / dt // 놓는 순간 속도 기억
+    }
+    const up = () => {
+      s.dragging = false
+      // 과속 방지
+      s.velocity = Math.max(-2500, Math.min(2500, s.velocity))
+    }
+
+    track.addEventListener('pointerdown', down)
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+    window.addEventListener('pointercancel', up)
+    return () => {
+      cancelAnimationFrame(s.raf)
+      ro.disconnect()
+      track.removeEventListener('pointerdown', down)
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      window.removeEventListener('pointercancel', up)
+    }
+  }, [])
+
   const items = [...PHOTOS, ...PHOTOS]
   return (
     <div className="relative py-6">
@@ -52,11 +140,15 @@ export default function GalleryMarquee() {
       </div>
 
       <div className="marquee-mask overflow-hidden relative">
-        <div className="marquee-track gallery-speed py-4">
+        <div
+          ref={trackRef}
+          className="flex w-max py-4 cursor-grab active:cursor-grabbing select-none"
+          style={{ willChange: 'transform', touchAction: 'pan-y' }}
+        >
           {items.map((p, i) => (
             <figure
               key={`${p.src}-${i}`}
-              className={`shrink-0 mr-5 bg-white p-2 pb-3 rounded-xl ${p.rot} transition-transform hover:rotate-0 hover:scale-105 duration-300`}
+              className={`shrink-0 mr-5 bg-white p-2 pb-3 rounded-xl ${p.rot}`}
               style={{ boxShadow: p.glow }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -64,7 +156,8 @@ export default function GalleryMarquee() {
                 src={p.src}
                 alt={p.cap}
                 loading="lazy"
-                className="w-[150px] h-[190px] object-cover rounded-lg block"
+                draggable={false}
+                className="w-[150px] h-[190px] object-cover object-top rounded-lg block pointer-events-none"
               />
               <figcaption className="text-[11px] text-gray-500 text-center mt-2 tracking-wide">
                 {p.cap}

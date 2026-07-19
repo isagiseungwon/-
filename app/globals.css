@@ -76,12 +76,6 @@ input, select, textarea {
   animation-name: marquee-right;
   animation-duration: 42s;
 }
-.marquee-track.gallery-speed {
-  animation-duration: 12s;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
