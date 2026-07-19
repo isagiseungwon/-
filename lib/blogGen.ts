@@ -5,9 +5,15 @@
 export interface BlogRequest {
   keyword: string // 노릴 검색어 (예: 쌍문역 스터디카페)
   topic: string // 글 주제/방향
+  title?: string // 사용할 제목 (제목 짓기에서 선택)
   type: '정보형' | '스토리형' | '후기형'
   photos: string[] // 넣을 사진 설명들
   extra?: string // 추가로 강조할 내용
+}
+
+export interface TitleIdea {
+  title: string
+  topic: string
 }
 
 const BIZ = `
@@ -46,6 +52,7 @@ ${BIZ}`
   const user = `다음 조건으로 네이버 블로그 글 한 편을 완성해주세요.
 
 - 노릴 검색 키워드: ${req.keyword}
+${req.title ? `- 제목: "${req.title}" (이 제목을 그대로 사용하세요)` : ''}
 - 글 주제/방향: ${req.topic}
 - 글 유형: ${req.type}
 - 사용할 사진들: ${req.photos.length ? req.photos.join(', ') : '공간 사진 위주로 알아서 배치'}
@@ -54,6 +61,63 @@ ${req.extra ? `- 추가 강조: ${req.extra}` : ''}
 제목부터 해시태그까지 완성된 글 전체를 출력하세요.`
 
   return { system, user }
+}
+
+// ---- 제목 짓기 ----
+export function buildTitlePrompt(keyword: string): { system: string; user: string } {
+  const system = `당신은 네이버 블로그 후킹 제목 전문가입니다. 클릭을 부르는 제목 패턴을 활용합니다:
+- 숫자 활용: "~하는 팁 3가지", "10명 중 7명이 놓치는"
+- 궁금증 유발: "'이것' 확인 안 하면 후회합니다", "숨겨진 이유"
+- 반전/경고: "유명하다고 무조건 가지 마세요", "아직도 ~하세요?"
+- 경험담: "직접 가본 솔직 후기", "찾다가 결국 발견한"
+- 검색 키워드는 제목 맨 앞 또는 자연스러운 위치에 반드시 포함
+
+업체: 쌍문역 24시간 몰입 공간(스터디카페) '몰입, 흐름 그리고 나'. 24시간 이용권 4,500원. 조용한 몰입/생각정리/독서/카공 컨셉.
+
+반드시 아래 JSON 배열 형식으로만 답하세요. 다른 텍스트 금지:
+[{"title":"제목","topic":"이 제목으로 쓸 글의 주제 한 줄"}]`
+
+  const user = `검색 키워드 "${keyword}"로 네이버 블로그 제목 8개를 만들어주세요. 각 제목마다 글 주제 한 줄씩 포함. JSON 배열로만 출력.`
+
+  return { system, user }
+}
+
+// 제목 짓기 무료 폴백: 검증된 후킹 패턴 8종
+export function templateTitles(keyword: string): TitleIdea[] {
+  return [
+    {
+      title: `${keyword}, 운영자가 직접 알려주는 선택 팁 3가지`,
+      topic: '공간을 고를 때 확인해야 할 기준을 운영자 시점에서 소개',
+    },
+    {
+      title: `${keyword}? 10명 중 7명이 모르고 지나치는 곳`,
+      topic: '골목 안에 숨어있는 조용한 몰입 공간을 발견담 형식으로 소개',
+    },
+    {
+      title: `${keyword}, 유명한 곳만 찾다가 후회한 이유`,
+      topic: '프랜차이즈 대신 조용한 소형 공간이 몰입에 유리한 이유 설명',
+    },
+    {
+      title: `${keyword} '이것' 확인 안 하면 후회합니다`,
+      topic: '공간 선택 시 소음/좌석/요금제 등 필수 확인 요소 안내',
+    },
+    {
+      title: `아직도 시끄러운 카페에서 공부하세요? ${keyword} 추천`,
+      topic: '카페 소음에 지친 사람에게 몰입 환경의 차이를 비교 설명',
+    },
+    {
+      title: `${keyword} 찾다가 결국 발견한 4,500원의 행복`,
+      topic: '24시간 이용권 4,500원의 가성비를 경험담 형식으로 풀어냄',
+    },
+    {
+      title: `${keyword}, 하루종일 있어도 4,500원인 곳`,
+      topic: '24시간 단일 요금제의 장점과 자유로운 출입 시스템 소개',
+    },
+    {
+      title: `${keyword} 솔직 후기, 장점과 아쉬운 점까지`,
+      topic: '방문자 시점의 균형 잡힌 후기 형식으로 신뢰감 있게 소개',
+    },
+  ]
 }
 
 // ---- 무료 폴백: 템플릿 기반 생성 ----

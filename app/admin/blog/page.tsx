@@ -21,8 +21,16 @@ const LOADING_STEPS = [
   '문장 다듬는 중...',
 ]
 
+interface TitleIdea {
+  title: string
+  topic: string
+}
+
 export default function BlogFactoryPage() {
   const [keyword, setKeyword] = useState('')
+  const [title, setTitle] = useState('')
+  const [titleIdeas, setTitleIdeas] = useState<TitleIdea[]>([])
+  const [titlesLoading, setTitlesLoading] = useState(false)
   const [topic, setTopic] = useState('')
   const [type, setType] = useState<'정보형' | '스토리형' | '후기형'>('정보형')
   const [photos, setPhotos] = useState('')
@@ -46,6 +54,41 @@ export default function BlogFactoryPage() {
     return () => clearInterval(t)
   }, [loading])
 
+  async function fetchTitles() {
+    if (!keyword) {
+      alert('먼저 키워드를 입력해주세요!')
+      return
+    }
+    setTitlesLoading(true)
+    try {
+      const res = await fetch('/api/admin/blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'titles', keyword }),
+      })
+      const data = await res.json()
+      if (res.status === 401) {
+        alert('관리자 로그인이 필요해요.')
+        window.location.href = '/admin'
+        return
+      }
+      if (!res.ok) {
+        alert(data.error ?? '제목 생성 중 오류가 발생했습니다.')
+        return
+      }
+      setTitleIdeas(data.titles ?? [])
+    } catch {
+      alert('네트워크 오류가 발생했습니다.')
+    } finally {
+      setTitlesLoading(false)
+    }
+  }
+
+  function pickTitle(idea: TitleIdea) {
+    setTitle(idea.title)
+    setTopic(idea.topic)
+  }
+
   async function generate() {
     if (!keyword || !topic) {
       alert('키워드와 주제를 입력해주세요!')
@@ -61,6 +104,7 @@ export default function BlogFactoryPage() {
         body: JSON.stringify({
           keyword,
           topic,
+          title: title || undefined,
           type,
           photos: photos.split('\n').map((s) => s.trim()).filter(Boolean),
           extra: extra || undefined,
@@ -163,10 +207,73 @@ export default function BlogFactoryPage() {
             </div>
           </section>
 
-          {/* STEP 02 — 주제 */}
+          {/* STEP 02 — 제목 짓기 */}
+          <section>
+            <div className="flex items-baseline justify-between mb-3">
+              <div className="flex items-baseline gap-3">
+                <span className="serif text-[#e9c46a] text-sm font-semibold">02</span>
+                <h2 className="text-sm font-medium text-white/80">
+                  제목 짓기 <span className="text-white/30 font-normal">(선택)</span>
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={fetchTitles}
+                disabled={titlesLoading}
+                className="text-xs px-3.5 py-1.5 rounded-full border border-[#e9c46a]/50 text-[#e9c46a] hover:bg-[#e9c46a]/10 transition disabled:opacity-50"
+              >
+                {titlesLoading ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full border border-[#e9c46a]/40 border-t-[#e9c46a] animate-spin" />
+                    뽑는 중...
+                  </span>
+                ) : (
+                  '💡 제목 아이디어 8개 뽑기'
+                )}
+              </button>
+            </div>
+
+            {titleIdeas.length > 0 && (
+              <div className="space-y-2 mb-3">
+                {titleIdeas.map((idea) => (
+                  <button
+                    key={idea.title}
+                    type="button"
+                    onClick={() => pickTitle(idea)}
+                    className={`w-full text-left rounded-xl border px-4 py-3 transition ${
+                      title === idea.title
+                        ? 'border-[#e9c46a] bg-[#e9c46a]/10'
+                        : 'border-white/10 bg-white/[0.04] hover:border-white/30'
+                    }`}
+                  >
+                    <div
+                      className={`text-sm font-medium leading-snug ${
+                        title === idea.title ? 'text-[#e9c46a]' : 'text-white/85'
+                      }`}
+                    >
+                      {idea.title}
+                    </div>
+                    <div className="text-[11px] text-white/35 mt-1 leading-snug">
+                      {idea.topic}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="직접 입력하거나, 위에서 아이디어를 골라주세요"
+              className={inputCls}
+            />
+          </section>
+
+          {/* STEP 03 — 주제 */}
           <section>
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="serif text-[#e9c46a] text-sm font-semibold">02</span>
+              <span className="serif text-[#e9c46a] text-sm font-semibold">03</span>
               <h2 className="text-sm font-medium text-white/80">글 주제 · 방향</h2>
             </div>
             <textarea
@@ -181,7 +288,7 @@ export default function BlogFactoryPage() {
           {/* STEP 03 — 유형 */}
           <section>
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="serif text-[#e9c46a] text-sm font-semibold">03</span>
+              <span className="serif text-[#e9c46a] text-sm font-semibold">04</span>
               <h2 className="text-sm font-medium text-white/80">글 유형</h2>
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -218,7 +325,7 @@ export default function BlogFactoryPage() {
           {/* STEP 04 — 사진 */}
           <section>
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="serif text-[#e9c46a] text-sm font-semibold">04</span>
+              <span className="serif text-[#e9c46a] text-sm font-semibold">05</span>
               <h2 className="text-sm font-medium text-white/80">
                 넣을 사진 <span className="text-white/30 font-normal">(한 줄에 하나씩 · 선택)</span>
               </h2>
@@ -235,7 +342,7 @@ export default function BlogFactoryPage() {
           {/* STEP 05 — 추가 강조 */}
           <section>
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="serif text-[#e9c46a] text-sm font-semibold">05</span>
+              <span className="serif text-[#e9c46a] text-sm font-semibold">06</span>
               <h2 className="text-sm font-medium text-white/80">
                 추가 강조 <span className="text-white/30 font-normal">(선택)</span>
               </h2>

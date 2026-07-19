@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { isValidSession, ADMIN_COOKIE } from '@/lib/auth'
-import { buildPrompt, templateGenerate, BlogRequest } from '@/lib/blogGen'
+import {
+  buildPrompt,
+  buildTitlePrompt,
+  templateGenerate,
+  templateTitles,
+  BlogRequest,
+  TitleIdea,
+} from '@/lib/blogGen'
 
 // AI 생성은 시간이 걸리므로 함수 실행 시간 상한을 늘린다 (Vercel)
 export const maxDuration = 60
@@ -12,7 +19,49 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 
-  const body = (await req.json()) as Partial<BlogRequest>
+  const body = (await req.json()) as Partial<BlogRequest> & { action?: string }
+
+  // ---- 제목 짓기 ----
+  if (body.action === 'titles') {
+    if (!body.keyword) {
+      return NextResponse.json({ error: '키워드는 필수입니다.' }, { status: 400 })
+    }
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json({
+        mode: 'template',
+        titles: templateTitles(body.keyword),
+      })
+    }
+    try {
+      const { system, user } = buildTitlePrompt(body.keyword)
+      const client = new Anthropic()
+      const model = process.env.BLOG_MODEL || 'claude-opus-4-8'
+      const response = await client.messages.create({
+        model,
+        max_tokens: 2000,
+        thinking: { type: 'adaptive' },
+        system,
+        messages: [{ role: 'user', content: user }],
+      })
+      const text = response.content
+        .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+        .map((b) => b.text)
+        .join('\n')
+      // JSON 배열만 추출해 파싱 (앞뒤 잡텍스트 대비)
+      const match = text.match(/\[[\s\S]*\]/)
+      const titles = match ? (JSON.parse(match[0]) as TitleIdea[]) : []
+      if (!titles.length) throw new Error('empty titles')
+      return NextResponse.json({ mode: 'ai', titles })
+    } catch (e) {
+      console.error('[blog/titles] AI 실패, 템플릿 폴백:', e)
+      return NextResponse.json({
+        mode: 'template',
+        titles: templateTitles(body.keyword),
+      })
+    }
+  }
+
+  // ---- 본문 초안 생성 ----
   if (!body.keyword || !body.topic) {
     return NextResponse.json(
       { error: '키워드와 주제는 필수입니다.' },
@@ -23,6 +72,7 @@ export async function POST(req: NextRequest) {
   const blogReq: BlogRequest = {
     keyword: body.keyword,
     topic: body.topic,
+    title: body.title,
     type: body.type ?? '정보형',
     photos: Array.isArray(body.photos) ? body.photos.filter(Boolean) : [],
     extra: body.extra,
