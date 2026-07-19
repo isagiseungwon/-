@@ -357,6 +357,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ───────── 유튜브: 마차 이야기 ───────── */}
+      <section className="px-6 py-20">
+        <div className="max-w-xl mx-auto text-center">
+          <Reveal>
+            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-3">
+              Video
+            </p>
+            <h2 className="serif text-xl font-medium tracking-tight mb-4">
+              마차가 더 궁금하다면
+            </h2>
+            <p className="text-sm text-gray-500 mb-10">
+              이 공간을 만든 사람의 이야기를 영상으로 만나보세요
+            </p>
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-gray-200 bg-black shadow-[0_12px_40px_rgba(26,26,46,0.15)]">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/Kur0FCStKLo"
+                title="몰입, 흐름 그리고 나 — 마차 이야기"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── FAQ ───────── */}
       <section className="px-6 py-20 bg-white border-y border-gray-100">
         <div className="max-w-xl mx-auto">
