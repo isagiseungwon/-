@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { PRICES, TIME_SLOTS } from '@/lib/types'
+import { PRICES, TIME_SLOTS, PayMethod } from '@/lib/types'
 
 export default function BookingForm() {
   const router = useRouter()
@@ -11,6 +11,7 @@ export default function BookingForm() {
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
   const [duration, setDuration] = useState<1 | 2>(1)
+  const [method, setMethod] = useState<PayMethod>('transfer')
   const [reservedSlots, setReservedSlots] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -43,7 +44,9 @@ export default function BookingForm() {
     const res = await fetch('/api/reservations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, date, time, duration, amount, orderId }),
+      body: JSON.stringify({
+        name, phone, date, time, duration, amount, orderId, method,
+      }),
     })
 
     if (!res.ok) {
@@ -52,9 +55,15 @@ export default function BookingForm() {
       return
     }
 
-    router.push(
-      `/payment?orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${duration}`
-    )
+    if (method === 'transfer') {
+      router.push(
+        `/payment/transfer?orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${duration}`
+      )
+    } else {
+      router.push(
+        `/payment?orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${duration}`
+      )
+    }
   }
 
   return (
@@ -160,12 +169,50 @@ export default function BookingForm() {
         </div>
       )}
 
+      {/* 결제 방법 선택 */}
+      <div>
+        <label className="block text-sm text-gray-500 mb-2">결제 방법</label>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={() => setMethod('transfer')}
+            className={`py-3.5 rounded-xl border text-sm font-medium transition-all ${
+              method === 'transfer'
+                ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
+                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
+            }`}
+          >
+            🏦 계좌이체
+          </button>
+          <button
+            type="button"
+            onClick={() => setMethod('card')}
+            className={`py-3.5 rounded-xl border text-sm font-medium transition-all ${
+              method === 'card'
+                ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
+                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
+            }`}
+          >
+            💳 카드결제
+          </button>
+        </div>
+        {method === 'transfer' && (
+          <p className="text-xs text-gray-400 mt-2">
+            다음 화면에서 입금 계좌를 안내해 드려요
+          </p>
+        )}
+      </div>
+
       <button
         type="submit"
         disabled={!name || !phone || !date || !time || loading}
         className="w-full py-4 rounded-xl bg-[#1a1a2e] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2d2d4e] transition"
       >
-        {loading ? '처리 중...' : `${PRICES[duration].toLocaleString()}원 결제하기`}
+        {loading
+          ? '처리 중...'
+          : method === 'transfer'
+          ? `${PRICES[duration].toLocaleString()}원 계좌이체로 예약하기`
+          : `${PRICES[duration].toLocaleString()}원 카드로 결제하기`}
       </button>
     </form>
   )

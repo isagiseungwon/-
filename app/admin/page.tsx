@@ -53,6 +53,20 @@ export default function AdminPage() {
     setAuthed(false)
   }
 
+  async function confirmDeposit(orderId: string, name: string) {
+    if (!confirm(`${name}님 입금 확인하셨나요? 예약을 확정합니다.`)) return
+    const res = await fetch('/api/admin/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId }),
+    })
+    if (res.ok) {
+      await loadReservations()
+    } else {
+      alert('처리 중 오류가 발생했습니다.')
+    }
+  }
+
   // 세션 확인 중
   if (authed === null) {
     return (
@@ -183,7 +197,16 @@ export default function AdminPage() {
                 </span>
                 <span>⏱ {r.duration}시간</span>
                 <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
+                <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
               </div>
+              {r.status === 'pending' && r.method === 'transfer' && (
+                <button
+                  onClick={() => confirmDeposit(r.orderId, r.name)}
+                  className="mt-4 w-full py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition"
+                >
+                  ✅ 입금 확인 → 예약 확정
+                </button>
+              )}
             </div>
           ))}
         </div>

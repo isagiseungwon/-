@@ -1,4 +1,5 @@
 export type ReservationStatus = 'pending' | 'paid' | 'cancelled'
+export type PayMethod = 'card' | 'transfer'
 
 export interface Reservation {
   id: string
@@ -11,7 +12,15 @@ export interface Reservation {
   orderId: string
   paymentKey?: string
   status: ReservationStatus
+  method?: PayMethod
   createdAt: string
+}
+
+// 계좌이체 입금 계좌 (손님에게 안내되는 공개 정보)
+export const BANK_INFO = {
+  bank: '농협',
+  account: '670-02-173387',
+  holder: '차신영',
 }
 
 export interface BookingFormData {

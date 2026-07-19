@@ -18,11 +18,13 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { name, phone, date, time, duration, amount, orderId } = body
+  const { name, phone, date, time, duration, amount, orderId, method } = body
 
   if (!name || !phone || !date || !time || !duration || !amount || !orderId) {
     return NextResponse.json({ error: '필수 항목이 누락되었습니다.' }, { status: 400 })
   }
+
+  const payMethod = method === 'transfer' ? 'transfer' : 'card'
 
   try {
     const reservation = await createReservation({
@@ -35,14 +37,16 @@ export async function POST(req: NextRequest) {
       amount,
       orderId,
       status: 'pending',
+      method: payMethod,
     })
 
+    const methodLabel = payMethod === 'transfer' ? '🏦 계좌이체 (입금 대기!)' : '💳 카드결제 진행 중'
     await notifyOwner(
-      '🌿 새 예약 신청!',
+      payMethod === 'transfer' ? '🏦 계좌이체 예약! 입금 확인 필요' : '🌿 새 예약 신청!',
       `${name}님 예약\n` +
         `📅 ${date} ${time} · ${duration}시간 · ${Number(amount).toLocaleString()}원\n` +
         `📞 ${phone}\n` +
-        `상태: 결제 대기`
+        `결제: ${methodLabel}`
     )
 
     return NextResponse.json({ reservation })
