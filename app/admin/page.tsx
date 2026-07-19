@@ -67,6 +67,20 @@ export default function AdminPage() {
     }
   }
 
+  async function removeReservation(orderId: string, name: string) {
+    if (!confirm(`${name}님 예약을 삭제할까요?\n삭제하면 되돌릴 수 없어요.`)) return
+    const res = await fetch('/api/admin/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId }),
+    })
+    if (res.ok) {
+      await loadReservations()
+    } else {
+      alert('삭제 중 오류가 발생했습니다.')
+    }
+  }
+
   // 세션 확인 중
   if (authed === null) {
     return (
@@ -197,14 +211,22 @@ export default function AdminPage() {
                 <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
                 <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
               </div>
-              {r.status === 'pending' && r.method === 'transfer' && (
+              <div className="mt-4 flex gap-2">
+                {r.status === 'pending' && r.method === 'transfer' && (
+                  <button
+                    onClick={() => confirmDeposit(r.orderId, r.name)}
+                    className="flex-1 py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition"
+                  >
+                    ✅ 입금 확인 → 예약 확정
+                  </button>
+                )}
                 <button
-                  onClick={() => confirmDeposit(r.orderId, r.name)}
-                  className="mt-4 w-full py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition"
+                  onClick={() => removeReservation(r.orderId, r.name)}
+                  className="px-4 py-2.5 rounded-xl border border-red-200 text-red-500 text-sm font-medium hover:bg-red-50 transition"
                 >
-                  ✅ 입금 확인 → 예약 확정
+                  🗑 삭제
                 </button>
-              )}
+              </div>
             </div>
           ))}
         </div>

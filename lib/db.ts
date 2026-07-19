@@ -163,6 +163,24 @@ export async function updateReservation(
   return updated
 }
 
+export async function deleteReservation(orderId: string): Promise<boolean> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const removed = await r.hdel(HASH_KEY, orderId)
+    return removed > 0
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    const removed = await r.hdel(HASH_KEY, orderId)
+    return removed > 0
+  }
+  const rows = fileReadAll()
+  const next = rows.filter((x) => x.orderId !== orderId)
+  if (next.length === rows.length) return false
+  fileWriteAll(next)
+  return true
+}
+
 export async function getReservedSlots(date: string): Promise<string[]> {
   const rows = await getAllReservations()
   return rows
