@@ -21,7 +21,7 @@ export default function HomePage() {
         <Reveal>
           <div className="text-3xl mb-8">🌿</div>
           <p className="text-xs tracking-[0.25em] text-gray-400 uppercase mb-6">
-            시간 단위 몰입 공간
+            24시간 4,500원 몰입 공간
           </p>
           <h1 className="serif text-[2.4rem] leading-[1.3] font-semibold tracking-tight mb-6">
             몰입, 흐름<br />그리고 나
@@ -40,7 +40,7 @@ export default function HomePage() {
             예약하기
           </a>
           <p className="text-xs text-gray-400 mt-6 tracking-wide">
-            24시간 영업 · 음료와 간식 무료 · 쌍문역 3번 출구
+            24시간 4,500원 · 무료 와이파이 · 쌍문역 3번 출구
           </p>
         </Reveal>
         </div>
@@ -242,7 +242,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="shrink-0">☕</span>
-                  <span>음료와 간식 <strong className="text-[#1a1a2e] font-medium">무료</strong></span>
+                  <span>물과 <strong className="text-[#1a1a2e] font-medium">무료 와이파이</strong> 준비</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="shrink-0">🚪</span>
@@ -373,8 +373,8 @@ export default function HomePage() {
                   a: '네! 예약 없이 편히 방문하실 수 있어요. 다만 자리를 확실히 보장받고 싶다면 미리 예약을 추천드려요.',
                 },
                 {
-                  q: '음료나 간식을 가져가야 하나요?',
-                  a: '아니요, 음료와 간식이 무료로 준비되어 있어요. 편하게 몸만 오세요.',
+                  q: '음료나 커피를 가져가도 되나요?',
+                  a: '네! 음료, 커피 편히 가져오셔도 좋습니다. 물은 준비되어 있고, 와이파이도 무료로 쓰실 수 있어요.',
                 },
                 {
                   q: '중간에 나갔다 와도 되나요?',

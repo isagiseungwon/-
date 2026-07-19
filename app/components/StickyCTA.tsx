@@ -47,7 +47,7 @@ export default function StickyCTA() {
             <p className="text-white font-semibold text-base leading-tight">
               {DAY_PASS.price.toLocaleString()}원
               <span className="text-white/40 text-xs font-normal ml-2">
-                24시간 · 음료 무료
+                24시간 · 무료 와이파이
               </span>
             </p>
           </div>
