@@ -135,6 +135,12 @@ export default function AdminPage() {
           <p className="text-sm text-gray-500 mt-0.5">몰입, 흐름 그리고 나</p>
         </div>
         <div className="flex items-center gap-3">
+          <a
+            href="/admin/blog"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#1a1a2e] text-white font-medium hover:bg-[#2d2d4e] transition"
+          >
+            ✍️ 블로그 글 공장
+          </a>
           <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 예약 페이지</a>
           <button
             onClick={handleLogout}
