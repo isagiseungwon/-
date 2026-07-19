@@ -40,7 +40,7 @@ export default function HomePage() {
             예약하기
           </a>
           <p className="text-xs text-gray-400 mt-6 tracking-wide">
-            24시간 4,500원 · 무료 와이파이 · 쌍문역 3번 출구
+            24시간 4,500원 · 쌍문역 3번 출구
           </p>
         </Reveal>
         </div>
