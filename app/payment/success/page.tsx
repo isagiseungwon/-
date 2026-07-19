@@ -95,6 +95,19 @@ function SuccessContent() {
       <a href="/" className="px-6 py-3 rounded-xl bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition">
         처음으로
       </a>
+
+      <p className="text-xs text-gray-400 mt-8 leading-relaxed">
+        이용 후 좋으셨다면,{' '}
+        <a
+          href="https://map.naver.com/p/search/%EB%AA%B0%EC%9E%85%2C%20%ED%9D%90%EB%A6%84%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20%EB%82%98"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#03c75a] underline font-medium"
+        >
+          네이버 리뷰
+        </a>
+        로 첫 이야기를 남겨주세요 ⭐
+      </p>
     </main>
   )
 }

@@ -279,6 +279,24 @@ export default function HomePage() {
                 🗺️ 네이버 길찾기
               </a>
             </div>
+
+            {/* 네이버 리뷰 */}
+            <div className="mt-6 rounded-2xl border border-[#03c75a]/30 bg-[#03c75a]/[0.04] p-5 text-center">
+              <p className="text-sm text-gray-600 mb-1">
+                다녀가셨다면, <strong className="text-[#1a1a2e]">첫 이야기</strong>를 남겨주세요
+              </p>
+              <p className="text-xs text-gray-400 mb-4">
+                이제 막 문을 연 공간이라, 한 줄의 후기가 큰 힘이 됩니다
+              </p>
+              <a
+                href="https://map.naver.com/p/search/%EB%AA%B0%EC%9E%85%2C%20%ED%9D%90%EB%A6%84%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20%EB%82%98"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-3 rounded-xl border border-[#03c75a] text-[#03c75a] text-sm font-semibold hover:bg-[#03c75a] hover:text-white transition"
+              >
+                ⭐ 네이버 리뷰 남기기
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
