@@ -77,15 +77,12 @@ function SuccessContent() {
               <span className="font-medium">{reservation.date}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">시간</span>
-              <span className="font-medium">
-                {reservation.time} ~{' '}
-                {String(parseInt(reservation.time) + reservation.duration).padStart(2, '0')}:00
-              </span>
+              <span className="text-gray-500">입실 시간</span>
+              <span className="font-medium">{reservation.time}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">이용시간</span>
-              <span className="font-medium">{reservation.duration}시간</span>
+              <span className="text-gray-500">이용권</span>
+              <span className="font-medium">{reservation.duration}시간 이용권</span>
             </div>
             <div className="border-t pt-3 flex justify-between">
               <span className="text-gray-500">결제금액</span>

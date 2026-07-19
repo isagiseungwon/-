@@ -78,7 +78,7 @@ function TransferContent() {
         <p>⏱ 입금 확인 후 예약이 확정돼요 (영업시간 내 보통 수 분)</p>
         <p>📱 확정되면 관리자가 확인 후 처리해 드려요</p>
         <p className="text-gray-400 text-xs pt-1">
-          이용 예정: 몰입공간 {duration}시간 · {amount.toLocaleString()}원
+          이용 예정: 몰입공간 {duration}시간 이용권 · {amount.toLocaleString()}원
         </p>
       </div>
 

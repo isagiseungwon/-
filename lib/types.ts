@@ -6,8 +6,8 @@ export interface Reservation {
   name: string
   phone: string
   date: string
-  time: string
-  duration: 1 | 2
+  time: string // 입실 예정 시간
+  duration: number // 이용 시간 (현재: 24시간 이용권)
   amount: number
   orderId: string
   paymentKey?: string
@@ -31,9 +31,11 @@ export interface BookingFormData {
   duration: 1 | 2
 }
 
-export const PRICES: Record<1 | 2, number> = {
-  1: 3000,
-  2: 5000,
+// 24시간 이용권 단일 요금제
+export const DAY_PASS = {
+  hours: 24,
+  price: 4500,
+  label: '24시간 이용권',
 }
 
 export const TIME_SLOTS = [

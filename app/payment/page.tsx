@@ -54,7 +54,7 @@ function PaymentWidget() {
       // @ts-expect-error toss widget
       await widgetInstance.requestPayment({
         orderId,
-        orderName: `몰입공간 ${duration}시간 이용`,
+        orderName: `몰입공간 ${duration}시간 이용권`,
         customerName: name,
         successUrl: `${window.location.origin}/payment/success`,
         failUrl: `${window.location.origin}/payment/fail`,
@@ -70,7 +70,7 @@ function PaymentWidget() {
         <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 뒤로</a>
         <h1 className="text-xl font-bold mt-4 text-[#1a1a2e]">결제하기</h1>
         <p className="text-sm text-gray-500 mt-1">
-          몰입공간 {duration}시간 이용 · <strong>{amount.toLocaleString()}원</strong>
+          몰입공간 {duration}시간 이용권 · <strong>{amount.toLocaleString()}원</strong>
         </p>
       </div>
 

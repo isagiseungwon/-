@@ -192,10 +192,8 @@ export default function AdminPage() {
               </div>
               <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">
                 <span>📅 {r.date}</span>
-                <span>
-                  🕐 {r.time} ~ {String(parseInt(r.time) + r.duration).padStart(2, '0')}:00
-                </span>
-                <span>⏱ {r.duration}시간</span>
+                <span>🕐 {r.time} 입실</span>
+                <span>⏱ {r.duration}시간권</span>
                 <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
                 <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
               </div>

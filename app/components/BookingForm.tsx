@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PRICES, TIME_SLOTS, PayMethod } from '@/lib/types'
+import { DAY_PASS, TIME_SLOTS, PayMethod } from '@/lib/types'
 
 export default function BookingForm() {
   const router = useRouter()
@@ -10,42 +10,26 @@ export default function BookingForm() {
   const [phone, setPhone] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
-  const [duration, setDuration] = useState<1 | 2>(1)
   const [method, setMethod] = useState<PayMethod>('transfer')
-  const [reservedSlots, setReservedSlots] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
   const today = new Date().toISOString().split('T')[0]
-
-  useEffect(() => {
-    if (!date) return
-    fetch(`/api/reservations?date=${date}`)
-      .then((r) => r.json())
-      .then((d) => setReservedSlots(d.reservedSlots ?? []))
-  }, [date])
-
-  function isSlotAvailable(slot: string) {
-    const hour = parseInt(slot.split(':')[0])
-    for (let i = 0; i < duration; i++) {
-      const check = `${String(hour + i).padStart(2, '0')}:00`
-      if (reservedSlots.includes(check)) return false
-    }
-    return true
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name || !phone || !date || !time) return
 
     setLoading(true)
-    const amount = PRICES[duration]
+    const amount = DAY_PASS.price
     const orderId = `order_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
 
     const res = await fetch('/api/reservations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name, phone, date, time, duration, amount, orderId, method,
+        name, phone, date, time,
+        duration: DAY_PASS.hours,
+        amount, orderId, method,
       }),
     })
 
@@ -55,45 +39,21 @@ export default function BookingForm() {
       return
     }
 
-    if (method === 'transfer') {
-      router.push(
-        `/payment/transfer?orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${duration}`
-      )
-    } else {
-      router.push(
-        `/payment?orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${duration}`
-      )
-    }
+    const qs = `orderId=${orderId}&amount=${amount}&name=${encodeURIComponent(name)}&duration=${DAY_PASS.hours}`
+    router.push(method === 'transfer' ? `/payment/transfer?${qs}` : `/payment?${qs}`)
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {/* 요금 선택 */}
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          onClick={() => setDuration(1)}
-          className={`rounded-2xl p-5 border text-left transition-all ${
-            duration === 1
-              ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
-              : 'border-gray-200 bg-white text-[#1a1a2e] hover:border-gray-400'
-          }`}
-        >
-          <div className="text-base font-medium mb-1">1시간</div>
-          <div className="text-2xl font-semibold tracking-tight">3,000원</div>
-        </button>
-        <button
-          type="button"
-          onClick={() => setDuration(2)}
-          className={`rounded-2xl p-5 border text-left transition-all ${
-            duration === 2
-              ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
-              : 'border-gray-200 bg-white text-[#1a1a2e] hover:border-gray-400'
-          }`}
-        >
-          <div className="text-base font-medium mb-1">2시간</div>
-          <div className="text-2xl font-semibold tracking-tight">5,000원</div>
-        </button>
+      {/* 요금제 */}
+      <div className="rounded-2xl p-6 border-2 border-[#1a1a2e] bg-[#1a1a2e] text-white text-center">
+        <div className="text-sm font-medium mb-1 text-white/70">{DAY_PASS.label}</div>
+        <div className="text-3xl font-semibold tracking-tight">
+          {DAY_PASS.price.toLocaleString()}원
+        </div>
+        <div className="text-xs text-white/50 mt-2">
+          입실 후 24시간 · 자유로운 외출과 출입
+        </div>
       </div>
 
       <div>
@@ -121,7 +81,7 @@ export default function BookingForm() {
       </div>
 
       <div>
-        <label className="block text-sm text-gray-500 mb-1.5">날짜</label>
+        <label className="block text-sm text-gray-500 mb-1.5">방문 날짜</label>
         <input
           type="date"
           value={date}
@@ -134,38 +94,34 @@ export default function BookingForm() {
 
       {date && (
         <div>
-          <label className="block text-sm text-gray-500 mb-2">시간 선택</label>
+          <label className="block text-sm text-gray-500 mb-2">입실 예정 시간</label>
           <div className="grid grid-cols-4 gap-2">
-            {TIME_SLOTS.map((slot) => {
-              const available = isSlotAvailable(slot)
-              return (
-                <button
-                  key={slot}
-                  type="button"
-                  disabled={!available}
-                  onClick={() => setTime(slot)}
-                  className={`py-2 rounded-lg text-sm transition-all ${
-                    time === slot
-                      ? 'bg-[#1a1a2e] text-white'
-                      : available
-                      ? 'bg-white border border-gray-200 text-gray-700 hover:border-gray-400'
-                      : 'bg-gray-100 text-gray-300 cursor-not-allowed line-through'
-                  }`}
-                >
-                  {slot}
-                </button>
-              )
-            })}
+            {TIME_SLOTS.map((slot) => (
+              <button
+                key={slot}
+                type="button"
+                onClick={() => setTime(slot)}
+                className={`py-2 rounded-lg text-sm transition-all ${
+                  time === slot
+                    ? 'bg-[#1a1a2e] text-white'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:border-gray-400'
+                }`}
+              >
+                {slot}
+              </button>
+            ))}
           </div>
+          <p className="text-xs text-gray-400 mt-2">
+            입실 시간부터 24시간 동안 이용할 수 있어요
+          </p>
         </div>
       )}
 
       {time && (
         <div className="rounded-xl bg-[#1a1a2e]/[0.03] border border-[#1a1a2e]/10 p-4 text-sm text-[#1a1a2e]">
-          <strong className="font-semibold">{date}</strong> {time} ~{' '}
-          {String(parseInt(time) + duration).padStart(2, '0')}:00 &nbsp;·&nbsp;{' '}
-          {duration}시간 &nbsp;·&nbsp;{' '}
-          <strong className="font-semibold">{PRICES[duration].toLocaleString()}원</strong>
+          <strong className="font-semibold">{date}</strong> {time} 입실 &nbsp;·&nbsp;{' '}
+          {DAY_PASS.label} &nbsp;·&nbsp;{' '}
+          <strong className="font-semibold">{DAY_PASS.price.toLocaleString()}원</strong>
         </div>
       )}
 
@@ -211,8 +167,8 @@ export default function BookingForm() {
         {loading
           ? '처리 중...'
           : method === 'transfer'
-          ? `${PRICES[duration].toLocaleString()}원 계좌이체로 예약하기`
-          : `${PRICES[duration].toLocaleString()}원 카드로 결제하기`}
+          ? `${DAY_PASS.price.toLocaleString()}원 계좌이체로 예약하기`
+          : `${DAY_PASS.price.toLocaleString()}원 카드로 결제하기`}
       </button>
     </form>
   )

@@ -19,7 +19,7 @@ const serifKr = Noto_Serif_KR({
 export const metadata: Metadata = {
   title: "몰입, 흐름 그리고 나 | 쌍문역 24시간 몰입 공간",
   description:
-    "방해받지 않고 온전히 나에게 집중하는 시간. 쌍문역 3번 출구 도보 8분, 24시간 연중무휴, 음료·간식 무료. 1시간 3,000원 / 2시간 5,000원",
+    "방해받지 않고 온전히 나에게 집중하는 시간. 쌍문역 3번 출구 도보 8분, 24시간 연중무휴, 음료·간식 무료. 24시간 이용권 4,500원",
 };
 
 export default function RootLayout({
