@@ -77,7 +77,7 @@ input, select, textarea {
   animation-duration: 42s;
 }
 .marquee-track.gallery-speed {
-  animation-duration: 45s;
+  animation-duration: 22s;
 }
 .marquee-track:hover {
   animation-play-state: paused;
