@@ -242,7 +242,14 @@ export default function HomePage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="shrink-0">☕</span>
-                  <span>물과 <strong className="text-[#1a1a2e] font-medium">무료 와이파이</strong> 준비</span>
+                  <span>
+                    음료, 커피 편히 가져오셔도 좋습니다.<br />
+                    <span className="text-gray-500">물은 준비되어 있습니다.</span>
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="shrink-0">📶</span>
+                  <span>와이파이 <strong className="text-[#1a1a2e] font-medium">있습니다</strong></span>
                 </li>
                 <li className="flex gap-3">
                   <span className="shrink-0">🚪</span>
