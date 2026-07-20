@@ -197,7 +197,14 @@ export default function AdminPage() {
             <div key={r.id} className="bg-white rounded-2xl border border-gray-100 p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="font-medium text-[#1a1a2e]">{r.name}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-[#1a1a2e]">{r.name}</span>
+                    {r.kind === 'program' && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#2a9d8f]/10 text-[#2a9d8f] font-medium">
+                        🌿 4주 프로그램
+                      </span>
+                    )}
+                  </div>
                   <div className="text-sm text-gray-500 mt-0.5">{r.phone}</div>
                 </div>
                 <span
@@ -207,23 +214,40 @@ export default function AdminPage() {
                       : 'bg-yellow-100 text-yellow-700'
                   }`}
                 >
-                  {r.status === 'paid' ? '결제완료' : '대기'}
+                  {r.status === 'paid'
+                    ? r.kind === 'program'
+                      ? '입금완료'
+                      : '결제완료'
+                    : '대기'}
                 </span>
               </div>
-              <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">
-                <span>📅 {r.date}</span>
-                <span>🕐 {r.time} 입실</span>
-                <span>⏱ {r.duration}시간권</span>
-                <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
-                <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
-              </div>
+              {r.kind === 'program' ? (
+                <div className="mt-3 space-y-1.5 text-xs text-gray-500">
+                  <div className="flex flex-wrap gap-3">
+                    <span>📅 신청 {r.date}</span>
+                    <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
+                    {r.instagram && <span>📷 {r.instagram}</span>}
+                  </div>
+                  {r.wish && (
+                    <div className="text-gray-600">✍️ &ldquo;{r.wish}&rdquo;</div>
+                  )}
+                </div>
+              ) : (
+                <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">
+                  <span>📅 {r.date}</span>
+                  <span>🕐 {r.time} 입실</span>
+                  <span>⏱ {r.duration}시간권</span>
+                  <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
+                  <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
+                </div>
+              )}
               <div className="mt-4 flex gap-2">
                 {r.status === 'pending' && r.method === 'transfer' && (
                   <button
                     onClick={() => confirmDeposit(r.orderId, r.name)}
                     className="flex-1 py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition"
                   >
-                    ✅ 입금 확인 → 예약 확정
+                    {r.kind === 'program' ? '✅ 입금 확인 → 신청 확정' : '✅ 입금 확인 → 예약 확정'}
                   </button>
                 )}
                 <button

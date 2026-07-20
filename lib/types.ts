@@ -1,19 +1,25 @@
 export type ReservationStatus = 'pending' | 'paid' | 'cancelled'
 export type PayMethod = 'card' | 'transfer'
+// 'space' = 공간 예약(24시간 이용권), 'program' = 4주 프로그램 신청
+export type EntryKind = 'space' | 'program'
 
 export interface Reservation {
   id: string
   name: string
   phone: string
   date: string
-  time: string // 입실 예정 시간
-  duration: number // 이용 시간 (현재: 24시간 이용권)
+  time: string // 입실 예정 시간 (프로그램 신청은 협의 예정)
+  duration: number // 이용 시간 (프로그램 신청은 0)
   amount: number
   orderId: string
   paymentKey?: string
   status: ReservationStatus
   method?: PayMethod
   createdAt: string
+  // ── 프로그램 신청 전용(선택) 필드 ──
+  kind?: EntryKind
+  instagram?: string // 인스타그램 아이디 (선택)
+  wish?: string // 이 프로그램에서 이루고 싶은 것 한 줄
 }
 
 // 계좌이체 입금 계좌 (손님에게 안내되는 공개 정보)

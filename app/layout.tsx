@@ -17,9 +17,24 @@ const serifKr = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  title: "몰입, 흐름 그리고 나 | 24시간 4,500원 몰입공간",
+  metadataBase: new URL("https://hellkang.vercel.app"),
+  title: "요청을 현실로 만드는 4주 | 1기 모집",
   description:
-    "방해받지 않고 온전히 나에게 집중하는 시간. 쌍문역 3번 출구 도보 8분, 24시간 연중무휴, 무료 와이파이·물 제공, 음료 반입 가능. 24시간 이용권 4,500원",
+    "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간에서 진행하는 소수 정원 오프라인 프로그램. 주 1회 오프라인 세션 + 매일 단톡 실행 인증 + 몰입 노션 시스템. 1기 8명 한정 모집 중.",
+  openGraph: {
+    type: "website",
+    title: "요청을 현실로 만드는 4주 | 1기 모집",
+    description:
+      "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간에서 진행하는 소수 정원 오프라인 프로그램 · 1기 8명 한정.",
+    siteName: "몰입, 흐름 그리고 나",
+    locale: "ko_KR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "요청을 현실로 만드는 4주 | 1기 모집",
+    description:
+      "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간 소수 정원 오프라인 프로그램 · 1기 8명 한정.",
+  },
 };
 
 export default function RootLayout({
