@@ -18,22 +18,25 @@ const serifKr = Noto_Serif_KR({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hellkang.vercel.app"),
-  title: "요청을 현실로 만드는 4주 | 1기 모집",
+  title: {
+    default: "몰입, 흐름 그리고 나 | 쌍문 몰입 브랜드",
+    template: "%s | 몰입, 흐름 그리고 나",
+  },
   description:
-    "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간에서 진행하는 소수 정원 오프라인 프로그램. 주 1회 오프라인 세션 + 매일 단톡 실행 인증 + 몰입 노션 시스템. 1기 8명 한정 모집 중.",
+    "온전히 나에게 집중하는 시간을 위한 브랜드. 쌍문 몰입 공간에서 24시간 공간 대여와 4주 오프라인 프로그램을 운영합니다.",
   openGraph: {
     type: "website",
-    title: "요청을 현실로 만드는 4주 | 1기 모집",
+    title: "몰입, 흐름 그리고 나",
     description:
-      "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간에서 진행하는 소수 정원 오프라인 프로그램 · 1기 8명 한정.",
+      "온전히 나에게 집중하는 시간. 쌍문 몰입 공간의 24시간 공간 대여와 4주 프로그램.",
     siteName: "몰입, 흐름 그리고 나",
     locale: "ko_KR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "요청을 현실로 만드는 4주 | 1기 모집",
+    title: "몰입, 흐름 그리고 나",
     description:
-      "혼자서는 4주를 못 버티니까, 같이 합니다. 쌍문 몰입 공간 소수 정원 오프라인 프로그램 · 1기 8명 한정.",
+      "온전히 나에게 집중하는 시간. 쌍문 몰입 공간의 24시간 공간 대여와 4주 프로그램.",
   },
 };
 
