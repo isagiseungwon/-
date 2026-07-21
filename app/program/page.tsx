@@ -176,6 +176,46 @@ export default function ProgramPage() {
           </div>
         </section>
 
+        {/* ───────── 본질: 이 프로그램이 시작된 이야기 ───────── */}
+        <section className="px-6 py-20 bg-white border-y border-gray-100">
+          <div className="max-w-xl mx-auto">
+            <Reveal>
+              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+                Why
+              </p>
+              <h2 className="serif text-xl font-medium text-center mb-5 tracking-tight">
+                이 프로그램이 시작된 이야기
+              </h2>
+              <p className="text-sm text-gray-500 text-center leading-relaxed mb-10">
+                왜 4주인지, 왜 함께여야 하는지 —<br />
+                운영자가 직접 남긴 글을 읽어보세요.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="mx-auto max-w-md rounded-2xl overflow-hidden border border-gray-100 bg-[#f8f7f4] shadow-[0_12px_40px_rgba(26,26,46,0.08)]">
+                <iframe
+                  src="https://www.instagram.com/p/DYmfB1BEgA4/embed/captioned/"
+                  title="요청을 현실로 만드는 4주 — 운영자의 이야기"
+                  loading="lazy"
+                  scrolling="no"
+                  allowFullScreen
+                  className="w-full h-[560px] block"
+                />
+              </div>
+              <p className="text-center mt-6">
+                <a
+                  href="https://www.instagram.com/p/DYmfB1BEgA4/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-4 tracking-wide"
+                >
+                  인스타그램에서 전체 글 보기 ↗
+                </a>
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ───────── 가격 ───────── */}
         <section className="px-6 py-20 bg-[#12122a] text-white">
           <div className="max-w-md mx-auto">
