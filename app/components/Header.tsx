@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation'
 
 const NAV = [
   { href: '/', label: '홈' },
-  { href: '/program', label: '4주 프로그램' },
   { href: '/space', label: '공간 대여' },
+  { href: '/program', label: '4주 프로그램' },
 ]
 
 export default function Header() {

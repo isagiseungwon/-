@@ -48,8 +48,49 @@ export default function HomePage() {
         {/* ───────── 두 갈래 입구: 사진 카드 ───────── */}
         <section className="px-5 pb-10">
           <div className="max-w-xl mx-auto space-y-5">
-            {/* 프로그램 카드 */}
+            {/* 공간 카드 */}
             <Reveal>
+              <Link
+                href="/space"
+                className="group block rounded-[28px] overflow-hidden bg-white border border-gray-100 shadow-[0_12px_40px_rgba(26,26,46,0.08)] transition-all duration-300 hover:shadow-[0_20px_56px_rgba(26,26,46,0.14)] hover:-translate-y-0.5"
+              >
+                <div className="relative h-44 overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/story/gallery/room-window.jpg"
+                    alt="오후의 창가, 몰입 공간"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-gray-600">
+                    🕐 24시간 · 연중무휴
+                  </span>
+                </div>
+                <div className="px-7 pb-7 -mt-6 relative">
+                  <p className="text-[11px] tracking-[0.18em] text-gray-400 uppercase mb-2">
+                    Space
+                  </p>
+                  <h2 className="serif text-[1.65rem] font-semibold leading-tight tracking-tight mb-3">
+                    24시간 몰입 공간
+                  </h2>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                    쌍문역 조용한 골목, 방해받지 않는 나만의 자리.
+                    커피 한 잔 값으로 하루를 온전히 쓰는 공간.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-[#1a1a2e]">
+                      {DAY_PASS.label} {DAY_PASS.price.toLocaleString()}원
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-all group-hover:text-[#1a1a2e] group-hover:gap-2.5">
+                      자세히 보기 <span aria-hidden>→</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
+
+            {/* 프로그램 카드 */}
+            <Reveal delay={120}>
               <Link
                 href="/program"
                 className="group block rounded-[28px] overflow-hidden bg-[#12122a] text-white shadow-[0_16px_48px_rgba(18,18,42,0.28)] transition-all duration-300 hover:shadow-[0_24px_64px_rgba(18,18,42,0.4)] hover:-translate-y-0.5"
@@ -95,46 +136,6 @@ export default function HomePage() {
               </Link>
             </Reveal>
 
-            {/* 공간 카드 */}
-            <Reveal delay={120}>
-              <Link
-                href="/space"
-                className="group block rounded-[28px] overflow-hidden bg-white border border-gray-100 shadow-[0_12px_40px_rgba(26,26,46,0.08)] transition-all duration-300 hover:shadow-[0_20px_56px_rgba(26,26,46,0.14)] hover:-translate-y-0.5"
-              >
-                <div className="relative h-44 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/story/gallery/room-window.jpg"
-                    alt="오후의 창가, 몰입 공간"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-gray-600">
-                    🕐 24시간 · 연중무휴
-                  </span>
-                </div>
-                <div className="px-7 pb-7 -mt-6 relative">
-                  <p className="text-[11px] tracking-[0.18em] text-gray-400 uppercase mb-2">
-                    Space
-                  </p>
-                  <h2 className="serif text-[1.65rem] font-semibold leading-tight tracking-tight mb-3">
-                    24시간 몰입 공간
-                  </h2>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                    쌍문역 조용한 골목, 방해받지 않는 나만의 자리.
-                    커피 한 잔 값으로 하루를 온전히 쓰는 공간.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-[#1a1a2e]">
-                      {DAY_PASS.label} {DAY_PASS.price.toLocaleString()}원
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-all group-hover:text-[#1a1a2e] group-hover:gap-2.5">
-                      자세히 보기 <span aria-hidden>→</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
           </div>
         </section>
 
@@ -208,16 +209,16 @@ export default function HomePage() {
             <Reveal>
               <div className="mt-12 grid grid-cols-2 gap-3 max-w-md mx-auto">
                 <Link
-                  href="/program"
+                  href="/space"
                   className="py-3.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-medium text-center hover:bg-[#2d2d4e] transition"
                 >
-                  4주 프로그램 →
+                  공간 이용하기 →
                 </Link>
                 <Link
-                  href="/space"
+                  href="/program"
                   className="py-3.5 rounded-xl border border-[#1a1a2e]/20 text-[#1a1a2e] text-sm font-medium text-center hover:border-[#1a1a2e] transition"
                 >
-                  공간 이용하기 →
+                  4주 프로그램 →
                 </Link>
               </div>
             </Reveal>

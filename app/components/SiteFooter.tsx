@@ -6,12 +6,12 @@ export default function SiteFooter() {
       <div className="text-base mb-3">🪑</div>
       <p className="text-sm font-medium mb-3">몰입, 흐름 그리고 나</p>
       <div className="flex items-center justify-center gap-4 text-xs text-gray-400 mb-4">
-        <Link href="/program" className="hover:text-[#1a1a2e] transition">4주 프로그램</Link>
-        <span className="text-gray-200">·</span>
         <Link href="/space" className="hover:text-[#1a1a2e] transition">공간 대여</Link>
+        <span className="text-gray-200">·</span>
+        <Link href="/program" className="hover:text-[#1a1a2e] transition">4주 프로그램</Link>
       </div>
       <p className="text-xs text-gray-400 leading-relaxed mb-1">
-        서울 도봉구 도봉로103길 23-13 B02호 · 쌍문역 3번 출구 도보 8분
+        서울 도봉구 도봉로103길 23-13 · 쌍문역 3번 출구 도보 8분
       </p>
       <p className="text-xs text-gray-400 leading-relaxed mb-1">
         24시간 영업 · 연중무휴 ·{' '}

@@ -7,6 +7,7 @@ import Reveal from '../components/Reveal'
 import GalleryMarquee from '../components/GalleryMarquee'
 import StickyCTA from '../components/StickyCTA'
 import { DAY_PASS } from '@/lib/types'
+import { REVIEWS } from '@/lib/reviews'
 
 export const metadata: Metadata = {
   title: '24시간 몰입 공간 4,500원 | 쌍문역 공간 대여',
@@ -211,7 +212,7 @@ export default function SpacePage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="shrink-0">📍</span>
-                    <span>서울 도봉구 도봉로103길 23-13 B02호</span>
+                    <span>서울 도봉구 도봉로103길 23-13</span>
                   </li>
                 </ul>
               </div>
@@ -252,6 +253,49 @@ export default function SpacePage() {
             </Reveal>
           </div>
         </section>
+
+        {/* ───────── 방문자 후기 (실제 후기가 있을 때만 표시) ───────── */}
+        {REVIEWS.length > 0 && (
+          <section className="px-6 py-20 bg-white border-y border-gray-100">
+            <div className="max-w-xl mx-auto">
+              <Reveal>
+                <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+                  Reviews
+                </p>
+                <h2 className="serif text-xl font-medium text-center mb-4 tracking-tight">
+                  다녀간 분들의 이야기
+                </h2>
+                <p className="text-sm text-gray-400 text-center mb-12">
+                  실제 방문자분들이 남겨주신 후기입니다
+                </p>
+              </Reveal>
+              <div className="space-y-4">
+                {REVIEWS.map((r, i) => (
+                  <Reveal key={`${r.name}-${i}`} delay={i * 100}>
+                    <figure className="rounded-2xl border border-gray-100 bg-[#f8f7f4] p-6 relative">
+                      <span
+                        className="serif absolute top-3 left-5 text-3xl text-[#e9c46a] leading-none"
+                        aria-hidden
+                      >
+                        &ldquo;
+                      </span>
+                      <blockquote className="pt-3">
+                        <p className="text-[15px] leading-[1.9] text-gray-600">
+                          {r.text}
+                        </p>
+                      </blockquote>
+                      <figcaption className="mt-4 flex items-center gap-2 text-xs text-gray-400">
+                        <span className="font-medium text-gray-500">{r.name}</span>
+                        <span className="text-gray-300">·</span>
+                        <span>{r.source}</span>
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ───────── FAQ ───────── */}
         <section className="px-6 py-20">
