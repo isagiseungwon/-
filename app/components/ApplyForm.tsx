@@ -44,7 +44,7 @@ export default function ApplyForm() {
   if (done) {
     return (
       <div className="rounded-2xl border border-[#2a9d8f]/30 bg-[#2a9d8f]/[0.06] p-8 text-center">
-        <div className="text-3xl mb-4">🌿</div>
+        <div className="text-3xl mb-4">🪑</div>
         <p className="text-[15px] leading-[1.9] text-[#1a1a2e] font-medium mb-2">
           신청이 접수되었어요.
         </p>

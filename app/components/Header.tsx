@@ -22,7 +22,7 @@ export default function Header() {
           onClick={() => setOpen(false)}
           className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-[#1a1a2e]"
         >
-          <span>🌿</span>
+          <span>🪑</span>
           <span className="serif">몰입, 흐름 그리고 나</span>
         </Link>
 

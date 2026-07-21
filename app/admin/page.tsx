@@ -201,7 +201,7 @@ export default function AdminPage() {
                     <span className="font-medium text-[#1a1a2e]">{r.name}</span>
                     {r.kind === 'program' && (
                       <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#2a9d8f]/10 text-[#2a9d8f] font-medium">
-                        🌿 4주 프로그램
+                        🪑 4주 프로그램
                       </span>
                     )}
                   </div>

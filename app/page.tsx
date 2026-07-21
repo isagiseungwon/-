@@ -21,7 +21,7 @@ export default function HomePage() {
           </div>
           <div className="relative max-w-xl mx-auto text-center">
             <Reveal>
-              <div className="float-soft inline-block text-3xl mb-8">🌿</div>
+              <div className="float-soft inline-block text-3xl mb-8">🪑</div>
               <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-6">
                 쌍문역 · 몰입 브랜드
               </p>
@@ -75,8 +75,8 @@ export default function HomePage() {
                     요청을 현실로<br />만드는 4주
                   </h2>
                   <p className="text-sm text-white/55 leading-relaxed mb-5">
-                    혼자서는 못 버티니까, 같이. 주 1회 오프라인 세션과
-                    매일의 실행 인증으로 미루던 것을 해내는 소수 정원 프로그램.
+                    혼자서는 못 버티니까, 같이. 주 1회 마차 운영자의 밀도 높은
+                    강의와 매일의 실행 인증으로 미루던 것을 해내는 소수 정원 프로그램.
                   </p>
                   <div className="flex items-center justify-between">
                     <p className="text-sm">

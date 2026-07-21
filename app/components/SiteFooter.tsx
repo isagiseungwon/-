@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function SiteFooter() {
   return (
     <footer className="px-6 py-12 text-center border-t border-gray-100 bg-white">
-      <div className="text-base mb-3">🌿</div>
+      <div className="text-base mb-3">🪑</div>
       <p className="text-sm font-medium mb-3">몰입, 흐름 그리고 나</p>
       <div className="flex items-center justify-center gap-4 text-xs text-gray-400 mb-4">
         <Link href="/program" className="hover:text-[#1a1a2e] transition">4주 프로그램</Link>
