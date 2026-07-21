@@ -89,3 +89,32 @@ input, select, textarea {
     animation: none;
   }
 }
+
+/* 은은한 떠다니는 모션 (홈 히어로 잎사귀 등) */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+.float-soft {
+  animation: float-soft 4.5s ease-in-out infinite;
+}
+
+/* 히어로 글로우가 천천히 숨쉬는 효과 */
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.14; transform: scale(1); }
+  50% { opacity: 0.22; transform: scale(1.06); }
+}
+.glow-breathe {
+  animation: glow-breathe 7s ease-in-out infinite;
+}
+.glow-breathe-delay {
+  animation: glow-breathe 7s ease-in-out 2.3s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-soft,
+  .glow-breathe,
+  .glow-breathe-delay {
+    animation: none;
+  }
+}
