@@ -9,6 +9,7 @@ const NAV = [
   { href: '/', label: '홈' },
   { href: '/space', label: '공간 대여' },
   { href: '/program', label: '4주 프로그램' },
+  { href: '/test', label: '몰입 유형 테스트' },
 ]
 
 export default function Header() {

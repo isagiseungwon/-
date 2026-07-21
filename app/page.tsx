@@ -137,6 +137,31 @@ export default function HomePage() {
               </Link>
             </Reveal>
 
+            {/* 몰입 테스트 티저 */}
+            <Reveal delay={200}>
+              <Link
+                href="/test"
+                className="group block rounded-[28px] border border-[#2a9d8f]/25 bg-[#2a9d8f]/[0.05] p-7 transition-all duration-300 hover:border-[#2a9d8f]/50 hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-5">
+                    <span className="text-3xl">🧭</span>
+                    <div>
+                      <p className="text-[11px] tracking-[0.18em] text-[#2a9d8f] uppercase mb-1.5 font-semibold">
+                        1분 무료 테스트
+                      </p>
+                      <h2 className="serif text-lg font-semibold tracking-tight leading-snug mb-1">
+                        나는 왜 몰입이 안 될까?
+                      </h2>
+                      <p className="text-xs text-gray-500">
+                        8개 질문으로 내 몰입 유형과 처방 받기
+                      </p>
+                    </div>
+                  </div>
+                  <span className="shrink-0 text-[#2a9d8f] text-sm transition-transform group-hover:translate-x-1">→</span>
+                </div>
+              </Link>
+            </Reveal>
           </div>
         </section>
 
