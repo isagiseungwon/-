@@ -227,3 +227,20 @@ export function resolveResult(env: number, peer: number): QuizResult {
   if (P) return RESULTS.peer
   return RESULTS.ready
 }
+
+// 각 축의 이론상 최대 점수 (게이지 % 계산용)
+export const MAX_SCORES = QUIZ.reduce(
+  (acc, q) => {
+    acc.env += Math.max(...q.options.map((o) => o.env))
+    acc.peer += Math.max(...q.options.map((o) => o.peer))
+    return acc
+  },
+  { env: 0, peer: 0 }
+)
+
+// 게이지 수준 라벨
+export function gaugeLevel(pct: number): string {
+  if (pct >= 70) return '높음'
+  if (pct >= 40) return '중간'
+  return '낮음'
+}

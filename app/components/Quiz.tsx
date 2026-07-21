@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { QUIZ, QuizResult, resolveResult } from '@/lib/quiz'
+import { QUIZ, QuizResult, resolveResult, MAX_SCORES, gaugeLevel } from '@/lib/quiz'
 import { PROGRAM } from '@/lib/program'
 import { DAY_PASS } from '@/lib/types'
 
@@ -21,6 +21,8 @@ export default function Quiz() {
   const [selected, setSelected] = useState<number | null>(null)
   const [analyzeStep, setAnalyzeStep] = useState(0)
   const [result, setResult] = useState<QuizResult | null>(null)
+  const [scores, setScores] = useState({ env: 0, peer: 0 })
+  const [shared, setShared] = useState(false)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
@@ -79,11 +81,28 @@ export default function Quiz() {
           env += opt.env
           peer += opt.peer
         })
+        setScores({ env, peer })
         setResult(resolveResult(env, peer))
         setPhase('result')
         window.scrollTo({ top: 0 })
       }, ANALYZE_STEPS.length * 700 + 600)
     )
+  }
+
+  async function share() {
+    const url = `${window.location.origin}/test`
+    const text = '나는 왜 몰입이 안 될까? 1분 만에 내 몰입 유형 알아보기 🧭'
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: '몰입 유형 테스트', text, url })
+        return
+      }
+      await navigator.clipboard.writeText(`${text}\n${url}`)
+      setShared(true)
+      timers.current.push(setTimeout(() => setShared(false), 2000))
+    } catch {
+      // 사용자가 공유 취소한 경우 등 — 무시
+    }
   }
 
   // ───────── 인트로 ─────────
@@ -217,6 +236,43 @@ export default function Quiz() {
         <p className="text-[15px] text-gray-500">{result.tagline}</p>
       </div>
 
+      {/* 방해 지수 게이지 */}
+      <div className="rounded-2xl border border-gray-100 bg-white p-6 mb-5">
+        <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-5">
+          몰입 방해 지수
+        </p>
+        {[
+          {
+            label: '환경 방해',
+            desc: '소음·유혹·공간이 몰입을 깨는 정도',
+            pct: Math.round((scores.env / MAX_SCORES.env) * 100),
+            color: '#e76f51',
+          },
+          {
+            label: '지속 방해',
+            desc: '혼자서는 못 잇게 되는 정도',
+            pct: Math.round((scores.peer / MAX_SCORES.peer) * 100),
+            color: '#e9c46a',
+          },
+        ].map((g) => (
+          <div key={g.label} className="mb-5 last:mb-0">
+            <div className="flex items-baseline justify-between mb-1.5">
+              <span className="text-[15px] font-semibold">{g.label}</span>
+              <span className="text-sm tabular-nums" style={{ color: g.color }}>
+                {g.pct}% · {gaugeLevel(g.pct)}
+              </span>
+            </div>
+            <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-1000"
+                style={{ width: `${g.pct}%`, backgroundColor: g.color }}
+              />
+            </div>
+            <p className="text-xs text-gray-400 mt-1.5">{g.desc}</p>
+          </div>
+        ))}
+      </div>
+
       {/* 진단 */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6 mb-5">
         <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
@@ -257,6 +313,11 @@ export default function Quiz() {
           그리고, 한 가지 더
         </p>
         <p className="text-[15px] leading-[1.9] text-white/80 mb-6">{result.ctaReason}</p>
+        {result.cta === 'program' && (
+          <p className="text-xs text-[#e9c46a] mb-4 tracking-wide">
+            {PROGRAM.cohort} {PROGRAM.seatsTotal}명 한정 · 현재 {PROGRAM.seatsLeft}자리 남음
+          </p>
+        )}
         <Link
           href={primaryCta.href}
           className="block w-full py-4 rounded-xl bg-white text-[#1a1a2e] text-sm font-semibold hover:bg-gray-100 transition"
@@ -271,6 +332,13 @@ export default function Quiz() {
         </Link>
       </div>
 
+      <button
+        type="button"
+        onClick={share}
+        className="block w-full max-w-xs mx-auto py-3.5 rounded-full border border-[#1a1a2e]/20 text-[#1a1a2e] text-sm font-medium hover:border-[#1a1a2e] transition mb-5"
+      >
+        {shared ? '링크가 복사됐어요 ✓' : '🧭 친구에게 테스트 공유하기'}
+      </button>
       <button
         type="button"
         onClick={start}
