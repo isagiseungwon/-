@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import InstaIcon from './InstaIcon'
 
 export default function SiteFooter() {
   return (
@@ -22,9 +23,10 @@ export default function SiteFooter() {
           href="https://www.instagram.com/macha_ver._"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="inline-flex items-center gap-1.5 underline"
         >
-          📷 @macha_ver._
+          <InstaIcon className="w-3.5 h-3.5" />
+          @macha_ver._
         </a>
       </p>
       <p className="text-xs text-gray-300">

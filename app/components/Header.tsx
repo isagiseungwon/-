@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import InstaIcon from './InstaIcon'
 
 const NAV = [
   { href: '/', label: '홈' },
@@ -92,7 +93,10 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-between py-3.5 text-[15px] text-gray-500 hover:text-[#1a1a2e] transition"
               >
-                📷 인스타그램
+                <span className="inline-flex items-center gap-2">
+                  <InstaIcon className="w-4 h-4" />
+                  @macha_ver._
+                </span>
                 <span className="text-gray-300">↗</span>
               </a>
             </li>

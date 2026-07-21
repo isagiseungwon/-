@@ -3,6 +3,7 @@ import Header from './components/Header'
 import SiteFooter from './components/SiteFooter'
 import Reveal from './components/Reveal'
 import InstaMarquee from './components/InstaMarquee'
+import InstaIcon from './components/InstaIcon'
 import GalleryMarquee from './components/GalleryMarquee'
 import { PROGRAM } from '@/lib/program'
 import { DAY_PASS } from '@/lib/types'
@@ -253,13 +254,14 @@ export default function HomePage() {
                 href="https://www.instagram.com/macha_ver._"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-8 py-3.5 rounded-full text-sm font-medium text-white transition hover:opacity-90"
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-semibold text-white transition hover:opacity-90"
                 style={{
                   background:
                     'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
                 }}
               >
-                📷 인스타그램 보러가기
+                <InstaIcon className="w-[18px] h-[18px]" />
+                @macha_ver._
               </a>
             </Reveal>
           </div>
