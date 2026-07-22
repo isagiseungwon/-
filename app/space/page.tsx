@@ -3,10 +3,11 @@ import Link from 'next/link'
 import Header from '../components/Header'
 import SiteFooter from '../components/SiteFooter'
 import BookingForm from '../components/BookingForm'
+import MembershipForm from '../components/MembershipForm'
 import Reveal from '../components/Reveal'
 import GalleryMarquee from '../components/GalleryMarquee'
 import StickyCTA from '../components/StickyCTA'
-import { DAY_PASS } from '@/lib/types'
+import { DAY_PASS, MEMBERSHIP } from '@/lib/types'
 import { REVIEWS } from '@/lib/reviews'
 
 export const metadata: Metadata = {
@@ -161,6 +162,95 @@ export default function SpacePage() {
           </div>
         </section>
 
+        {/* ───────── 요금: 하루 vs 멤버십 ───────── */}
+        <section className="px-6 py-20 mt-8 bg-white border-y border-gray-100">
+          <div className="max-w-xl mx-auto">
+            <Reveal>
+              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+                Price
+              </p>
+              <h2 className="serif text-xl font-medium text-center mb-12 tracking-tight">
+                머무는 방법, 두 가지
+              </h2>
+            </Reveal>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {/* 하루 이용권 */}
+              <Reveal>
+                <div className="h-full rounded-3xl border border-gray-200 bg-[#f8f7f4] p-7 flex flex-col">
+                  <p className="text-xs tracking-[0.15em] text-gray-400 uppercase mb-3">
+                    가볍게
+                  </p>
+                  <h3 className="serif text-lg font-semibold mb-1">{DAY_PASS.label}</h3>
+                  <p className="serif text-3xl font-bold tracking-tight mb-3">
+                    {DAY_PASS.price.toLocaleString()}
+                    <span className="text-base font-medium">원</span>
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-500 mb-6 flex-1">
+                    <li>입실부터 24시간</li>
+                    <li>자유로운 외출과 출입</li>
+                    <li>예약 없이 방문도 가능</li>
+                  </ul>
+                  <a
+                    href="#booking"
+                    className="block py-3.5 rounded-xl border border-[#1a1a2e]/25 text-center text-sm font-medium text-[#1a1a2e] hover:border-[#1a1a2e] transition"
+                  >
+                    하루 예약하기
+                  </a>
+                </div>
+              </Reveal>
+
+              {/* 멤버십 */}
+              <Reveal delay={120}>
+                <div className="relative h-full rounded-3xl bg-[#12122a] text-white p-7 flex flex-col shadow-[0_16px_48px_rgba(18,18,42,0.25)]">
+                  <span className="absolute -top-3 left-6 rounded-full bg-[#e9c46a] text-[#1a1a2e] text-[11px] font-bold px-3 py-1">
+                    매일 오는 분께
+                  </span>
+                  <p className="text-xs tracking-[0.15em] text-white/40 uppercase mb-3">
+                    깊게
+                  </p>
+                  <h3 className="serif text-lg font-semibold mb-1">{MEMBERSHIP.label}</h3>
+                  <p className="serif text-3xl font-bold tracking-tight mb-3">
+                    월 {MEMBERSHIP.price.toLocaleString()}
+                    <span className="text-base font-medium">원</span>
+                  </p>
+                  <ul className="space-y-2 text-sm text-white/70 mb-6 flex-1">
+                    <li>한 달 <strong className="text-white">무제한</strong> 이용</li>
+                    <li>월 11회부터는 멤버십이 이득</li>
+                    <li>나만의 몰입 루틴 만들기</li>
+                  </ul>
+                  <a
+                    href="#membership"
+                    className="block py-3.5 rounded-xl bg-white text-center text-sm font-semibold text-[#1a1a2e] hover:bg-gray-100 transition"
+                  >
+                    멤버십 시작하기
+                  </a>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* 선물 배너 */}
+            <Reveal>
+              <Link
+                href="/gift"
+                className="group mt-4 flex items-center justify-between rounded-2xl border border-[#e9c46a]/40 bg-[#e9c46a]/[0.07] px-6 py-5 transition hover:border-[#e9c46a]"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl">🎁</span>
+                  <div>
+                    <p className="text-[15px] font-medium text-[#1a1a2e]">
+                      소중한 사람에게 몰입을 선물하세요
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      물건 대신, 조용한 시간을 · {DAY_PASS.price.toLocaleString()}원부터
+                    </p>
+                  </div>
+                </div>
+                <span className="text-[#b8860b] text-sm transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ───────── 공간 & 위치 ───────── */}
         <section className="py-20 mt-8 bg-white border-y border-gray-100 overflow-hidden">
           <div className="max-w-md mx-auto text-center px-6">
@@ -254,6 +344,64 @@ export default function SpacePage() {
           </div>
         </section>
 
+        {/* ───────── 공간 대관 ───────── */}
+        <section className="px-6 py-20">
+          <div className="max-w-xl mx-auto">
+            <Reveal>
+              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+                Rent
+              </p>
+              <h2 className="serif text-xl font-medium text-center mb-4 tracking-tight">
+                공간 전체를 빌릴 수도 있어요
+              </h2>
+              <p className="text-sm text-gray-500 text-center leading-relaxed mb-10">
+                조용한 골목의 몰입 공간을 통째로.<br />
+                모임의 밀도가 달라집니다.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="grid grid-cols-2 gap-3 mb-8">
+                {[
+                  { e: '📚', t: '스터디 · 독서 모임' },
+                  { e: '🧑‍💻', t: '팀 워크숍 · 집중 회의' },
+                  { e: '🎬', t: '인터뷰 · 촬영' },
+                  { e: '✍️', t: '글쓰기 · 창작 모임' },
+                ].map((u, i) => (
+                  <div
+                    key={u.t}
+                    className="rounded-2xl border border-gray-100 bg-white p-5 text-center"
+                  >
+                    <div className="text-2xl mb-2">{u.e}</div>
+                    <p className="text-sm font-medium text-[#1a1a2e]">{u.t}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-2xl border border-gray-100 bg-white p-6 text-center">
+                <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                  대관료는 인원·시간대에 따라 협의해요.<br />
+                  원하는 날짜와 용도를 알려주시면 빠르게 안내드립니다.
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <a
+                    href="tel:0507-1348-9410"
+                    className="py-3.5 rounded-xl border border-gray-200 bg-white text-sm font-medium text-[#1a1a2e] hover:border-gray-400 transition"
+                  >
+                    📞 전화 문의
+                  </a>
+                  <a
+                    href="https://www.instagram.com/macha_ver._"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3.5 rounded-xl bg-[#1a1a2e] text-sm font-medium text-white hover:bg-[#2d2d4e] transition"
+                  >
+                    DM으로 문의
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ───────── 방문자 후기 (실제 후기가 있을 때만 표시) ───────── */}
         {REVIEWS.length > 0 && (
           <section className="px-6 py-20 bg-white border-y border-gray-100">
@@ -335,6 +483,14 @@ export default function SpacePage() {
                     q: '몇 시까지 하나요?',
                     a: '24시간, 연중무휴로 운영됩니다. 새벽의 고요함이 필요할 때도 언제든 오세요.',
                   },
+                  {
+                    q: '멤버십은 어떻게 이용하나요?',
+                    a: '월 49,000원으로 한 달간 무제한 이용할 수 있어요. 신청 후 입금이 확인된 날부터 시작되고, 월 11회 이상 오신다면 하루 이용권보다 이득입니다.',
+                  },
+                  {
+                    q: '단체로 공간을 빌릴 수 있나요?',
+                    a: '네, 스터디·워크숍·촬영 등 대관이 가능합니다. 인원과 시간대에 따라 협의하니 전화나 인스타 DM으로 편하게 문의해 주세요.',
+                  },
                 ].map((item) => (
                   <details
                     key={item.q}
@@ -376,6 +532,29 @@ export default function SpacePage() {
             <p className="text-center text-xs text-gray-400 mt-8">
               결제 후 입실 시간이 확정됩니다
             </p>
+          </div>
+        </section>
+
+        {/* ───────── 멤버십 신청 ───────── */}
+        <section id="membership" className="px-6 py-20 border-t border-gray-100 scroll-mt-16">
+          <div className="max-w-md mx-auto">
+            <Reveal>
+              <div className="text-center mb-10">
+                <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
+                  Membership
+                </p>
+                <h2 className="serif text-xl font-medium tracking-tight mb-4">
+                  매일의 몰입,<br />월 {MEMBERSHIP.price.toLocaleString()}원
+                </h2>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  한 달 무제한. 커피 열 잔 값으로<br />
+                  나만의 서재가 생기는 셈이에요.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal>
+              <MembershipForm />
+            </Reveal>
           </div>
         </section>
 

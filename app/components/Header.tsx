@@ -11,6 +11,7 @@ const NAV = [
   { href: '/program', label: '4주 프로그램' },
   { href: '/test', label: '몰입 유형 테스트' },
   { href: '/focus', label: '10분 몰입 체험' },
+  { href: '/gift', label: '선물하기' },
 ]
 
 export default function Header() {
@@ -60,7 +61,7 @@ export default function Header() {
       {/* 드롭다운 메뉴 */}
       <div
         className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
-          open ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+          open ? 'max-h-[420px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <nav className="max-w-xl mx-auto px-5 pb-4 pt-1">

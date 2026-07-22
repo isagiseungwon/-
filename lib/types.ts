@@ -1,8 +1,9 @@
 export type ReservationStatus = 'pending' | 'paid' | 'cancelled'
 export type PayMethod = 'card' | 'transfer'
 // 'space' = 공간 예약(24시간 이용권), 'program' = 4주 프로그램 신청,
-// 'lead' = 몰입 테스트 결과 리포트 신청(잠재 고객)
-export type EntryKind = 'space' | 'program' | 'lead'
+// 'lead' = 몰입 테스트 결과 리포트 신청(잠재 고객),
+// 'membership' = 월 몰입 멤버십, 'gift' = 몰입 선물권
+export type EntryKind = 'space' | 'program' | 'lead' | 'membership' | 'gift'
 
 export interface Reservation {
   id: string
@@ -44,6 +45,20 @@ export const DAY_PASS = {
   price: 4500,
   label: '24시간 이용권',
 }
+
+// 월 몰입 멤버십 (한 달 무제한)
+export const MEMBERSHIP = {
+  price: 49000,
+  label: '몰입 멤버십',
+  desc: '한 달 무제한 이용',
+}
+
+// 몰입 선물권 옵션
+export const GIFT_OPTIONS = [
+  { key: 'day', label: '24시간 이용권 선물', price: 4500 },
+  { key: 'month', label: '몰입 멤버십 1개월 선물', price: 49000 },
+] as const
+export type GiftKey = (typeof GIFT_OPTIONS)[number]['key']
 
 export const TIME_SLOTS = [
   '09:00', '10:00', '11:00', '12:00',

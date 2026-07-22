@@ -10,6 +10,8 @@ export default function SiteFooter() {
         <Link href="/space" className="hover:text-[#1a1a2e] transition">공간 대여</Link>
         <span className="text-gray-200">·</span>
         <Link href="/program" className="hover:text-[#1a1a2e] transition">4주 프로그램</Link>
+        <span className="text-gray-200">·</span>
+        <Link href="/gift" className="hover:text-[#1a1a2e] transition">선물하기</Link>
       </div>
       <p className="text-xs text-gray-400 leading-relaxed mb-1">
         서울 도봉구 도봉로103길 23-13 · 쌍문역 3번 출구 도보 8분

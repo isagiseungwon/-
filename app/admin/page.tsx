@@ -209,6 +209,16 @@ export default function AdminPage() {
                         🧭 테스트 리드
                       </span>
                     )}
+                    {r.kind === 'membership' && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">
+                        💳 멤버십
+                      </span>
+                    )}
+                    {r.kind === 'gift' && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-pink-100 text-pink-600 font-medium">
+                        🎁 선물권
+                      </span>
+                    )}
                   </div>
                   <div className="text-sm text-gray-500 mt-0.5">{r.phone}</div>
                 </div>
@@ -237,7 +247,7 @@ export default function AdminPage() {
                   {r.wish && <div className="text-gray-600">{r.wish}</div>}
                   <div className="text-[#b8860b]">→ 결과 리포트 DM/문자 보내기</div>
                 </div>
-              ) : r.kind === 'program' ? (
+              ) : r.kind === 'program' || r.kind === 'membership' || r.kind === 'gift' ? (
                 <div className="mt-3 space-y-1.5 text-xs text-gray-500">
                   <div className="flex flex-wrap gap-3">
                     <span>📅 신청 {r.date}</span>
@@ -263,7 +273,9 @@ export default function AdminPage() {
                     onClick={() => confirmDeposit(r.orderId, r.name)}
                     className="flex-1 py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition"
                   >
-                    {r.kind === 'program' ? '✅ 입금 확인 → 신청 확정' : '✅ 입금 확인 → 예약 확정'}
+                    {r.kind === 'program' || r.kind === 'membership' || r.kind === 'gift'
+                      ? '✅ 입금 확인 → 확정'
+                      : '✅ 입금 확인 → 예약 확정'}
                   </button>
                 )}
                 <button

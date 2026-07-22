@@ -92,7 +92,10 @@ export default function HomePage() {
                   </p>
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-[#1a1a2e]">
-                      {DAY_PASS.label} {DAY_PASS.price.toLocaleString()}원
+                      {DAY_PASS.price.toLocaleString()}원
+                      <span className="text-gray-400 font-normal text-xs ml-2">
+                        · 월 무제한 49,000원
+                      </span>
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-all group-hover:text-[#1a1a2e] group-hover:gap-2.5">
                       자세히 보기 <span aria-hidden>→</span>
