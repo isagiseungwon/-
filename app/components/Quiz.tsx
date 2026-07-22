@@ -360,31 +360,6 @@ export default function Quiz() {
         </div>
       </div>
 
-      {/* 추천 */}
-      <div className="rounded-2xl bg-[#12122a] text-white p-7 text-center mb-6">
-        <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-4">
-          그리고, 한 가지 더
-        </p>
-        <p className="text-[15px] leading-[1.9] text-white/80 mb-6">{result.ctaReason}</p>
-        {result.cta === 'program' && (
-          <p className="text-xs text-[#e9c46a] mb-4 tracking-wide">
-            {PROGRAM.cohort} {PROGRAM.seatsTotal}명 한정 · 현재 {PROGRAM.seatsLeft}자리 남음
-          </p>
-        )}
-        <Link
-          href={primaryCta.href}
-          className="block w-full py-4 rounded-xl bg-white text-[#1a1a2e] text-sm font-semibold hover:bg-gray-100 transition"
-        >
-          {primaryCta.label}
-        </Link>
-        <Link
-          href={secondaryCta.href}
-          className="inline-block mt-4 text-xs text-white/40 hover:text-white/70 underline underline-offset-4 transition"
-        >
-          {secondaryCta.label}
-        </Link>
-      </div>
-
       {/* 결과 리포트 받기 (리드) */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6 mb-6">
         {leadDone ? (
@@ -442,6 +417,31 @@ export default function Quiz() {
             </p>
           </>
         )}
+      </div>
+
+      {/* 추천 — 다 드리고 나서, 마지막에 조용히 */}
+      <div className="rounded-2xl bg-[#12122a] text-white p-7 text-center mb-6">
+        <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-4">
+          더 가보고 싶다면
+        </p>
+        <p className="text-[15px] leading-[1.9] text-white/80 mb-6">{result.ctaReason}</p>
+        {result.cta === 'program' && (
+          <p className="text-xs text-[#e9c46a] mb-4 tracking-wide">
+            {PROGRAM.cohort} {PROGRAM.seatsTotal}명 한정 · 현재 {PROGRAM.seatsLeft}자리 남음
+          </p>
+        )}
+        <Link
+          href={primaryCta.href}
+          className="block w-full py-4 rounded-xl bg-white text-[#1a1a2e] text-sm font-semibold hover:bg-gray-100 transition"
+        >
+          {primaryCta.label}
+        </Link>
+        <Link
+          href={secondaryCta.href}
+          className="inline-block mt-4 text-xs text-white/40 hover:text-white/70 underline underline-offset-4 transition"
+        >
+          {secondaryCta.label}
+        </Link>
       </div>
 
       <button
