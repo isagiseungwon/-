@@ -1,7 +1,22 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Reservation } from '@/lib/types'
+import { Reservation, EntryKind } from '@/lib/types'
+import { REPORT_TEMPLATES } from '@/lib/reportTemplates'
+
+// 리드의 유형 요약(wish)에서 맞는 DM 템플릿을 찾는다
+function templateForLead(r: Reservation) {
+  if (!r.wish) return null
+  return REPORT_TEMPLATES.find((t) => r.wish!.includes(t.title)) ?? null
+}
+
+// 멤버십 만료일 계산 (입금 확인일 + 30일)
+function membershipExpiry(r: Reservation): { expiry: Date; dday: number } | null {
+  if (r.kind !== 'membership' || r.status !== 'paid' || !r.paidAt) return null
+  const expiry = new Date(new Date(r.paidAt).getTime() + 30 * 24 * 60 * 60 * 1000)
+  const dday = Math.ceil((expiry.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+  return { expiry, dday }
+}
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean | null>(null) // null = 확인 중
@@ -10,6 +25,8 @@ export default function AdminPage() {
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'all' | 'paid' | 'pending'>('all')
+  const [kindFilter, setKindFilter] = useState<'all' | EntryKind>('all')
+  const [copiedId, setCopiedId] = useState('')
 
   const loadReservations = useCallback(async () => {
     setLoading(true)
@@ -119,7 +136,28 @@ export default function AdminPage() {
     )
   }
 
-  const filtered = reservations.filter((r) => filter === 'all' || r.status === filter)
+  const filtered = reservations.filter((r) => {
+    const statusOk = filter === 'all' || r.status === filter
+    const kind = r.kind ?? 'space'
+    const kindOk = kindFilter === 'all' || kind === kindFilter
+    return statusOk && kindOk
+  })
+
+  async function copyLeadTemplate(r: Reservation) {
+    const t = templateForLead(r)
+    if (!t) return
+    const body = t.body.replaceAll(
+      '{이름}',
+      r.name === '이름 미기재' ? '안녕하세요' : r.name
+    )
+    try {
+      await navigator.clipboard.writeText(body)
+      setCopiedId(r.orderId)
+      setTimeout(() => setCopiedId(''), 2000)
+    } catch {
+      alert('복사에 실패했어요.')
+    }
+  }
   const totalRevenue = reservations
     .filter((r) => r.status === 'paid')
     .reduce((sum, r) => sum + r.amount, 0)
@@ -140,6 +178,12 @@ export default function AdminPage() {
             className="text-sm px-3 py-1.5 rounded-full bg-[#1a1a2e] text-white font-medium hover:bg-[#2d2d4e] transition"
           >
             ✍️ 블로그 글 공장
+          </a>
+          <a
+            href="/admin/templates"
+            className="text-sm px-3 py-1.5 rounded-full border border-[#1a1a2e] text-[#1a1a2e] font-medium hover:bg-[#1a1a2e] hover:text-white transition"
+          >
+            📋 DM 템플릿
           </a>
           <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 예약 페이지</a>
           <button
@@ -170,7 +214,7 @@ export default function AdminPage() {
       </div>
 
       {/* 필터 */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-2">
         {(['all', 'paid', 'pending'] as const).map((f) => (
           <button
             key={f}
@@ -182,6 +226,30 @@ export default function AdminPage() {
             }`}
           >
             {f === 'all' ? '전체' : f === 'paid' ? '결제완료' : '대기'}
+          </button>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {(
+          [
+            ['all', '🗂 전체'],
+            ['space', '🕐 공간 예약'],
+            ['program', '🪑 프로그램'],
+            ['membership', '💳 멤버십'],
+            ['gift', '🎁 선물권'],
+            ['lead', '🧭 리드'],
+          ] as const
+        ).map(([k, label]) => (
+          <button
+            key={k}
+            onClick={() => setKindFilter(k)}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+              kindFilter === k
+                ? 'bg-[#2a9d8f] text-white'
+                : 'bg-white border border-gray-200 text-gray-500 hover:border-gray-300'
+            }`}
+          >
+            {label}
           </button>
         ))}
       </div>
@@ -245,7 +313,22 @@ export default function AdminPage() {
                     <span>📞 {r.phone}</span>
                   </div>
                   {r.wish && <div className="text-gray-600">{r.wish}</div>}
-                  <div className="text-[#b8860b]">→ 결과 리포트 DM/문자 보내기</div>
+                  {templateForLead(r) ? (
+                    <button
+                      onClick={() => copyLeadTemplate(r)}
+                      className={`mt-1 px-3 py-1.5 rounded-full text-xs font-medium transition ${
+                        copiedId === r.orderId
+                          ? 'bg-green-600 text-white'
+                          : 'bg-[#1a1a2e] text-white hover:bg-[#2d2d4e]'
+                      }`}
+                    >
+                      {copiedId === r.orderId
+                        ? '복사됨 ✓ 이제 DM에 붙여넣으세요'
+                        : '📋 맞춤 리포트 복사 (이름 자동 반영)'}
+                    </button>
+                  ) : (
+                    <div className="text-[#b8860b]">→ 결과 리포트 DM/문자 보내기</div>
+                  )}
                 </div>
               ) : r.kind === 'program' || r.kind === 'membership' || r.kind === 'gift' ? (
                 <div className="mt-3 space-y-1.5 text-xs text-gray-500">
@@ -257,6 +340,28 @@ export default function AdminPage() {
                   {r.wish && (
                     <div className="text-gray-600">✍️ &ldquo;{r.wish}&rdquo;</div>
                   )}
+                  {(() => {
+                    const m = membershipExpiry(r)
+                    if (!m) return null
+                    const dateStr = m.expiry.toISOString().split('T')[0]
+                    return (
+                      <div
+                        className={`font-medium ${
+                          m.dday <= 0
+                            ? 'text-red-500'
+                            : m.dday <= 5
+                            ? 'text-[#b8860b]'
+                            : 'text-blue-600'
+                        }`}
+                      >
+                        {m.dday <= 0
+                          ? `⏰ 멤버십 만료됨 (${dateStr}) — 연장 안내 DM 추천`
+                          : `⏰ 멤버십 ${dateStr}까지 · D-${m.dday}${
+                              m.dday <= 5 ? ' — 곧 만료, 연장 안내 타이밍!' : ''
+                            }`}
+                      </div>
+                    )
+                  })()}
                 </div>
               ) : (
                 <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">

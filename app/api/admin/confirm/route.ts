@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'orderId가 필요합니다.' }, { status: 400 })
   }
 
-  const updated = await updateReservation(orderId, { status: 'paid' })
+  const updated = await updateReservation(orderId, {
+    status: 'paid',
+    paidAt: new Date().toISOString(),
+  })
   if (!updated) {
     return NextResponse.json({ error: '예약을 찾을 수 없습니다.' }, { status: 404 })
   }

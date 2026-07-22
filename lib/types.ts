@@ -18,6 +18,7 @@ export interface Reservation {
   status: ReservationStatus
   method?: PayMethod
   createdAt: string
+  paidAt?: string // 입금/결제 확정 시각 (멤버십 만료일 계산에 사용)
   // ── 프로그램 신청 전용(선택) 필드 ──
   kind?: EntryKind
   instagram?: string // 인스타그램 아이디 (선택)
