@@ -4,6 +4,7 @@ import { isValidSession, ADMIN_COOKIE } from '@/lib/auth'
 import {
   buildPrompt,
   buildTitlePrompt,
+  buildRefinePrompt,
   templateGenerate,
   templateTitles,
   BlogRequest,
@@ -19,7 +20,51 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 
-  const body = (await req.json()) as Partial<BlogRequest> & { action?: string }
+  const body = (await req.json()) as Partial<BlogRequest> & {
+    action?: string
+    content?: string
+    instruction?: string
+  }
+
+  // ---- 원고 다듬기 (수정 지시 반영) ----
+  if (body.action === 'refine') {
+    if (!body.content || !body.instruction) {
+      return NextResponse.json(
+        { error: '원고와 수정 지시가 필요합니다.' },
+        { status: 400 }
+      )
+    }
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json(
+        { error: 'AI 다듬기는 ANTHROPIC_API_KEY 설정 후 사용할 수 있어요.' },
+        { status: 400 }
+      )
+    }
+    try {
+      const { system, user } = buildRefinePrompt(body.content, body.instruction)
+      const client = new Anthropic()
+      const model = process.env.BLOG_MODEL || 'claude-opus-4-8'
+      const response = await client.messages.create({
+        model,
+        max_tokens: 8000,
+        thinking: { type: 'adaptive' },
+        system,
+        messages: [{ role: 'user', content: user }],
+      })
+      const text = response.content
+        .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+        .map((b) => b.text)
+        .join('\n')
+      if (!text) throw new Error('empty refine result')
+      return NextResponse.json({ mode: 'ai', content: text })
+    } catch (e) {
+      console.error('[blog/refine] 실패:', e)
+      return NextResponse.json(
+        { error: '다듬기에 실패했어요. 잠시 후 다시 시도해주세요.' },
+        { status: 502 }
+      )
+    }
+  }
 
   // ---- 제목 짓기 ----
   if (body.action === 'titles') {

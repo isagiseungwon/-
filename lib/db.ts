@@ -181,6 +181,90 @@ export async function deleteReservation(orderId: string): Promise<boolean> {
   return true
 }
 
+// ═════════ 블로그 초안 저장소 (같은 백엔드 재사용) ═════════
+
+const DRAFT_KEY = 'blog_drafts'
+const DRAFT_FILE = path.join(process.cwd(), 'data', 'blog-drafts.json')
+
+export interface BlogDraft {
+  id: string
+  title: string
+  keyword: string
+  content: string
+  createdAt: string
+}
+
+function draftFileReadAll(): BlogDraft[] {
+  try {
+    if (!fs.existsSync(DRAFT_FILE)) return []
+    return JSON.parse(fs.readFileSync(DRAFT_FILE, 'utf-8'))
+  } catch {
+    return []
+  }
+}
+function draftFileWriteAll(rows: BlogDraft[]) {
+  const dir = path.dirname(DRAFT_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  fs.writeFileSync(DRAFT_FILE, JSON.stringify(rows, null, 2))
+}
+
+function parseDraft(value: unknown): BlogDraft {
+  if (typeof value === 'string') return JSON.parse(value) as BlogDraft
+  return value as BlogDraft
+}
+
+export async function listBlogDrafts(): Promise<BlogDraft[]> {
+  let rows: BlogDraft[]
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const all = await r.hgetall(DRAFT_KEY)
+    rows = Object.values(all).map(parseDraft)
+  } else if (backend === 'upstash') {
+    const r = await getUpstash()
+    const all = await r.hgetall<Record<string, unknown>>(DRAFT_KEY)
+    rows = all ? Object.values(all).map(parseDraft) : []
+  } else {
+    rows = draftFileReadAll()
+  }
+  return rows.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
+}
+
+export async function saveBlogDraft(draft: BlogDraft): Promise<void> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    await r.hset(DRAFT_KEY, draft.id, JSON.stringify(draft))
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    await r.hset(DRAFT_KEY, { [draft.id]: draft })
+    return
+  }
+  const rows = draftFileReadAll()
+  const idx = rows.findIndex((x) => x.id === draft.id)
+  if (idx === -1) rows.push(draft)
+  else rows[idx] = draft
+  draftFileWriteAll(rows)
+}
+
+export async function deleteBlogDraft(id: string): Promise<boolean> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    return (await r.hdel(DRAFT_KEY, id)) > 0
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    return (await r.hdel(DRAFT_KEY, id)) > 0
+  }
+  const rows = draftFileReadAll()
+  const next = rows.filter((x) => x.id !== id)
+  if (next.length === rows.length) return false
+  draftFileWriteAll(next)
+  return true
+}
+
 export async function getReservedSlots(date: string): Promise<string[]> {
   const rows = await getAllReservations()
   return rows

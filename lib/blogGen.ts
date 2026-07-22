@@ -21,8 +21,11 @@ const BIZ = `
 - 상호: 몰입, 흐름 그리고 나 (스터디카페/몰입 공간)
 - 위치: 서울 도봉구 도봉로103길 23-13 (쌍문역 3번 출구 도보 8분, 조용한 골목)
 - 영업: 24시간, 연중무휴
-- 가격: 24시간 이용권 4,500원 (단일 요금제)
-- 음료·커피는 손님이 가져와도 됨. 물은 제공. 와이파이 무료
+- 가격: 24시간 이용권 4,500원 / 몰입 멤버십 월 49,000원(한 달 무제한, 월 11회부터 이득)
+- 4주 몰입 프로그램 1기 모집 중: 주 1회 오프라인 세션(운영자 강의) + 매일 단톡 실행 인증, 소수 정원 → hellkang.vercel.app/program
+- 무료 몰입 유형 테스트(1분): hellkang.vercel.app/test — 글 마무리에 자연스럽게 붙이면 좋음
+- 몰입 선물권: hellkang.vercel.app/gift
+- 음료·커피는 손님이 가져와도 됨. 물은 제공. 와이파이 있음
 - 이용 중 자유로운 외출/출입 가능
 - 예약: hellkang.vercel.app (계좌이체/카드)
 - 인스타: @macha_ver._ (이상한 마차, 팔로워 1.3만)
@@ -47,8 +50,8 @@ export function buildPrompt(req: BlogRequest): { system: string; user: string } 
 7. 본론 예고: "그래서 오늘은 ~ 3가지를 말씀드리겠습니다" — 핵심 문구는 **볼드** 표시
 8. 본론: 번호 소제목 3개 (1. / 2. / 3.), 각 소제목마다 설명 + [사진: 설명] 배치
 9. "한눈에 보기" 박스: 공간의 신뢰 요소를 불릿 리스트로
-   (24시간 연중무휴 / 24시간 이용권 4,500원 / 와이파이·물 제공 / 자유 출입 / 쌍문역 3번 출구 도보 8분 / 인스타 팔로워 1.3만)
-10. 마무리: 부드러운 방문 유도 + 예약 링크(hellkang.vercel.app) + 인스타
+   (24시간 연중무휴 / 24시간 이용권 4,500원 / 몰입 멤버십 월 49,000원 / 와이파이·물 제공 / 자유 출입 / 쌍문역 3번 출구 도보 8분 / 인스타 팔로워 1.3만)
+10. 마무리: 부드러운 방문 유도 + 예약 링크(hellkang.vercel.app) + 무료 몰입 유형 테스트 링크(hellkang.vercel.app/test)를 "내 몰입 유형이 궁금하다면" 식으로 자연스럽게 + 인스타
 11. 해시태그 10~15개
 
 [문체 공식]
@@ -76,6 +79,102 @@ ${req.extra ? `- 추가 강조: ${req.extra}` : ''}
 제목부터 해시태그까지 완성된 글 전체를 출력하세요.`
 
   return { system, user }
+}
+
+// ---- AI 다듬기 (수정 지시 반영) ----
+export function buildRefinePrompt(
+  content: string,
+  instruction: string
+): { system: string; user: string } {
+  const system = `당신은 네이버 블로그 전문 에디터입니다. 사용자가 준 원고를 지시에 따라 수정합니다.
+
+[규칙]
+- 사실 왜곡·과장·날조 절대 금지. 업체 정보의 사실만 사용
+- [사진: ...] 마커는 유지 (지시가 없다면 위치·개수 보존)
+- 검증된 글 구조(제목 → 본문 → 한눈에 보기 → 마무리 → 해시태그)는 유지
+- 설명이나 인사말 없이, 수정된 완성 원고 전체만 출력
+${BIZ}`
+
+  const user = `아래 원고를 다음 지시에 따라 수정해주세요.
+
+[수정 지시]
+${instruction}
+
+[원고]
+${content}`
+
+  return { system, user }
+}
+
+// ---- 발행 전 SEO 점검 ----
+export interface SeoCheck {
+  label: string
+  status: 'ok' | 'warn' | 'bad'
+  detail: string
+}
+
+export function checkBlogSeo(content: string, keyword: string): SeoCheck[] {
+  const items: SeoCheck[] = []
+  const kw = keyword.trim()
+
+  // 1) 분량
+  const len = content.length
+  items.push({
+    label: '글 분량',
+    status: len >= 1500 ? 'ok' : len >= 1000 ? 'warn' : 'bad',
+    detail: `${len.toLocaleString()}자 (권장 1,500자 이상)`,
+  })
+
+  // 2) 제목에 키워드
+  const firstLine =
+    content
+      .split('\n')
+      .map((l) => l.trim())
+      .find(Boolean) ?? ''
+  const titleHasKw = kw ? firstLine.includes(kw) : false
+  items.push({
+    label: '제목에 키워드',
+    status: titleHasKw ? 'ok' : 'bad',
+    detail: titleHasKw ? '제목에 키워드가 들어있어요' : `제목에 "${kw}"를 넣어주세요`,
+  })
+
+  // 3) 본문 키워드 횟수
+  const kwCount = kw ? content.split(kw).length - 1 : 0
+  items.push({
+    label: '키워드 반복',
+    status:
+      kwCount >= 3 && kwCount <= 6 ? 'ok' : kwCount >= 2 && kwCount <= 9 ? 'warn' : 'bad',
+    detail: `${kwCount}회 사용 (권장 3~6회, 억지 반복은 역효과)`,
+  })
+
+  // 4) 사진 자리
+  const photoCount = (content.match(/\[사진:/g) ?? []).length
+  items.push({
+    label: '사진 배치',
+    status: photoCount >= 3 ? 'ok' : photoCount >= 1 ? 'warn' : 'bad',
+    detail: `[사진: ...] ${photoCount}곳 (권장 3곳 이상)`,
+  })
+
+  // 5) 해시태그
+  const tagCount = (content.match(/#[^\s#]+/g) ?? []).length
+  items.push({
+    label: '해시태그',
+    status:
+      tagCount >= 10 && tagCount <= 15 ? 'ok' : tagCount >= 5 ? 'warn' : 'bad',
+    detail: `${tagCount}개 (권장 10~15개)`,
+  })
+
+  // 6) 예약/테스트 링크
+  const hasLink = content.includes('hellkang.vercel.app')
+  items.push({
+    label: '유입 링크',
+    status: hasLink ? 'ok' : 'warn',
+    detail: hasLink
+      ? '홈페이지 링크가 들어있어요'
+      : 'hellkang.vercel.app 링크를 넣으면 예약 전환으로 이어져요',
+  })
+
+  return items
 }
 
 // ---- 제목 짓기 ----
