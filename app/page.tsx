@@ -47,6 +47,12 @@ export default function HomePage() {
                 <p className="text-xs text-gray-400 mt-3 tracking-wide">
                   1분 무료 테스트 · 내 몰입 유형과 처방 받기
                 </p>
+                <Link
+                  href="/focus"
+                  className="inline-block mt-4 text-xs text-gray-400 hover:text-[#1a1a2e] underline underline-offset-4 tracking-wide transition"
+                >
+                  🕯️ 아니면, 그냥 지금 10분 몰입해 보기 →
+                </Link>
               </div>
             </Reveal>
           </div>

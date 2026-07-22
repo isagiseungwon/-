@@ -360,6 +360,27 @@ export default function Quiz() {
         </div>
       </div>
 
+      {/* 지금 바로 실행: 10분 몰입 체험 */}
+      <Link
+        href="/focus"
+        className="group block rounded-2xl border border-[#2a9d8f]/25 bg-[#2a9d8f]/[0.05] p-6 mb-6 transition hover:border-[#2a9d8f]/50"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs tracking-[0.2em] text-[#2a9d8f] uppercase mb-2 font-semibold">
+              지금 바로
+            </p>
+            <h3 className="serif text-lg font-medium tracking-tight mb-1">
+              말로만 말고, 지금 10분 몰입해 보실래요?
+            </h3>
+            <p className="text-sm text-gray-500">
+              읽는 것과 하는 것의 차이를 10분 만에 느껴보세요
+            </p>
+          </div>
+          <span className="shrink-0 text-[#2a9d8f] transition-transform group-hover:translate-x-1">→</span>
+        </div>
+      </Link>
+
       {/* 결과 리포트 받기 (리드) */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6 mb-6">
         {leadDone ? (
