@@ -118,3 +118,17 @@ input, select, textarea {
     animation: none;
   }
 }
+
+/* 몰입 명언이 잔잔하게 떠오르는 효과 */
+@keyframes quote-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.quote-fade {
+  animation: quote-fade 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .quote-fade {
+    animation: none;
+  }
+}

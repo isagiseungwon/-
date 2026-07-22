@@ -37,22 +37,22 @@ export default function HomePage() {
                 혼자 머무는 <span className="text-[#1a1a2e] font-medium">공간</span>부터,<br />
                 함께 해내는 <span className="text-[#1a1a2e] font-medium">4주 프로그램</span>까지.
               </p>
-              <div className="mt-10">
+              <div className="mt-10 flex flex-col items-center gap-3">
                 <Link
                   href="/test"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition shadow-[0_8px_28px_rgba(26,26,46,0.25)]"
+                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition shadow-[0_8px_28px_rgba(26,26,46,0.25)]"
                 >
                   🧭 나는 왜 몰입이 안 될까?
                 </Link>
-                <p className="text-xs text-gray-400 mt-3 tracking-wide">
-                  1분 무료 테스트 · 내 몰입 유형과 처방 받기
-                </p>
                 <Link
                   href="/focus"
-                  className="inline-block mt-4 text-xs text-gray-400 hover:text-[#1a1a2e] underline underline-offset-4 tracking-wide transition"
+                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full border border-[#1a1a2e]/25 bg-white/60 backdrop-blur text-[#1a1a2e] text-sm font-medium hover:border-[#1a1a2e] transition"
                 >
-                  🕯️ 아니면, 그냥 지금 10분 몰입해 보기 →
+                  🕯️ 지금 10분 몰입해 보기
                 </Link>
+                <p className="text-xs text-gray-400 mt-1 tracking-wide">
+                  둘 다 무료 · 1분 테스트, 10분 체험
+                </p>
               </div>
             </Reveal>
           </div>

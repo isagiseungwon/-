@@ -9,6 +9,50 @@ type Phase = 'prep' | 'running' | 'done'
 
 const DEFAULT_MINUTES = 10
 
+// 1분마다 하나씩 넘어가는 몰입 명언 (10분 = 10개)
+const QUOTES = [
+  {
+    text: '인간의 모든 불행은\n방에 혼자 조용히 앉아 있지 못하는 데서 온다.',
+    by: '블레즈 파스칼',
+  },
+  {
+    text: '최고의 순간은 어렵고 가치 있는 일을 해내려\n스스로를 한계까지 밀어붙일 때 찾아온다.',
+    by: '미하이 칙센트미하이 · 『몰입 Flow』',
+  },
+  {
+    text: '내가 가치 있는 발견을 했다면,\n다른 재능이 아니라 끈기 있는 집중 덕분이다.',
+    by: '아이작 뉴턴',
+  },
+  {
+    text: '집중이란 집중할 것에 예스라고 말하는 것이 아니다.\n다른 백 가지 좋은 아이디어에 노라고 말하는 것이다.',
+    by: '스티브 잡스',
+  },
+  {
+    text: '나는 특별히 똑똑한 것이 아니다.\n단지 문제를 더 오래 붙들고 있을 뿐이다.',
+    by: '알베르트 아인슈타인',
+  },
+  {
+    text: '성공의 비결을 한 단어로 적어달라는 질문에\n빌 게이츠와 워런 버핏은 같은 단어를 적었다. — 집중.',
+    by: '빌 게이츠 & 워런 버핏',
+  },
+  {
+    text: '만 가지 발차기를 한 번씩 연습한 사람은 두렵지 않다.\n한 가지를 만 번 연습한 사람이 두렵다.',
+    by: '브루스 리',
+  },
+  {
+    text: '우리에게 시간이 부족한 것이 아니라,\n우리가 시간을 낭비하는 것이다.',
+    by: '세네카',
+  },
+  {
+    text: '깊게 몰입하는 능력은 점점 희귀해지고 있다.\n그래서 점점 더 가치 있어진다.',
+    by: '칼 뉴포트 · 『딥 워크』',
+  },
+  {
+    text: '오늘, 내가 할 수 있는\n의도적 몰입은 무엇인가?',
+    by: '몰입, 흐름 그리고 나',
+  },
+]
+
 export default function FocusTimer() {
   const [phase, setPhase] = useState<Phase>('prep')
   const [task, setTask] = useState('')
@@ -103,7 +147,7 @@ export default function FocusTimer() {
           몰입 시작하기
         </button>
         <p className="text-xs text-gray-300 mt-5">
-          타이머가 도는 동안 화면이 꺼지지 않아요
+          화면이 꺼지지 않고, 1분마다 몰입 명언이 함께해요
         </p>
       </div>
     )
@@ -113,6 +157,8 @@ export default function FocusTimer() {
   if (phase === 'running') {
     const R = 130
     const C = 2 * Math.PI * R
+    const elapsed = total - remaining
+    const quote = QUOTES[Math.floor(elapsed / 60) % QUOTES.length]
     return (
       <div className="text-center select-none">
         {task && (
@@ -145,6 +191,14 @@ export default function FocusTimer() {
             </span>
           </div>
         </div>
+        {/* 1분마다 넘어가는 몰입 명언 */}
+        <div key={quote.by + quote.text} className="quote-fade max-w-sm mx-auto mb-10 min-h-[96px]">
+          <p className="serif text-[15px] leading-[1.9] text-gray-600 whitespace-pre-line">
+            &ldquo;{quote.text}&rdquo;
+          </p>
+          <p className="text-xs text-gray-400 mt-3 tracking-wide">— {quote.by}</p>
+        </div>
+
         <button
           type="button"
           onClick={quit}

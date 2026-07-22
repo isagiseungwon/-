@@ -10,6 +10,7 @@ const NAV = [
   { href: '/space', label: '공간 대여' },
   { href: '/program', label: '4주 프로그램' },
   { href: '/test', label: '몰입 유형 테스트' },
+  { href: '/focus', label: '10분 몰입 체험' },
 ]
 
 export default function Header() {
