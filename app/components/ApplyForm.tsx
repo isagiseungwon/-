@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BANK_INFO } from '@/lib/types'
 import { PROGRAM } from '@/lib/program'
 
@@ -14,6 +14,12 @@ export default function ApplyForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
+
+  // 몰입 테스트 결과에서 넘어온 경우(?type=유형) 유형을 미리 채워둔다
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get('type')
+    if (t) setWish((prev) => prev || `${t} 유형 · `)
+  }, [])
 
   const canSubmit = name.trim() && phone.trim() && !loading
 

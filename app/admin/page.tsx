@@ -204,6 +204,11 @@ export default function AdminPage() {
                         🪑 4주 프로그램
                       </span>
                     )}
+                    {r.kind === 'lead' && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#e9c46a]/15 text-[#b8860b] font-medium">
+                        🧭 테스트 리드
+                      </span>
+                    )}
                   </div>
                   <div className="text-sm text-gray-500 mt-0.5">{r.phone}</div>
                 </div>
@@ -214,14 +219,25 @@ export default function AdminPage() {
                       : 'bg-yellow-100 text-yellow-700'
                   }`}
                 >
-                  {r.status === 'paid'
+                  {r.kind === 'lead'
+                    ? '리드'
+                    : r.status === 'paid'
                     ? r.kind === 'program'
                       ? '입금완료'
                       : '결제완료'
                     : '대기'}
                 </span>
               </div>
-              {r.kind === 'program' ? (
+              {r.kind === 'lead' ? (
+                <div className="mt-3 space-y-1.5 text-xs text-gray-500">
+                  <div className="flex flex-wrap gap-3">
+                    <span>📅 {r.date}</span>
+                    <span>📞 {r.phone}</span>
+                  </div>
+                  {r.wish && <div className="text-gray-600">{r.wish}</div>}
+                  <div className="text-[#b8860b]">→ 결과 리포트 DM/문자 보내기</div>
+                </div>
+              ) : r.kind === 'program' ? (
                 <div className="mt-3 space-y-1.5 text-xs text-gray-500">
                   <div className="flex flex-wrap gap-3">
                     <span>📅 신청 {r.date}</span>

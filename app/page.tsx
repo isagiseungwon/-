@@ -268,7 +268,9 @@ export default function HomePage() {
                 이 공간의 이야기를<br />
                 함께 보고 있습니다
               </h2>
-              <p className="text-sm text-white/50">@macha_ver._ · 이상한 마차</p>
+              <p className="text-sm text-white/50">
+                @macha_ver._ · <span className="text-white/80 font-medium">팔로워 1.3만</span>
+              </p>
             </Reveal>
           </div>
 

@@ -1,7 +1,8 @@
 export type ReservationStatus = 'pending' | 'paid' | 'cancelled'
 export type PayMethod = 'card' | 'transfer'
-// 'space' = 공간 예약(24시간 이용권), 'program' = 4주 프로그램 신청
-export type EntryKind = 'space' | 'program'
+// 'space' = 공간 예약(24시간 이용권), 'program' = 4주 프로그램 신청,
+// 'lead' = 몰입 테스트 결과 리포트 신청(잠재 고객)
+export type EntryKind = 'space' | 'program' | 'lead'
 
 export interface Reservation {
   id: string

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { QUIZ, QuizResult, resolveResult, MAX_SCORES, gaugeLevel } from '@/lib/quiz'
+import { QUIZ, QuizResult, resolveResult, MAX_SCORES, gaugeLevel, RESULTS, ResultKey } from '@/lib/quiz'
 import { PROGRAM } from '@/lib/program'
 import { DAY_PASS } from '@/lib/types'
 
@@ -23,9 +23,18 @@ export default function Quiz() {
   const [result, setResult] = useState<QuizResult | null>(null)
   const [scores, setScores] = useState({ env: 0, peer: 0 })
   const [shared, setShared] = useState(false)
+  const [friend, setFriend] = useState<QuizResult | null>(null)
+  const [leadName, setLeadName] = useState('')
+  const [leadContact, setLeadContact] = useState('')
+  const [leadSending, setLeadSending] = useState(false)
+  const [leadDone, setLeadDone] = useState(false)
+  const [leadError, setLeadError] = useState('')
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
+    // 공유 링크(?r=유형)로 들어온 경우 친구의 결과를 인트로에 보여준다
+    const r = new URLSearchParams(window.location.search).get('r') as ResultKey | null
+    if (r && RESULTS[r]) setFriend(RESULTS[r])
     const t = timers.current
     return () => t.forEach(clearTimeout)
   }, [])
@@ -90,8 +99,12 @@ export default function Quiz() {
   }
 
   async function share() {
-    const url = `${window.location.origin}/test`
-    const text = '나는 왜 몰입이 안 될까? 1분 만에 내 몰입 유형 알아보기 🧭'
+    const url = result
+      ? `${window.location.origin}/test?r=${result.key}`
+      : `${window.location.origin}/test`
+    const text = result
+      ? `나는 '${result.title}' 유형이래 ${result.emoji} 너는 어떤 유형인지 1분 만에 알아봐`
+      : '나는 왜 몰입이 안 될까? 1분 만에 내 몰입 유형 알아보기 🧭'
     try {
       if (navigator.share) {
         await navigator.share({ title: '몰입 유형 테스트', text, url })
@@ -105,10 +118,49 @@ export default function Quiz() {
     }
   }
 
+  async function submitLead() {
+    if (!leadContact.trim() || leadSending || !result) return
+    setLeadSending(true)
+    setLeadError('')
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: leadName.trim(),
+          contact: leadContact.trim(),
+          resultTitle: result.title,
+          resultEmoji: result.emoji,
+          envPct: Math.round((scores.env / MAX_SCORES.env) * 100),
+          peerPct: Math.round((scores.peer / MAX_SCORES.peer) * 100),
+        }),
+      })
+      if (!res.ok) throw new Error('bad status')
+      setLeadDone(true)
+    } catch {
+      setLeadError('전송에 실패했어요. 잠시 후 다시 시도해 주세요.')
+    } finally {
+      setLeadSending(false)
+    }
+  }
+
   // ───────── 인트로 ─────────
   if (phase === 'intro') {
     return (
       <div className="text-center">
+        {friend && (
+          <div className="mb-8 mx-auto max-w-xs rounded-2xl border border-[#e9c46a]/40 bg-[#e9c46a]/[0.08] px-5 py-4">
+            <p className="text-xs text-gray-500 leading-relaxed">
+              친구의 몰입 유형은
+              <br />
+              <span className="text-[15px] text-[#1a1a2e] font-semibold">
+                {friend.emoji} {friend.title}
+              </span>
+              <br />
+              당신은 어떤 유형일까요?
+            </p>
+          </div>
+        )}
         <div className="float-soft inline-block text-4xl mb-8">🧭</div>
         <h1 className="serif text-[1.9rem] leading-[1.35] font-semibold tracking-tight mb-5">
           나는 왜<br />몰입이 안 될까?
@@ -208,19 +260,20 @@ export default function Quiz() {
 
   // ───────── 결과 ─────────
   if (!result) return null
+  const typeParam = encodeURIComponent(`${result.emoji} ${result.title}`)
   const primaryCta =
     result.cta === 'space'
       ? {
-          href: '/space',
+          href: '/space#booking',
           label: `24시간 몰입 공간 써보기 · ${DAY_PASS.price.toLocaleString()}원`,
         }
       : {
-          href: '/program',
-          label: `4주 프로그램 ${PROGRAM.cohort} 알아보기`,
+          href: `/program?type=${typeParam}#apply`,
+          label: `4주 프로그램 ${PROGRAM.cohort} 신청하기`,
         }
   const secondaryCta =
     result.cta === 'space'
-      ? { href: '/program', label: '4주 프로그램도 궁금하다면 →' }
+      ? { href: `/program?type=${typeParam}#apply`, label: '4주 프로그램도 궁금하다면 →' }
       : { href: '/space', label: '공간만 먼저 경험해 보고 싶다면 →' }
 
   return (
@@ -332,12 +385,71 @@ export default function Quiz() {
         </Link>
       </div>
 
+      {/* 결과 리포트 받기 (리드) */}
+      <div className="rounded-2xl border border-gray-100 bg-white p-6 mb-6">
+        {leadDone ? (
+          <div className="text-center py-4">
+            <div className="text-2xl mb-3">🪑</div>
+            <p className="text-[15px] font-medium text-[#1a1a2e] mb-1.5">
+              리포트를 보내드릴게요.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              24시간 안에 DM 또는 문자로<br />
+              {result.title} 유형의 자세한 처방이 도착합니다.
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-3">
+              Report
+            </p>
+            <h3 className="serif text-lg font-medium tracking-tight mb-2">
+              이 결과, 리포트로 받아보실래요?
+            </h3>
+            <p className="text-sm text-gray-500 leading-relaxed mb-5">
+              {result.title} 유형을 위한 더 자세한 처방을
+              DM 또는 문자로 정리해 보내드려요. 무료입니다.
+            </p>
+            <div className="space-y-3 mb-4">
+              <input
+                type="text"
+                value={leadName}
+                onChange={(e) => setLeadName(e.target.value)}
+                placeholder="이름 (선택)"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+              />
+              <input
+                type="text"
+                value={leadContact}
+                onChange={(e) => setLeadContact(e.target.value)}
+                placeholder="연락처 또는 인스타 아이디 (@_)"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+              />
+            </div>
+            {leadError && (
+              <p className="text-sm text-[#e76f51] mb-3">{leadError}</p>
+            )}
+            <button
+              type="button"
+              onClick={submitLead}
+              disabled={!leadContact.trim() || leadSending}
+              className="w-full py-3.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2d2d4e] transition"
+            >
+              {leadSending ? '보내는 중...' : '무료로 리포트 받기'}
+            </button>
+            <p className="text-[11px] text-gray-300 mt-3 text-center">
+              광고성 연락 없이, 결과 리포트만 보내드려요
+            </p>
+          </>
+        )}
+      </div>
+
       <button
         type="button"
         onClick={share}
         className="block w-full max-w-xs mx-auto py-3.5 rounded-full border border-[#1a1a2e]/20 text-[#1a1a2e] text-sm font-medium hover:border-[#1a1a2e] transition mb-5"
       >
-        {shared ? '링크가 복사됐어요 ✓' : '🧭 친구에게 테스트 공유하기'}
+        {shared ? '링크가 복사됐어요 ✓' : '🧭 친구에게 내 유형 공유하기'}
       </button>
       <button
         type="button"
