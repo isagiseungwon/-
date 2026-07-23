@@ -101,7 +101,7 @@ export default function AdminPage() {
   // 세션 확인 중
   if (authed === null) {
     return (
-      <main className="flex items-center justify-center min-h-screen text-sm text-gray-400">
+      <main className="flex items-center justify-center min-h-screen text-sm text-[#8f7e69]">
         불러오는 중...
       </main>
     )
@@ -111,9 +111,9 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-8 max-w-sm w-full">
-          <h1 className="text-lg font-bold text-[#3b2e21] mb-1">관리자 로그인</h1>
-          <p className="text-xs text-gray-400 mb-6">몰입, 흐름 그리고 나</p>
+        <div className="bg-[#332619] rounded-2xl border border-white/10 p-8 max-w-sm w-full">
+          <h1 className="text-lg font-bold text-[#f0e7d7] mb-1">관리자 로그인</h1>
+          <p className="text-xs text-[#8f7e69] mb-6">몰입, 흐름 그리고 나</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
@@ -121,12 +121,12 @@ export default function AdminPage() {
               onChange={(e) => setPw(e.target.value)}
               placeholder="비밀번호"
               autoFocus
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21]"
+              className="w-full rounded-xl border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55"
             />
             <button
               type="submit"
               disabled={loggingIn || !pw}
-              className="w-full py-3 rounded-xl bg-[#3b2e21] text-white font-bold text-sm disabled:opacity-40"
+              className="w-full py-3 rounded-xl bg-[#e9c46a] text-[#241a10] font-bold text-sm disabled:opacity-40"
             >
               {loggingIn ? '확인 중...' : '로그인'}
             </button>
@@ -169,8 +169,8 @@ export default function AdminPage() {
     <main className="max-w-3xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-[#3b2e21]">관리자 대시보드</h1>
-          <p className="text-sm text-gray-500 mt-0.5">몰입, 흐름 그리고 나</p>
+          <h1 className="text-xl font-bold text-[#f0e7d7]">관리자 대시보드</h1>
+          <p className="text-sm text-[#aa9a83] mt-0.5">몰입, 흐름 그리고 나</p>
         </div>
         <div className="flex items-center gap-3">
           <a
@@ -181,20 +181,20 @@ export default function AdminPage() {
           </a>
           <a
             href="/admin/blog"
-            className="text-sm px-3 py-1.5 rounded-full bg-[#3b2e21] text-white font-medium hover:bg-[#4d3c2b] transition"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#e9c46a] text-[#241a10] font-medium hover:bg-[#d9b45a] transition"
           >
             ✍️ 블로그 글 공장
           </a>
           <a
             href="/admin/templates"
-            className="text-sm px-3 py-1.5 rounded-full border border-[#3b2e21] text-[#3b2e21] font-medium hover:bg-[#3b2e21] hover:text-white transition"
+            className="text-sm px-3 py-1.5 rounded-full border border-[#e9c46a]/55 text-[#f0e7d7] font-medium hover:bg-[#e9c46a] hover:text-[#241a10] transition"
           >
             📋 DM 템플릿
           </a>
-          <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 예약 페이지</a>
+          <a href="/" className="text-sm text-[#aa9a83] hover:text-[#e3d8c5]">← 예약 페이지</a>
           <button
             onClick={handleLogout}
-            className="text-sm text-gray-400 hover:text-gray-600 underline"
+            className="text-sm text-[#8f7e69] hover:text-[#d0c3ad] underline"
           >
             로그아웃
           </button>
@@ -203,17 +203,17 @@ export default function AdminPage() {
 
       {/* 매출 요약 */}
       <div className="grid grid-cols-3 gap-3 mb-8">
-        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
-          <div className="text-xs text-gray-400 mb-1">총 매출</div>
-          <div className="text-xl font-bold text-[#3b2e21]">{totalRevenue.toLocaleString()}원</div>
+        <div className="bg-[#332619] rounded-2xl border border-white/10 p-5">
+          <div className="text-xs text-[#8f7e69] mb-1">총 매출</div>
+          <div className="text-xl font-bold text-[#f0e7d7]">{totalRevenue.toLocaleString()}원</div>
         </div>
-        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
-          <div className="text-xs text-gray-400 mb-1">오늘 매출</div>
-          <div className="text-xl font-bold text-[#3b2e21]">{todayRevenue.toLocaleString()}원</div>
+        <div className="bg-[#332619] rounded-2xl border border-white/10 p-5">
+          <div className="text-xs text-[#8f7e69] mb-1">오늘 매출</div>
+          <div className="text-xl font-bold text-[#f0e7d7]">{todayRevenue.toLocaleString()}원</div>
         </div>
-        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
-          <div className="text-xs text-gray-400 mb-1">총 예약</div>
-          <div className="text-xl font-bold text-[#3b2e21]">
+        <div className="bg-[#332619] rounded-2xl border border-white/10 p-5">
+          <div className="text-xs text-[#8f7e69] mb-1">총 예약</div>
+          <div className="text-xl font-bold text-[#f0e7d7]">
             {reservations.filter((r) => r.status === 'paid').length}건
           </div>
         </div>
@@ -227,8 +227,8 @@ export default function AdminPage() {
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
               filter === f
-                ? 'bg-[#3b2e21] text-white'
-                : 'bg-[#fdfaf4] border border-gray-200 text-gray-600 hover:border-gray-300'
+                ? 'bg-[#e9c46a] text-[#241a10]'
+                : 'bg-[#332619] border border-white/15 text-[#d0c3ad] hover:border-white/25'
             }`}
           >
             {f === 'all' ? '전체' : f === 'paid' ? '결제완료' : '대기'}
@@ -252,7 +252,7 @@ export default function AdminPage() {
             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
               kindFilter === k
                 ? 'bg-[#7f8f5a] text-white'
-                : 'bg-[#fdfaf4] border border-gray-200 text-gray-500 hover:border-gray-300'
+                : 'bg-[#332619] border border-white/15 text-[#aa9a83] hover:border-white/25'
             }`}
           >
             {label}
@@ -262,17 +262,17 @@ export default function AdminPage() {
 
       {/* 예약 목록 */}
       {loading ? (
-        <div className="text-center py-12 text-sm text-gray-400">불러오는 중...</div>
+        <div className="text-center py-12 text-sm text-[#8f7e69]">불러오는 중...</div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-12 text-sm text-gray-400">예약이 없습니다.</div>
+        <div className="text-center py-12 text-sm text-[#8f7e69]">예약이 없습니다.</div>
       ) : (
         <div className="space-y-3">
           {filtered.map((r) => (
-            <div key={r.id} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
+            <div key={r.id} className="bg-[#332619] rounded-2xl border border-white/10 p-5">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-[#3b2e21]">{r.name}</span>
+                    <span className="font-medium text-[#f0e7d7]">{r.name}</span>
                     {r.kind === 'program' && (
                       <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#7f8f5a]/10 text-[#7f8f5a] font-medium">
                         🪑 4주 프로그램
@@ -294,7 +294,7 @@ export default function AdminPage() {
                       </span>
                     )}
                   </div>
-                  <div className="text-sm text-gray-500 mt-0.5">{r.phone}</div>
+                  <div className="text-sm text-[#aa9a83] mt-0.5">{r.phone}</div>
                 </div>
                 <span
                   className={`text-xs px-2.5 py-1 rounded-full font-medium ${
@@ -313,19 +313,19 @@ export default function AdminPage() {
                 </span>
               </div>
               {r.kind === 'lead' ? (
-                <div className="mt-3 space-y-1.5 text-xs text-gray-500">
+                <div className="mt-3 space-y-1.5 text-xs text-[#aa9a83]">
                   <div className="flex flex-wrap gap-3">
                     <span>📅 {r.date}</span>
                     <span>📞 {r.phone}</span>
                   </div>
-                  {r.wish && <div className="text-gray-600">{r.wish}</div>}
+                  {r.wish && <div className="text-[#d0c3ad]">{r.wish}</div>}
                   {templateForLead(r) ? (
                     <button
                       onClick={() => copyLeadTemplate(r)}
                       className={`mt-1 px-3 py-1.5 rounded-full text-xs font-medium transition ${
                         copiedId === r.orderId
                           ? 'bg-green-600 text-white'
-                          : 'bg-[#3b2e21] text-white hover:bg-[#4d3c2b]'
+                          : 'bg-[#e9c46a] text-[#241a10] hover:bg-[#d9b45a]'
                       }`}
                     >
                       {copiedId === r.orderId
@@ -337,14 +337,14 @@ export default function AdminPage() {
                   )}
                 </div>
               ) : r.kind === 'program' || r.kind === 'membership' || r.kind === 'gift' ? (
-                <div className="mt-3 space-y-1.5 text-xs text-gray-500">
+                <div className="mt-3 space-y-1.5 text-xs text-[#aa9a83]">
                   <div className="flex flex-wrap gap-3">
                     <span>📅 신청 {r.date}</span>
-                    <span className="font-medium text-[#3b2e21]">💰 {r.amount.toLocaleString()}원</span>
+                    <span className="font-medium text-[#f0e7d7]">💰 {r.amount.toLocaleString()}원</span>
                     {r.instagram && <span>📷 {r.instagram}</span>}
                   </div>
                   {r.wish && (
-                    <div className="text-gray-600">✍️ &ldquo;{r.wish}&rdquo;</div>
+                    <div className="text-[#d0c3ad]">✍️ &ldquo;{r.wish}&rdquo;</div>
                   )}
                   {(() => {
                     const m = membershipExpiry(r)
@@ -370,11 +370,11 @@ export default function AdminPage() {
                   })()}
                 </div>
               ) : (
-                <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">
+                <div className="mt-3 flex flex-wrap gap-3 text-xs text-[#aa9a83]">
                   <span>📅 {r.date}</span>
                   <span>🕐 {r.time} 입실</span>
                   <span>⏱ {r.duration}시간권</span>
-                  <span className="font-medium text-[#3b2e21]">💰 {r.amount.toLocaleString()}원</span>
+                  <span className="font-medium text-[#f0e7d7]">💰 {r.amount.toLocaleString()}원</span>
                   <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
                 </div>
               )}

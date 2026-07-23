@@ -22,7 +22,7 @@ export default function ProgramPage() {
   return (
     <>
       <Header />
-      <main className="text-[#3b2e21]">
+      <main className="text-[#f0e7d7]">
         <StickyCTA variant="program" />
 
         {/* ───────── Hero ───────── */}
@@ -43,23 +43,23 @@ export default function ProgramPage() {
               <h1 className="serif text-[2.4rem] leading-[1.3] font-semibold tracking-tight mb-6">
                 요청을 현실로<br />만드는 4주
               </h1>
-              <p className="text-[17px] leading-[1.8] text-[#3b2e21] font-medium mb-3">
+              <p className="text-[17px] leading-[1.8] text-[#f0e7d7] font-medium mb-3">
                 혼자서는 4주를 못 버티니까,<br />같이 합니다.
               </p>
-              <p className="text-[15px] leading-relaxed text-gray-500 mb-10">
+              <p className="text-[15px] leading-relaxed text-[#aa9a83] mb-10">
                 쌍문 몰입 공간에서 진행하는<br />
                 소수 정원 오프라인 프로그램
               </p>
               <a
                 href="#apply"
-                className="inline-block px-8 py-3.5 rounded-full bg-[#3b2e21] text-white text-sm font-medium hover:bg-[#4d3c2b] transition"
+                className="inline-block px-8 py-3.5 rounded-full bg-[#e9c46a] text-[#241a10] text-sm font-medium hover:bg-[#d9b45a] transition"
               >
                 {PROGRAM.cohort} 신청하기
               </a>
               <div className="mt-6">
                 <Link
                   href="/space"
-                  className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-4 tracking-wide"
+                  className="text-xs text-[#8f7e69] hover:text-[#d0c3ad] underline underline-offset-4 tracking-wide"
                 >
                   공간만 이용하고 싶다면 →
                 </Link>
@@ -68,29 +68,29 @@ export default function ProgramPage() {
           </div>
         </section>
 
-        <div className="max-w-[60px] mx-auto border-t border-gray-200" />
+        <div className="max-w-[60px] mx-auto border-t border-white/15" />
 
         {/* ───────── 문제 제기 ───────── */}
         <section className="px-6 py-20 max-w-xl mx-auto text-center">
           <Reveal>
-            <p className="text-[17px] leading-[1.9] text-[#3b2e21] font-medium">
+            <p className="text-[17px] leading-[1.9] text-[#f0e7d7] font-medium">
               자기계발 콘텐츠는 넘치는데,<br />
               왜 실행은 안 될까요?
             </p>
           </Reveal>
           <Reveal delay={120}>
-            <p className="text-[15px] leading-[2.1] text-gray-500 mt-8">
+            <p className="text-[15px] leading-[2.1] text-[#aa9a83] mt-8">
               의지가 부족해서가 아닙니다.<br />
-              <span className="text-[#3b2e21]">환경과 동료</span>가 없었을 뿐.
+              <span className="text-[#f0e7d7]">환경과 동료</span>가 없었을 뿐.
             </p>
           </Reveal>
         </section>
 
         {/* ───────── 프로그램 소개 ───────── */}
-        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#332619] border-y border-white/10">
           <div className="max-w-xl mx-auto">
             <Reveal>
-              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+              <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase text-center mb-3">
                 Program
               </p>
               <h2 className="serif text-xl font-medium text-center mb-12 tracking-tight">
@@ -111,13 +111,13 @@ export default function ProgramPage() {
                 },
               ].map((c, i) => (
                 <Reveal key={c.n} delay={i * 120}>
-                  <div className="flex gap-4 items-start rounded-2xl border border-gray-100 bg-[#f3ece1] p-5">
+                  <div className="flex gap-4 items-start rounded-2xl border border-white/10 bg-[#2b2018] p-5">
                     <div className="serif text-2xl text-[#7f8f5a] leading-none shrink-0">
                       {c.n}
                     </div>
                     <div>
                       <h3 className="text-[15px] font-semibold mb-1.5">{c.t}</h3>
-                      <p className="text-sm text-gray-500 leading-relaxed">{c.d}</p>
+                      <p className="text-sm text-[#aa9a83] leading-relaxed">{c.d}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -130,7 +130,7 @@ export default function ProgramPage() {
         <section className="px-6 py-20">
           <div className="max-w-xl mx-auto">
             <Reveal>
-              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+              <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase text-center mb-3">
                 Curriculum
               </p>
               <h2 className="serif text-xl font-medium text-center mb-14 tracking-tight">
@@ -143,14 +143,14 @@ export default function ProgramPage() {
                 {CURRICULUM.map((w, i) => (
                   <Reveal key={w.week} delay={i * 100}>
                     <div className="relative">
-                      <div className="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full border-2 border-[#7f8f5a] bg-[#f3ece1]" />
+                      <div className="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full border-2 border-[#7f8f5a] bg-[#2b2018]" />
                       <p className="text-xs tracking-wide text-[#7f8f5a] font-semibold mb-1">
                         {w.week}
                       </p>
                       <h3 className="serif text-[17px] font-medium mb-1.5 tracking-tight">
                         {w.title}
                       </h3>
-                      <p className="text-sm text-gray-500 leading-relaxed">{w.desc}</p>
+                      <p className="text-sm text-[#aa9a83] leading-relaxed">{w.desc}</p>
                     </div>
                   </Reveal>
                 ))}
@@ -158,12 +158,12 @@ export default function ProgramPage() {
             </div>
 
             <Reveal>
-              <div className="mt-16 rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 text-center">
-                <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-3">
+              <div className="mt-16 rounded-2xl border border-white/10 bg-[#332619] p-6 text-center">
+                <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-3">
                   이런 분께
                 </p>
-                <p className="text-[15px] leading-[1.9] text-[#3b2e21]">
-                  자기계발 콘텐츠를 <span className="text-gray-400">소비만</span> 하다가,<br />
+                <p className="text-[15px] leading-[1.9] text-[#f0e7d7]">
+                  자기계발 콘텐츠를 <span className="text-[#8f7e69]">소비만</span> 하다가,<br />
                   <span className="font-semibold">실행이 안 되는 분</span>
                 </p>
               </div>
@@ -172,22 +172,22 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── 본질: 이 프로그램이 시작된 이야기 ───────── */}
-        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#332619] border-y border-white/10">
           <div className="max-w-xl mx-auto">
             <Reveal>
-              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+              <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase text-center mb-3">
                 Why
               </p>
               <h2 className="serif text-xl font-medium text-center mb-5 tracking-tight">
                 이 프로그램이 시작된 이야기
               </h2>
-              <p className="text-sm text-gray-500 text-center leading-relaxed mb-10">
+              <p className="text-sm text-[#aa9a83] text-center leading-relaxed mb-10">
                 왜 4주인지, 왜 함께여야 하는지 —<br />
                 운영자가 직접 남긴 글을 읽어보세요.
               </p>
             </Reveal>
             <Reveal>
-              <div className="mx-auto max-w-md rounded-2xl overflow-hidden border border-gray-100 bg-[#f3ece1] shadow-[0_12px_40px_rgba(26,26,46,0.08)]">
+              <div className="mx-auto max-w-md rounded-2xl overflow-hidden border border-white/10 bg-[#2b2018] shadow-[0_12px_40px_rgba(26,26,46,0.08)]">
                 <iframe
                   src="https://www.instagram.com/p/DYmfB1BEgA4/embed/captioned/"
                   title="요청을 현실로 만드는 4주 — 운영자의 이야기"
@@ -202,7 +202,7 @@ export default function ProgramPage() {
                   href="https://www.instagram.com/p/DYmfB1BEgA4/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-4 tracking-wide"
+                  className="text-xs text-[#8f7e69] hover:text-[#d0c3ad] underline underline-offset-4 tracking-wide"
                 >
                   인스타그램에서 전체 글 보기 ↗
                 </a>
@@ -212,7 +212,7 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── 가격 ───────── */}
-        <section className="px-6 py-20 bg-[#2b2119] text-white">
+        <section className="px-6 py-20 bg-[#160f08] text-white">
           <div className="max-w-md mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-white/40 uppercase text-center mb-3">
@@ -263,7 +263,7 @@ export default function ProgramPage() {
               <div className="text-center mt-8">
                 <a
                   href="#apply"
-                  className="inline-block px-8 py-3.5 rounded-full bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
+                  className="inline-block px-8 py-3.5 rounded-full bg-[#e9c46a] text-[#241a10] text-sm font-semibold hover:bg-white/10 transition"
                 >
                   {PROGRAM.cohort} 신청하기
                 </a>
@@ -277,13 +277,13 @@ export default function ProgramPage() {
           <div className="max-w-md mx-auto">
             <Reveal>
               <div className="text-center mb-10">
-                <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
+                <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-4">
                   Apply
                 </p>
                 <h2 className="serif text-xl font-medium tracking-tight mb-4">
                   {PROGRAM.cohort}에 함께하기
                 </h2>
-                <p className="text-sm text-gray-500 leading-relaxed">
+                <p className="text-sm text-[#aa9a83] leading-relaxed">
                   {PROGRAM.seatsTotal}명 한정, 선착순으로 마감됩니다.<br />
                   먼저 신청서를 남겨주세요.
                 </p>
@@ -296,10 +296,10 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── FAQ ───────── */}
-        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#332619] border-y border-white/10">
           <div className="max-w-xl mx-auto">
             <Reveal>
-              <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
+              <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase text-center mb-3">
                 FAQ
               </p>
               <h2 className="serif text-xl font-medium text-center mb-12 tracking-tight">
@@ -332,15 +332,15 @@ export default function ProgramPage() {
                 ].map((item) => (
                   <details
                     key={item.q}
-                    className="group rounded-2xl border border-gray-100 bg-[#f3ece1] overflow-hidden"
+                    className="group rounded-2xl border border-white/10 bg-[#2b2018] overflow-hidden"
                   >
-                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#3b2e21] py-4">
+                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#f0e7d7] py-4">
                       {item.q}
-                      <span className="text-gray-300 transition-transform group-open:rotate-45 text-lg leading-none">
+                      <span className="text-[#6b5e4e] transition-transform group-open:rotate-45 text-lg leading-none">
                         +
                       </span>
                     </summary>
-                    <p className="px-6 pb-5 text-sm leading-relaxed text-gray-500">
+                    <p className="px-6 pb-5 text-sm leading-relaxed text-[#aa9a83]">
                       {item.a}
                     </p>
                   </details>

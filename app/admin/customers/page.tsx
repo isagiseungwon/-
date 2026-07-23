@@ -113,8 +113,8 @@ export default function CustomersPage() {
   if (authed === false) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
-        <p className="text-sm text-gray-500 mb-4">관리자 로그인이 필요해요.</p>
-        <a href="/admin" className="text-sm underline text-[#3b2e21]">
+        <p className="text-sm text-[#aa9a83] mb-4">관리자 로그인이 필요해요.</p>
+        <a href="/admin" className="text-sm underline text-[#f0e7d7]">
           로그인하러 가기 →
         </a>
       </main>
@@ -126,18 +126,18 @@ export default function CustomersPage() {
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-[#3b2e21]">🗂 고객 관리</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-xl font-bold text-[#f0e7d7]">🗂 고객 관리</h1>
+          <p className="text-sm text-[#aa9a83] mt-0.5">
             예약·리드·멤버십을 사람 단위로 모았어요
           </p>
         </div>
-        <a href="/admin" className="text-sm text-gray-500 hover:text-gray-700">
+        <a href="/admin" className="text-sm text-[#aa9a83] hover:text-[#e3d8c5]">
           ← 대시보드
         </a>
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-sm text-gray-400">불러오는 중...</div>
+        <div className="text-center py-20 text-sm text-[#8f7e69]">불러오는 중...</div>
       ) : (
         <>
           {/* 통계 */}
@@ -149,9 +149,9 @@ export default function CustomersPage() {
                 { label: '단골', value: `${stats.regulars}명` },
                 { label: '누적 매출', value: `${(stats.revenue / 10000).toFixed(0)}만` },
               ].map((s) => (
-                <div key={s.label} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-4">
-                  <div className="text-[11px] text-gray-400 mb-1">{s.label}</div>
-                  <div className="text-lg font-bold text-[#3b2e21]">{s.value}</div>
+                <div key={s.label} className="bg-[#332619] rounded-2xl border border-white/10 p-4">
+                  <div className="text-[11px] text-[#8f7e69] mb-1">{s.label}</div>
+                  <div className="text-lg font-bold text-[#f0e7d7]">{s.value}</div>
                 </div>
               ))}
             </div>
@@ -160,11 +160,11 @@ export default function CustomersPage() {
           {/* 오늘 할 일 */}
           <section className="mb-10">
             <div className="flex items-center gap-2 mb-3">
-              <h2 className="text-sm font-bold text-[#3b2e21]">☀️ 오늘 챙길 사람</h2>
-              <span className="text-xs text-gray-400">{actions.length}건</span>
+              <h2 className="text-sm font-bold text-[#f0e7d7]">☀️ 오늘 챙길 사람</h2>
+              <span className="text-xs text-[#8f7e69]">{actions.length}건</span>
             </div>
             {actions.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-gray-200 bg-[#fdfaf4] p-6 text-center text-sm text-gray-400">
+              <div className="rounded-2xl border border-dashed border-white/15 bg-[#332619] p-6 text-center text-sm text-[#8f7e69]">
                 지금 급히 챙길 고객은 없어요. 잘하고 계세요 🌿
               </div>
             ) : (
@@ -175,12 +175,12 @@ export default function CustomersPage() {
                   return (
                     <div
                       key={key}
-                      className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-4 flex items-start gap-3"
+                      className="rounded-2xl border border-white/10 bg-[#332619] p-4 flex items-start gap-3"
                     >
                       <span className="text-xl shrink-0 mt-0.5">{a.emoji}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#3b2e21]">{a.title}</p>
-                        <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                        <p className="text-sm font-semibold text-[#f0e7d7]">{a.title}</p>
+                        <p className="text-xs text-[#aa9a83] mt-0.5 leading-relaxed">
                           {a.reason}
                         </p>
                         <div className="flex items-center gap-2 mt-2.5">
@@ -190,7 +190,7 @@ export default function CustomersPage() {
                               className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${
                                 copiedKey === key
                                   ? 'bg-green-600 text-white'
-                                  : 'bg-[#3b2e21] text-white hover:bg-[#4d3c2b]'
+                                  : 'bg-[#e9c46a] text-[#241a10] hover:bg-[#d9b45a]'
                               }`}
                             >
                               {copiedKey === key ? '복사됨 ✓ 붙여넣으세요' : '📋 DM 문안 복사'}
@@ -198,7 +198,7 @@ export default function CustomersPage() {
                           )}
                           <a
                             href={`sms:${a.customer.phone}`}
-                            className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 transition"
+                            className="text-xs px-3 py-1.5 rounded-full border border-white/15 text-[#aa9a83] hover:border-white/30 transition"
                           >
                             {a.customer.phone}
                           </a>
@@ -228,8 +228,8 @@ export default function CustomersPage() {
                 onClick={() => setStageFilter(k)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                   stageFilter === k
-                    ? 'bg-[#3b2e21] text-white'
-                    : 'bg-[#fdfaf4] border border-gray-200 text-gray-600 hover:border-gray-300'
+                    ? 'bg-[#e9c46a] text-[#241a10]'
+                    : 'bg-[#332619] border border-white/15 text-[#d0c3ad] hover:border-white/25'
                 }`}
               >
                 {label}
@@ -239,20 +239,20 @@ export default function CustomersPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="이름·번호 검색"
-              className="ml-auto rounded-full border border-gray-200 bg-[#fdfaf4] px-4 py-1.5 text-xs w-36 focus:outline-none focus:border-[#3b2e21]"
+              className="ml-auto rounded-full border border-white/15 bg-[#332619] px-4 py-1.5 text-xs w-36 focus:outline-none focus:border-[#e9c46a]/55"
             />
           </div>
 
           {/* 고객 목록 */}
           {filtered.length === 0 ? (
-            <div className="text-center py-12 text-sm text-gray-400">고객이 없어요.</div>
+            <div className="text-center py-12 text-sm text-[#8f7e69]">고객이 없어요.</div>
           ) : (
             <div className="space-y-2.5">
               {filtered.map((c) => {
                 const meta = STAGE_META[c.stage]
                 const open = expanded === c.phone
                 return (
-                  <div key={c.phone} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 overflow-hidden">
+                  <div key={c.phone} className="bg-[#332619] rounded-2xl border border-white/10 overflow-hidden">
                     <button
                       onClick={() => setExpanded(open ? null : c.phone)}
                       className="w-full text-left p-5"
@@ -260,7 +260,7 @@ export default function CustomersPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-[#3b2e21]">{c.name}</span>
+                            <span className="font-semibold text-[#f0e7d7]">{c.name}</span>
                             <span
                               className="text-[11px] px-2 py-0.5 rounded-full font-medium"
                               style={{ backgroundColor: `${meta.color}18`, color: meta.color }}
@@ -273,22 +273,22 @@ export default function CustomersPage() {
                               </span>
                             )}
                           </div>
-                          <div className="text-xs text-gray-500 mt-1">{c.phone}</div>
+                          <div className="text-xs text-[#aa9a83] mt-1">{c.phone}</div>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="text-sm font-semibold text-[#3b2e21]">
+                          <div className="text-sm font-semibold text-[#f0e7d7]">
                             {c.totalSpent.toLocaleString()}원
                           </div>
-                          <div className="text-[11px] text-gray-400 mt-0.5">
+                          <div className="text-[11px] text-[#8f7e69] mt-0.5">
                             방문 {c.visitCount}회 · {timeAgo(c.lastActivity)}
                           </div>
                         </div>
                       </div>
                       {c.leadType && (
-                        <div className="text-[11px] text-gray-400 mt-2">유형: {c.leadType}</div>
+                        <div className="text-[11px] text-[#8f7e69] mt-2">유형: {c.leadType}</div>
                       )}
                       {c.note && !open && (
-                        <div className="text-xs text-gray-500 mt-2 truncate">📝 {c.note}</div>
+                        <div className="text-xs text-[#aa9a83] mt-2 truncate">📝 {c.note}</div>
                       )}
                     </button>
 
@@ -296,7 +296,7 @@ export default function CustomersPage() {
                       <div className="px-5 pb-5 -mt-1 space-y-4">
                         {/* 타임라인 */}
                         <div>
-                          <p className="text-[11px] tracking-wide text-gray-400 uppercase mb-2">
+                          <p className="text-[11px] tracking-wide text-[#8f7e69] uppercase mb-2">
                             여정
                           </p>
                           <ul className="space-y-1.5">
@@ -307,10 +307,10 @@ export default function CustomersPage() {
                                     e.status === 'paid' ? 'bg-green-500' : 'bg-gray-300'
                                   }`}
                                 />
-                                <span className="text-gray-400 tabular-nums">{e.date}</span>
-                                <span className="text-gray-600">{e.label}</span>
+                                <span className="text-[#8f7e69] tabular-nums">{e.date}</span>
+                                <span className="text-[#d0c3ad]">{e.label}</span>
                                 {e.amount > 0 && (
-                                  <span className="text-gray-400">
+                                  <span className="text-[#8f7e69]">
                                     · {e.amount.toLocaleString()}원
                                   </span>
                                 )}
@@ -324,7 +324,7 @@ export default function CustomersPage() {
 
                         {/* 메모 */}
                         <div>
-                          <p className="text-[11px] tracking-wide text-gray-400 uppercase mb-2">
+                          <p className="text-[11px] tracking-wide text-[#8f7e69] uppercase mb-2">
                             메모
                           </p>
                           <textarea
@@ -334,19 +334,19 @@ export default function CustomersPage() {
                             }
                             rows={2}
                             placeholder="예: 새벽에 오심, 창가 자리 선호"
-                            className="w-full rounded-xl border border-gray-200 bg-[#f3ece1] px-3 py-2 text-sm focus:outline-none focus:border-[#3b2e21] resize-none"
+                            className="w-full rounded-xl border border-white/15 bg-[#2b2018] px-3 py-2 text-sm focus:outline-none focus:border-[#e9c46a]/55 resize-none"
                           />
                           <div className="flex items-center gap-2 mt-2">
                             <button
                               onClick={() => saveNote(c.phone)}
                               disabled={savingNote === c.phone}
-                              className="text-xs px-3 py-1.5 rounded-full bg-[#3b2e21] text-white font-medium hover:bg-[#4d3c2b] transition disabled:opacity-40"
+                              className="text-xs px-3 py-1.5 rounded-full bg-[#e9c46a] text-[#241a10] font-medium hover:bg-[#d9b45a] transition disabled:opacity-40"
                             >
                               {savingNote === c.phone ? '저장 중...' : '메모 저장'}
                             </button>
                             <a
                               href={`sms:${c.phone}`}
-                              className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 transition"
+                              className="text-xs px-3 py-1.5 rounded-full border border-white/15 text-[#aa9a83] hover:border-white/30 transition"
                             >
                               💬 문자
                             </a>

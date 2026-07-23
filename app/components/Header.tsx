@@ -19,12 +19,12 @@ export default function Header() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 bg-[#f3ece1]/85 backdrop-blur border-b border-black/[0.06]">
+    <header className="sticky top-0 z-50 bg-[#2b2018]/85 backdrop-blur border-b border-white/10">
       <div className="max-w-xl mx-auto px-5 h-14 flex items-center justify-between">
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-[#3b2e21]"
+          className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-[#f0e7d7]"
         >
           <span>🪑</span>
           <span className="serif">몰입, 흐름 그리고 나</span>
@@ -40,17 +40,17 @@ export default function Header() {
           <span className="sr-only">메뉴</span>
           <div className="flex flex-col gap-[5px] items-end">
             <span
-              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#e9c46a] transition-all duration-300 ${
                 open ? 'w-5 translate-y-[6.5px] rotate-45' : 'w-5'
               }`}
             />
             <span
-              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#e9c46a] transition-all duration-300 ${
                 open ? 'opacity-0 w-5' : 'w-4'
               }`}
             />
             <span
-              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#e9c46a] transition-all duration-300 ${
                 open ? 'w-5 -translate-y-[6.5px] -rotate-45' : 'w-5'
               }`}
             />
@@ -65,7 +65,7 @@ export default function Header() {
         }`}
       >
         <nav className="max-w-xl mx-auto px-5 pb-4 pt-1">
-          <ul className="flex flex-col divide-y divide-black/[0.05]">
+          <ul className="flex flex-col divide-y divide-white/10">
             {NAV.map((item) => {
               const active =
                 item.href === '/'
@@ -78,12 +78,12 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     className={`flex items-center justify-between py-3.5 text-[15px] transition ${
                       active
-                        ? 'text-[#3b2e21] font-semibold'
-                        : 'text-gray-500 hover:text-[#3b2e21]'
+                        ? 'text-[#f0e7d7] font-semibold'
+                        : 'text-[#aa9a83] hover:text-[#f0e7d7]'
                     }`}
                   >
                     {item.label}
-                    <span className="text-gray-300">→</span>
+                    <span className="text-[#6b5e4e]">→</span>
                   </Link>
                 </li>
               )
@@ -94,13 +94,13 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between py-3.5 text-[15px] text-gray-500 hover:text-[#3b2e21] transition"
+                className="flex items-center justify-between py-3.5 text-[15px] text-[#aa9a83] hover:text-[#f0e7d7] transition"
               >
                 <span className="inline-flex items-center gap-2">
                   <InstaIcon className="w-4 h-4" />
                   @macha_ver._
                 </span>
-                <span className="text-gray-300">↗</span>
+                <span className="text-[#6b5e4e]">↗</span>
               </a>
             </li>
           </ul>

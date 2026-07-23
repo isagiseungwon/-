@@ -150,10 +150,10 @@ export default function Quiz() {
       <div className="text-center">
         {friend && (
           <div className="mb-8 mx-auto max-w-xs rounded-2xl border border-[#e9c46a]/40 bg-[#e9c46a]/[0.08] px-5 py-4">
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <p className="text-xs text-[#aa9a83] leading-relaxed">
               친구의 몰입 유형은
               <br />
-              <span className="text-[15px] text-[#3b2e21] font-semibold">
+              <span className="text-[15px] text-[#f0e7d7] font-semibold">
                 {friend.emoji} {friend.title}
               </span>
               <br />
@@ -165,22 +165,22 @@ export default function Quiz() {
         <h1 className="serif text-[1.9rem] leading-[1.35] font-semibold tracking-tight mb-5">
           나는 왜<br />몰입이 안 될까?
         </h1>
-        <p className="text-[15px] leading-[1.9] text-gray-500 mb-3">
+        <p className="text-[15px] leading-[1.9] text-[#aa9a83] mb-3">
           같은 의지인데 누구는 되고, 누구는 안 됩니다.<br />
-          차이는 의지가 아니라 <span className="text-[#3b2e21] font-medium">유형</span>에 있어요.
+          차이는 의지가 아니라 <span className="text-[#f0e7d7] font-medium">유형</span>에 있어요.
         </p>
-        <p className="text-sm leading-relaxed text-gray-400 mb-10">
+        <p className="text-sm leading-relaxed text-[#8f7e69] mb-10">
           8개 질문, 약 1분.<br />
           내 몰입 유형과 그에 맞는 처방을 알려드립니다.
         </p>
         <button
           type="button"
           onClick={start}
-          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#3b2e21] text-white font-medium text-base hover:bg-[#4d3c2b] transition"
+          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#e9c46a] text-[#241a10] font-medium text-base hover:bg-[#d9b45a] transition"
         >
           테스트 시작하기
         </button>
-        <p className="text-xs text-gray-300 mt-5">무료 · 로그인 없음 · 저장되지 않아요</p>
+        <p className="text-xs text-[#6b5e4e] mt-5">무료 · 로그인 없음 · 저장되지 않아요</p>
       </div>
     )
   }
@@ -197,7 +197,7 @@ export default function Quiz() {
             type="button"
             onClick={goBack}
             aria-label="이전으로"
-            className="shrink-0 w-8 h-8 rounded-full border border-gray-200 text-gray-400 text-sm hover:border-gray-400 hover:text-gray-600 transition"
+            className="shrink-0 w-8 h-8 rounded-full border border-white/15 text-[#8f7e69] text-sm hover:border-white/30 hover:text-[#d0c3ad] transition"
           >
             ←
           </button>
@@ -207,7 +207,7 @@ export default function Quiz() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <span className="shrink-0 text-xs text-gray-400 tabular-nums">
+          <span className="shrink-0 text-xs text-[#8f7e69] tabular-nums">
             {idx + 1} / {QUIZ.length}
           </span>
         </div>
@@ -224,8 +224,8 @@ export default function Quiz() {
               onClick={() => pick(i)}
               className={`w-full text-left px-5 py-4 rounded-2xl border text-[15px] leading-relaxed transition-all ${
                 selected === i
-                  ? 'border-[#3b2e21] bg-[#3b2e21] text-white'
-                  : 'border-gray-200 bg-[#fdfaf4] text-gray-700 hover:border-gray-400 active:scale-[0.99]'
+                  ? 'border-[#e9c46a]/55 bg-[#e9c46a] text-[#241a10]'
+                  : 'border-white/15 bg-[#332619] text-[#e3d8c5] hover:border-white/30 active:scale-[0.99]'
               }`}
             >
               {opt.label}
@@ -246,7 +246,7 @@ export default function Quiz() {
             <p
               key={s}
               className={`text-sm transition-all duration-500 ${
-                i <= analyzeStep ? 'text-[#3b2e21] opacity-100' : 'opacity-25 text-gray-400'
+                i <= analyzeStep ? 'text-[#f0e7d7] opacity-100' : 'opacity-25 text-[#8f7e69]'
               }`}
             >
               {i < analyzeStep ? '✓ ' : ''}
@@ -279,19 +279,19 @@ export default function Quiz() {
   return (
     <div>
       <div className="text-center mb-12">
-        <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-6">
+        <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-6">
           당신의 몰입 유형
         </p>
         <div className="text-5xl mb-5">{result.emoji}</div>
         <h1 className="serif text-[1.8rem] leading-tight font-semibold tracking-tight mb-3">
           {result.title}
         </h1>
-        <p className="text-[15px] text-gray-500">{result.tagline}</p>
+        <p className="text-[15px] text-[#aa9a83]">{result.tagline}</p>
       </div>
 
       {/* 방해 지수 게이지 */}
-      <div className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 mb-5">
-        <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-5">
+      <div className="rounded-2xl border border-white/10 bg-[#332619] p-6 mb-5">
+        <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-5">
           몰입 방해 지수
         </p>
         {[
@@ -315,25 +315,25 @@ export default function Quiz() {
                 {g.pct}% · {gaugeLevel(g.pct)}
               </span>
             </div>
-            <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-1000"
                 style={{ width: `${g.pct}%`, backgroundColor: g.color }}
               />
             </div>
-            <p className="text-xs text-gray-400 mt-1.5">{g.desc}</p>
+            <p className="text-xs text-[#8f7e69] mt-1.5">{g.desc}</p>
           </div>
         ))}
       </div>
 
       {/* 진단 */}
-      <div className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 mb-5">
-        <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
+      <div className="rounded-2xl border border-white/10 bg-[#332619] p-6 mb-5">
+        <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-4">
           진단
         </p>
         <div className="space-y-4">
           {result.analysis.map((para) => (
-            <p key={para.slice(0, 20)} className="text-[15px] leading-[1.9] text-gray-600">
+            <p key={para.slice(0, 20)} className="text-[15px] leading-[1.9] text-[#d0c3ad]">
               {para}
             </p>
           ))}
@@ -341,8 +341,8 @@ export default function Quiz() {
       </div>
 
       {/* 처방 */}
-      <div className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 mb-8">
-        <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-5">
+      <div className="rounded-2xl border border-white/10 bg-[#332619] p-6 mb-8">
+        <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-5">
           오늘부터 해볼 것
         </p>
         <div className="space-y-5">
@@ -353,7 +353,7 @@ export default function Quiz() {
               </div>
               <div>
                 <h3 className="text-[15px] font-semibold mb-1">{s.t}</h3>
-                <p className="text-sm leading-relaxed text-gray-500">{s.d}</p>
+                <p className="text-sm leading-relaxed text-[#aa9a83]">{s.d}</p>
               </div>
             </div>
           ))}
@@ -373,7 +373,7 @@ export default function Quiz() {
             <h3 className="serif text-lg font-medium tracking-tight mb-1">
               말로만 말고, 지금 10분 몰입해 보실래요?
             </h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-[#aa9a83]">
               읽는 것과 하는 것의 차이를 10분 만에 느껴보세요
             </p>
           </div>
@@ -382,27 +382,27 @@ export default function Quiz() {
       </Link>
 
       {/* 결과 리포트 받기 (리드) */}
-      <div className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 mb-6">
+      <div className="rounded-2xl border border-white/10 bg-[#332619] p-6 mb-6">
         {leadDone ? (
           <div className="text-center py-4">
             <div className="text-2xl mb-3">🪑</div>
-            <p className="text-[15px] font-medium text-[#3b2e21] mb-1.5">
+            <p className="text-[15px] font-medium text-[#f0e7d7] mb-1.5">
               리포트를 보내드릴게요.
             </p>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-[#aa9a83] leading-relaxed">
               24시간 안에 DM 또는 문자로<br />
               {result.title} 유형의 자세한 처방이 도착합니다.
             </p>
           </div>
         ) : (
           <>
-            <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-3">
+            <p className="text-xs tracking-[0.2em] text-[#8f7e69] uppercase mb-3">
               Report
             </p>
             <h3 className="serif text-lg font-medium tracking-tight mb-2">
               이 결과, 리포트로 받아보실래요?
             </h3>
-            <p className="text-sm text-gray-500 leading-relaxed mb-5">
+            <p className="text-sm text-[#aa9a83] leading-relaxed mb-5">
               {result.title} 유형을 위한 더 자세한 처방을
               DM 또는 문자로 정리해 보내드려요. 무료입니다.
             </p>
@@ -412,14 +412,14 @@ export default function Quiz() {
                 value={leadName}
                 onChange={(e) => setLeadName(e.target.value)}
                 placeholder="이름 (선택)"
-                className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
+                className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
               />
               <input
                 type="text"
                 value={leadContact}
                 onChange={(e) => setLeadContact(e.target.value)}
                 placeholder="연락처 또는 인스타 아이디 (@_)"
-                className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
+                className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
               />
             </div>
             {leadError && (
@@ -429,11 +429,11 @@ export default function Quiz() {
               type="button"
               onClick={submitLead}
               disabled={!leadContact.trim() || leadSending}
-              className="w-full py-3.5 rounded-xl bg-[#3b2e21] text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#4d3c2b] transition"
+              className="w-full py-3.5 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#d9b45a] transition"
             >
               {leadSending ? '보내는 중...' : '무료로 리포트 받기'}
             </button>
-            <p className="text-[11px] text-gray-300 mt-3 text-center">
+            <p className="text-[11px] text-[#6b5e4e] mt-3 text-center">
               광고성 연락 없이, 결과 리포트만 보내드려요
             </p>
           </>
@@ -441,7 +441,7 @@ export default function Quiz() {
       </div>
 
       {/* 추천 — 다 드리고 나서, 마지막에 조용히 */}
-      <div className="rounded-2xl bg-[#2b2119] text-white p-7 text-center mb-6">
+      <div className="rounded-2xl bg-[#160f08] text-white p-7 text-center mb-6">
         <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-4">
           더 가보고 싶다면
         </p>
@@ -453,7 +453,7 @@ export default function Quiz() {
         )}
         <Link
           href={primaryCta.href}
-          className="block w-full py-4 rounded-xl bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
+          className="block w-full py-4 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-semibold hover:bg-white/10 transition"
         >
           {primaryCta.label}
         </Link>
@@ -468,14 +468,14 @@ export default function Quiz() {
       <button
         type="button"
         onClick={share}
-        className="block w-full max-w-xs mx-auto py-3.5 rounded-full border border-[#3b2e21]/20 text-[#3b2e21] text-sm font-medium hover:border-[#3b2e21] transition mb-5"
+        className="block w-full max-w-xs mx-auto py-3.5 rounded-full border border-[#e9c46a]/20 text-[#f0e7d7] text-sm font-medium hover:border-[#e9c46a]/55 transition mb-5"
       >
         {shared ? '링크가 복사됐어요 ✓' : '🧭 친구에게 내 유형 공유하기'}
       </button>
       <button
         type="button"
         onClick={start}
-        className="block mx-auto text-xs text-gray-400 hover:text-gray-600 underline underline-offset-4 transition"
+        className="block mx-auto text-xs text-[#8f7e69] hover:text-[#d0c3ad] underline underline-offset-4 transition"
       >
         테스트 다시 하기
       </button>

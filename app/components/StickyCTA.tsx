@@ -63,7 +63,7 @@ export default function StickyCTA({ variant }: { variant: Variant }) {
       }`}
     >
       <div className="mx-auto max-w-lg px-4 pb-4">
-        <div className="flex items-center gap-3 rounded-2xl bg-[#3b2e21]/95 backdrop-blur px-5 py-3.5 shadow-[0_8px_32px_rgba(26,26,46,0.35)]">
+        <div className="flex items-center gap-3 rounded-2xl bg-[#160f08]/95 backdrop-blur px-5 py-3.5 shadow-[0_8px_32px_rgba(26,26,46,0.35)]">
           <div className="flex-1 min-w-0">
             <p className="text-[11px] text-white/50 leading-tight">{content.top}</p>
             <p className="text-white font-semibold text-base leading-tight">
@@ -75,7 +75,7 @@ export default function StickyCTA({ variant }: { variant: Variant }) {
           </div>
           <a
             href={content.href}
-            className="shrink-0 px-6 py-2.5 rounded-xl bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
+            className="shrink-0 px-6 py-2.5 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-semibold hover:bg-white/10 transition"
           >
             {content.cta}
           </a>
