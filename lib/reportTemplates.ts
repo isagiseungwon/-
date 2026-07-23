@@ -9,6 +9,48 @@ export interface ReportTemplate {
   body: string
 }
 
+// CRM 아웃리치 템플릿 (재방문·멤버십 연장·휴면 안부).
+// {이름}은 자동 치환된다.
+export const OUTREACH_TEMPLATES: Record<
+  'revisit' | 'member_extend' | 'winback',
+  { title: string; body: string }
+> = {
+  revisit: {
+    title: '재방문 넛지',
+    body: `{이름}님, 안녕하세요 🪑
+지난번 몰입 시간은 어떠셨어요?
+
+한 번의 몰입이 좋았다면, 두 번째부터가 진짜예요. 리듬은 반복에서 생기거든요.
+
+이번 주에도 조용히 집중할 시간이 필요하시면 언제든 들르세요. 24시간 열려 있어요 🌿
+혹시 자주 오실 것 같으면, 월 무제한 멤버십(49,000원)이 11회부터는 더 이득이에요.
+
+예약: hellkang.vercel.app/space`,
+  },
+  member_extend: {
+    title: '멤버십 연장 안내',
+    body: `{이름}님, 안녕하세요 🪑
+{이름}님의 몰입 멤버십이 곧 마무리돼요.
+
+지난 한 달, {이름}님만의 몰입 리듬이 만들어지고 있는데 여기서 끊기면 아쉬워요. 이어서 가시겠어요?
+
+연장은 아래 계좌로 월 49,000원 입금해 주시면 바로 갱신됩니다.
+농협 670-02-173387 (예금주 차신영)
+
+계속 함께해요 🌿`,
+  },
+  winback: {
+    title: '휴면 고객 안부',
+    body: `{이름}님, 안녕하세요 🪑
+요즘 어떻게 지내세요? 한동안 뜸하셔서 안부 여쭤요.
+
+바쁜 시기일수록 오히려 온전히 나에게 집중하는 30분이 필요하더라고요. 생각 정리가 필요한 날, 편하게 들르세요.
+
+{이름}님 자리, 늘 그 자리에 있어요 🌿
+예약: hellkang.vercel.app/space`,
+  },
+}
+
 export const REPORT_TEMPLATES: ReportTemplate[] = [
   {
     key: 'env',

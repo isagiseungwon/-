@@ -174,6 +174,12 @@ export default function AdminPage() {
         </div>
         <div className="flex items-center gap-3">
           <a
+            href="/admin/customers"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#2a9d8f] text-white font-medium hover:bg-[#248277] transition"
+          >
+            🗂 고객 관리
+          </a>
+          <a
             href="/admin/blog"
             className="text-sm px-3 py-1.5 rounded-full bg-[#1a1a2e] text-white font-medium hover:bg-[#2d2d4e] transition"
           >

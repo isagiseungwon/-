@@ -137,8 +137,27 @@ export default function FocusTimer() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="지금 할 것 한 가지 (선택)"
-          className="w-full max-w-xs mx-auto block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-center focus:outline-none focus:border-[#1a1a2e] transition mb-6"
+          className="w-full max-w-xs mx-auto block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-center focus:outline-none focus:border-[#1a1a2e] transition mb-3"
         />
+        <div className="flex flex-wrap justify-center gap-2 max-w-xs mx-auto mb-6">
+          {['📖 독서', '✍️ 글쓰기', '📚 공부', '💻 업무', '🗓️ 계획'].map((ex) => {
+            const label = ex.replace(/^[^ ]+ /, '')
+            return (
+              <button
+                key={ex}
+                type="button"
+                onClick={() => setTask(label)}
+                className={`text-xs px-3 py-1.5 rounded-full border transition ${
+                  task === label
+                    ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
+                    : 'border-gray-200 bg-white text-gray-500 hover:border-gray-400'
+                }`}
+              >
+                {ex}
+              </button>
+            )
+          })}
+        </div>
         <button
           type="button"
           onClick={start}

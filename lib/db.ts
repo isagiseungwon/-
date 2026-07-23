@@ -1,4 +1,5 @@
 import { Reservation } from './types'
+import { normalizePhone } from './crm'
 import fs from 'fs'
 import path from 'path'
 
@@ -263,6 +264,60 @@ export async function deleteBlogDraft(id: string): Promise<boolean> {
   if (next.length === rows.length) return false
   draftFileWriteAll(next)
   return true
+}
+
+// ═════════ 고객 메모 저장소 (전화번호 → 메모, 같은 백엔드 재사용) ═════════
+
+const NOTE_KEY = 'customer_notes'
+const NOTE_FILE = path.join(process.cwd(), 'data', 'customer-notes.json')
+
+function noteFileReadAll(): Record<string, string> {
+  try {
+    if (!fs.existsSync(NOTE_FILE)) return {}
+    return JSON.parse(fs.readFileSync(NOTE_FILE, 'utf-8'))
+  } catch {
+    return {}
+  }
+}
+function noteFileWriteAll(map: Record<string, string>) {
+  const dir = path.dirname(NOTE_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  fs.writeFileSync(NOTE_FILE, JSON.stringify(map, null, 2))
+}
+
+export async function getAllNotes(): Promise<Record<string, string>> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const all = await r.hgetall(NOTE_KEY)
+    return all ?? {}
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    const all = await r.hgetall<Record<string, string>>(NOTE_KEY)
+    return all ?? {}
+  }
+  return noteFileReadAll()
+}
+
+export async function setCustomerNote(phone: string, note: string): Promise<void> {
+  const key = normalizePhone(phone)
+  if (!key) return
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    if (note) await r.hset(NOTE_KEY, key, note)
+    else await r.hdel(NOTE_KEY, key)
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    if (note) await r.hset(NOTE_KEY, { [key]: note })
+    else await r.hdel(NOTE_KEY, key)
+    return
+  }
+  const map = noteFileReadAll()
+  if (note) map[key] = note
+  else delete map[key]
+  noteFileWriteAll(map)
 }
 
 export async function getReservedSlots(date: string): Promise<string[]> {
