@@ -1,394 +1,586 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>스킨케어 어드바이저 · 나만의 피부 관리사</title>
-  <style>
-    :root {
-      --bg: #fdf6f0;
-      --card: #ffffff;
-      --ink: #2f2a2e;
-      --muted: #8a7f86;
-      --accent: #d98a8a;
-      --accent-dark: #c06e6e;
-      --soft: #f6e7e0;
-      --line: #efe2da;
-      --ok: #7fae7f;
-      --shadow: 0 8px 30px rgba(180, 130, 120, 0.15);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
-        "Malgun Gothic", sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.65;
-      padding: 24px 16px 60px;
-      min-height: 100vh;
-    }
-    .wrap { max-width: 720px; margin: 0 auto; }
-    header { text-align: center; margin-bottom: 28px; }
-    header .badge {
-      display: inline-block; font-size: 13px; letter-spacing: 2px;
-      color: var(--accent-dark); text-transform: uppercase; margin-bottom: 8px;
-    }
-    header h1 { font-size: 28px; font-weight: 800; }
-    header p { color: var(--muted); margin-top: 6px; font-size: 15px; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JARVIS · 나를 위한 개인 관리사</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --panel2:#1c232c; --line:#2a3441;
+    --ink:#e6edf3; --muted:#8b98a5; --accent:#4da3ff; --accent2:#3b82f6;
+    --ok:#3fb950; --warn:#d29922; --pink:#f778ba; --shadow:0 10px 40px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:90px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px}
+  h1,h2,h3{font-weight:800}
+  .muted{color:var(--muted)}
+  button{font-family:inherit;cursor:pointer}
 
-    .card {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 18px; padding: 24px; box-shadow: var(--shadow);
-      margin-bottom: 20px;
-    }
-    .q { margin-bottom: 26px; }
-    .q:last-child { margin-bottom: 0; }
-    .q > label.title {
-      display: block; font-weight: 700; font-size: 16px; margin-bottom: 4px;
-    }
-    .q .hint { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  /* header / briefing */
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px}
+  .hello{font-size:22px;font-weight:800}
+  .hello .name{color:var(--accent)}
+  .sub{color:var(--muted);font-size:14px;margin-top:2px}
+  .dday{
+    background:linear-gradient(135deg,#1f6feb,#0a58ca);border-radius:16px;padding:12px 16px;
+    text-align:center;min-width:120px;box-shadow:var(--shadow);cursor:pointer;
+  }
+  .dday .label{font-size:11px;letter-spacing:1px;opacity:.85}
+  .dday .num{font-size:26px;font-weight:900;line-height:1.1}
+  .dday .foot{font-size:11px;opacity:.85}
 
-    .opts { display: flex; flex-wrap: wrap; gap: 10px; }
-    .opt {
-      border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 16px;
-      cursor: pointer; user-select: none; font-size: 14px; background: #fff;
-      transition: all .15s ease; color: var(--ink);
-    }
-    .opt:hover { border-color: var(--accent); }
-    .opt.sel {
-      background: var(--soft); border-color: var(--accent);
-      color: var(--accent-dark); font-weight: 600;
-    }
+  .brief{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:18px}
+  .brief h3{font-size:14px;color:var(--accent);margin-bottom:8px;letter-spacing:.5px}
+  .brief ul{list-style:none;display:grid;gap:6px}
+  .brief li{font-size:14px;display:flex;gap:8px;align-items:baseline}
+  .brief li b{color:var(--ink)}
 
-    .btn {
-      display: block; width: 100%; border: none; cursor: pointer;
-      background: var(--accent-dark); color: #fff; font-size: 17px; font-weight: 700;
-      padding: 16px; border-radius: 14px; transition: background .15s;
-    }
-    .btn:hover { background: #a95c5c; }
-    .btn.secondary {
-      background: #fff; color: var(--accent-dark); border: 1.5px solid var(--accent);
-      margin-top: 12px; font-size: 15px;
-    }
-    .btn.secondary:hover { background: var(--soft); }
+  /* tabs */
+  .tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(14,17,22,.94);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);display:flex;z-index:50}
+  .tabs .wrapt{max-width:760px;margin:0 auto;display:flex;width:100%}
+  .tab{flex:1;background:none;border:none;color:var(--muted);padding:10px 4px 12px;font-size:11px;
+    display:flex;flex-direction:column;align-items:center;gap:3px}
+  .tab .ic{font-size:20px}
+  .tab.active{color:var(--accent)}
 
-    /* result */
-    #result { display: none; }
-    .result-head {
-      text-align: center; padding: 26px 20px; background: linear-gradient(135deg, #f7e3dc, #f3d9d9);
-      border-radius: 16px; margin-bottom: 22px;
-    }
-    .result-head .type { font-size: 26px; font-weight: 800; color: var(--accent-dark); }
-    .result-head .desc { color: #7a6a68; margin-top: 8px; font-size: 15px; }
+  /* panels */
+  .view{display:none} .view.active{display:block}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+  .card h2{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .card .cdesc{color:var(--muted);font-size:13px;margin-bottom:14px}
 
-    .section-title {
-      font-size: 18px; font-weight: 800; margin: 4px 0 14px; display: flex;
-      align-items: center; gap: 8px;
-    }
-    .section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .grow{flex:1}
+  input,select,textarea{
+    width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+    border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;
+  }
+  input:focus,select,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  textarea{resize:vertical;min-height:70px}
+  label.fld{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
 
-    .routine { display: grid; gap: 14px; }
-    .step {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #fffdfc;
-    }
-    .step .num {
-      flex: 0 0 30px; height: 30px; background: var(--soft); color: var(--accent-dark);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 14px;
-    }
-    .step .body h4 { font-size: 15px; }
-    .step .body p { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .btn{background:var(--accent2);color:#fff;border:none;border-radius:10px;padding:11px 16px;font-weight:700;font-size:15px}
+  .btn:hover{background:#2f6fd6}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--accent)}
+  .btn.sm{padding:7px 12px;font-size:13px;border-radius:8px}
+  .btn.pink{background:var(--pink);color:#111}
 
-    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media (max-width: 520px) { .cols { grid-template-columns: 1fr; } }
-    .mini { border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
-    .mini h4 { font-size: 14px; margin-bottom: 8px; }
-    .chip {
-      display: inline-block; font-size: 13px; padding: 5px 11px; border-radius: 20px;
-      margin: 0 6px 6px 0;
-    }
-    .chip.good { background: #e8f2e8; color: #4f7a4f; }
-    .chip.avoid { background: #f7e3e3; color: #b05c5c; }
-    ul.tips { list-style: none; }
-    ul.tips li { padding: 6px 0 6px 22px; position: relative; font-size: 14px; }
-    ul.tips li::before { content: "✽"; position: absolute; left: 0; color: var(--accent); }
+  /* checklist */
+  .check{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--line);
+    border-radius:11px;margin-bottom:8px;background:var(--panel2);cursor:pointer;user-select:none}
+  .check .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--muted);flex:0 0 22px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+  .check.done .box{background:var(--ok);border-color:var(--ok)}
+  .check.done .txt{color:var(--muted);text-decoration:line-through}
+  .check .txt{flex:1;font-size:15px}
+  .check .del{color:var(--muted);font-size:18px;background:none;border:none;padding:2px 6px}
 
-    .disclaimer { font-size: 12px; color: var(--muted); text-align: center; margin-top: 24px; }
-    footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 30px; }
-  </style>
+  .progress{height:8px;background:var(--panel2);border-radius:6px;overflow:hidden;margin:6px 0 14px}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),#7fe08a);width:0;transition:width .3s}
+
+  .stat{display:flex;gap:12px}
+  .stat .box{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .stat .box .n{font-size:24px;font-weight:900;color:var(--accent)}
+  .stat .box .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+  .log{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+  .log .li{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line)}
+  .log .li:last-child{border:none}
+
+  /* timer */
+  .timer{text-align:center}
+  .timer .disp{font-size:52px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:2px;margin:6px 0 14px}
+  .timer .disp.run{color:var(--ok)}
+
+  /* skincare survey */
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;font-size:14px;background:var(--panel2)}
+  .opt.sel{background:rgba(77,163,255,.15);border-color:var(--accent);color:var(--accent)}
+  .qgrp{margin-bottom:18px}
+  .qgrp>.qt{font-weight:700;font-size:15px;margin-bottom:8px}
+  .chip{display:inline-block;font-size:13px;padding:5px 11px;border-radius:20px;margin:0 6px 6px 0}
+  .chip.good{background:rgba(63,185,80,.18);color:#7ee08a}
+  .chip.avoid{background:rgba(248,81,73,.18);color:#ff9c96}
+  .step{display:flex;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:var(--panel2)}
+  .step .num{flex:0 0 26px;height:26px;background:rgba(77,163,255,.15);color:var(--accent);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .step h4{font-size:14px} .step p{font-size:12.5px;color:var(--muted)}
+
+  .addrow{display:flex;gap:8px;margin-top:6px}
+  .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;
+    padding:10px 18px;border-radius:30px;font-size:14px;font-weight:700;opacity:0;transition:opacity .25s;z-index:99;box-shadow:var(--shadow)}
+  .toast.show{opacity:1}
+  .disclaimer{font-size:11.5px;color:var(--muted);text-align:center;margin-top:8px}
+  .journal-item{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:10px}
+  .journal-item .date{font-size:12px;color:var(--accent);margin-bottom:4px}
+  .mood{font-size:20px;margin-right:6px}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="badge">Skin Care Advisor</div>
-      <h1>🌸 나만의 피부 관리사</h1>
-      <p>몇 가지 질문에 답하면 맞춤 스킨케어 루틴을 알려드려요</p>
-    </header>
+<div class="wrap">
 
-    <!-- SURVEY -->
-    <div class="card" id="survey">
-      <div class="q" data-key="type" data-multi="false">
-        <label class="title">1. 평소 피부 타입은 어떤가요?</label>
-        <div class="hint">세안 후 아무것도 바르지 않았을 때를 떠올려보세요</div>
-        <div class="opts">
-          <div class="opt" data-val="dry">건성 (당김·각질)</div>
-          <div class="opt" data-val="oily">지성 (번들거림)</div>
-          <div class="opt" data-val="combo">복합성 (T존 유분·볼 건조)</div>
-          <div class="opt" data-val="normal">중성 (무난함)</div>
-        </div>
-      </div>
-
-      <div class="q" data-key="concerns" data-multi="true">
-        <label class="title">2. 가장 신경 쓰이는 고민은? (복수 선택)</label>
-        <div class="hint">최대 3개까지 골라주세요</div>
-        <div class="opts">
-          <div class="opt" data-val="acne">여드름·트러블</div>
-          <div class="opt" data-val="pores">모공·블랙헤드</div>
-          <div class="opt" data-val="wrinkle">주름·탄력</div>
-          <div class="opt" data-val="pigment">색소·기미·잡티</div>
-          <div class="opt" data-val="dull">칙칙함·톤</div>
-          <div class="opt" data-val="dehydrate">속건조·수분부족</div>
-        </div>
-      </div>
-
-      <div class="q" data-key="sensitive" data-multi="false">
-        <label class="title">3. 피부가 예민한 편인가요?</label>
-        <div class="hint">자극에 붉어지거나 따가운 경우가 잦은지</div>
-        <div class="opts">
-          <div class="opt" data-val="yes">예민해요</div>
-          <div class="opt" data-val="some">가끔 그래요</div>
-          <div class="opt" data-val="no">튼튼한 편</div>
-        </div>
-      </div>
-
-      <div class="q" data-key="age" data-multi="false">
-        <label class="title">4. 연령대는?</label>
-        <div class="opts">
-          <div class="opt" data-val="teen">~10대</div>
-          <div class="opt" data-val="20s">20대</div>
-          <div class="opt" data-val="30s">30대</div>
-          <div class="opt" data-val="40s">40대 이상</div>
-        </div>
-      </div>
-
-      <button class="btn" id="analyze">✨ 진단받기</button>
-      <div id="err" style="color:#c06e6e;font-size:13px;text-align:center;margin-top:12px;display:none;">
-        모든 질문에 답해주세요 🙏
-      </div>
+  <!-- HEADER -->
+  <div class="top">
+    <div>
+      <div class="hello">안녕, <span class="name" id="uname">병사</span>님 👋</div>
+      <div class="sub" id="todayStr"></div>
     </div>
-
-    <!-- RESULT -->
-    <div id="result">
-      <div class="result-head">
-        <div class="type" id="rType"></div>
-        <div class="desc" id="rDesc"></div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><span class="dot"></span>추천 데일리 루틴</div>
-        <div style="font-weight:700;color:var(--accent-dark);margin-bottom:8px;">☀️ 아침</div>
-        <div class="routine" id="rMorning"></div>
-        <div style="font-weight:700;color:var(--accent-dark);margin:18px 0 8px;">🌙 저녁</div>
-        <div class="routine" id="rEvening"></div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><span class="dot"></span>성분 가이드</div>
-        <div class="cols">
-          <div class="mini">
-            <h4>💚 추천 성분</h4>
-            <div id="rGood"></div>
-          </div>
-          <div class="mini">
-            <h4>⚠️ 주의 성분</h4>
-            <div id="rAvoid"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><span class="dot"></span>관리 팁</div>
-        <ul class="tips" id="rTips"></ul>
-      </div>
-
-      <button class="btn secondary" id="restart">↺ 다시 진단하기</button>
-      <p class="disclaimer">
-        본 결과는 일반적인 참고용 정보이며 의료 진단이 아닙니다.<br />
-        심한 피부 트러블은 피부과 전문의와 상담하세요.
-      </p>
+    <div class="dday" id="ddayBox" title="클릭해서 전역일 설정">
+      <div class="label">전역까지</div>
+      <div class="num" id="ddayNum">D-?</div>
+      <div class="foot" id="ddayFoot">날짜 설정하기</div>
     </div>
-
-    <footer>Skin Care Advisor · 맞춤 피부 관리 가이드</footer>
   </div>
 
-  <script>
-    // ---- 선택 상태 관리 ----
-    const answers = { type: null, concerns: [], sensitive: null, age: null };
+  <!-- BRIEFING (home) -->
+  <div class="brief" id="briefing">
+    <h3>📋 오늘의 브리핑</h3>
+    <ul id="briefList"></ul>
+  </div>
 
-    document.querySelectorAll('.q').forEach(q => {
-      const key = q.dataset.key;
-      const multi = q.dataset.multi === 'true';
-      q.querySelectorAll('.opt').forEach(opt => {
-        opt.addEventListener('click', () => {
-          const val = opt.dataset.val;
-          if (multi) {
-            const arr = answers[key];
-            const i = arr.indexOf(val);
-            if (i > -1) { arr.splice(i, 1); opt.classList.remove('sel'); }
-            else {
-              if (arr.length >= 3) return; // 최대 3개
-              arr.push(val); opt.classList.add('sel');
-            }
-          } else {
-            answers[key] = val;
-            q.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
-            opt.classList.add('sel');
-          }
-        });
-      });
-    });
+  <!-- ===== HOME ===== -->
+  <div class="view active" data-view="home">
+    <div class="card">
+      <h2>✅ 오늘의 루틴</h2>
+      <div class="cdesc">매일 자정에 초기화돼요. 나만의 루틴을 추가해보세요.</div>
+      <div class="progress"><i id="routProg"></i></div>
+      <div id="routList"></div>
+      <div class="addrow">
+        <input id="routInput" placeholder="루틴 추가 (예: 물 2L 마시기)" />
+        <button class="btn sm" id="routAdd">추가</button>
+      </div>
+    </div>
 
-    // ---- 지식 베이스 ----
-    const TYPE_LABEL = {
-      dry: '건성', oily: '지성', combo: '복합성', normal: '중성'
-    };
-    const TYPE_DESC = {
-      dry: '수분과 유분이 모두 부족해 당김과 각질이 생기기 쉬워요. 보습 장벽 강화가 핵심입니다.',
-      oily: '피지 분비가 활발해 번들거림과 모공이 고민이에요. 유수분 밸런스와 가벼운 보습이 중요해요.',
-      combo: 'T존은 번들거리고 볼은 건조한 복합성이에요. 부위별 맞춤 관리가 필요합니다.',
-      normal: '유수분 밸런스가 좋은 편이에요. 지금의 균형을 지키는 꾸준한 기본 관리가 최고입니다.'
-    };
+    <div class="card">
+      <h2>🎯 목표 / 명언</h2>
+      <div class="cdesc">스스로에게 거는 한마디</div>
+      <textarea id="motto" placeholder="예: 전역할 때 더 강한 사람이 되어 나간다."></textarea>
+      <div style="margin-top:10px"><button class="btn sm" id="mottoSave">저장</button></div>
+    </div>
+  </div>
 
-    const CONCERN_ADVICE = {
-      acne: { good: ['살리실산(BHA)', '나이아신아마이드', '센텔라(시카)', '티트리'],
-              avoid: ['코메도제닉 오일', '고농도 향료', '두꺼운 유분크림'],
-              tip: '트러블 부위는 손으로 자주 만지지 말고, 살리실산은 주 2~3회부터 시작해 자극을 살펴보세요.' },
-      pores: { good: ['나이아신아마이드', 'BHA', '레티놀'],
-               avoid: ['과도한 스크럽', '알코올 과다'],
-               tip: '모공은 완전히 없앨 순 없지만 각질·피지 관리로 눈에 덜 띄게 만들 수 있어요.' },
-      wrinkle: { good: ['레티놀', '펩타이드', '비타민C', '아데노신'],
-                 avoid: ['과한 각질제거', '건조한 환경 방치'],
-                 tip: '레티놀은 저녁에만, 저농도부터. 낮에는 자외선차단이 주름 예방의 80%예요.' },
-      pigment: { good: ['비타민C', '나이아신아마이드', '알부틴', '트라넥삼산'],
-                 avoid: ['자외선 노출', '물리적 자극'],
-                 tip: '미백 성분보다 자외선 차단이 우선. SPF를 매일, 실내에서도 발라주세요.' },
-      dull: { good: ['비타민C', 'AHA', '나이아신아마이드'],
-              avoid: ['각질 방치', '수분 부족'],
-              tip: '주 1~2회 순한 AHA로 묵은 각질을 정리하면 톤이 한결 맑아 보여요.' },
-      dehydrate: { good: ['히알루론산', '판테놀', '세라마이드', '글리세린'],
-                   avoid: ['탈수 유발 알코올', '뜨거운 물 세안'],
-                   tip: '수분크림은 세안 후 3분 내, 촉촉할 때 발라 수분을 가둬주세요.' }
-    };
+  <!-- ===== BODY ===== -->
+  <div class="view" data-view="body">
+    <div class="card">
+      <h2>💪 오늘 운동 기록</h2>
+      <div class="cdesc">한 세트 끝날 때마다 눌러서 누적하세요.</div>
+      <div class="stat" id="bodyStats"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn ghost grow" data-ex="pushup">팔굽혀펴기 +10</button>
+        <button class="btn ghost grow" data-ex="situp">윗몸 +10</button>
+        <button class="btn ghost grow" data-ex="squat">스쿼트 +10</button>
+      </div>
+      <div class="addrow" style="margin-top:10px">
+        <input id="runInput" type="number" inputmode="decimal" placeholder="오늘 달리기 (km)" />
+        <button class="btn sm" id="runAdd">기록</button>
+      </div>
+      <div class="log" id="bodyLog"></div>
+    </div>
+    <div class="card">
+      <h2>⚖️ 몸무게 기록</h2>
+      <div class="cdesc">주 1~2회만 재도 충분해요.</div>
+      <div class="addrow">
+        <input id="wInput" type="number" inputmode="decimal" placeholder="몸무게 (kg)" />
+        <button class="btn sm" id="wAdd">기록</button>
+      </div>
+      <div class="log" id="wLog"></div>
+    </div>
+  </div>
 
-    const CONCERN_LABEL = {
-      acne: '트러블', pores: '모공', wrinkle: '주름·탄력',
-      pigment: '색소·잡티', dull: '칙칙함', dehydrate: '속건조'
-    };
+  <!-- ===== STUDY ===== -->
+  <div class="view" data-view="study">
+    <div class="card timer">
+      <h2 style="justify-content:center">📚 공부 타이머</h2>
+      <div class="cdesc">집중 시간을 재고 오늘 누적에 더해요.</div>
+      <div class="disp" id="tDisp">00:00</div>
+      <div class="row" style="justify-content:center">
+        <button class="btn" id="tToggle">시작</button>
+        <button class="btn ghost" id="tSave">기록 저장</button>
+      </div>
+      <div class="stat" style="margin-top:16px">
+        <div class="box"><div class="n" id="studyToday">0분</div><div class="l">오늘 공부</div></div>
+        <div class="box"><div class="n" id="studyTotal">0분</div><div class="l">누적</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📝 공부/할 일 목록</h2>
+      <div class="cdesc">시험, 자격증, 과제 등 무엇이든.</div>
+      <div id="todoList"></div>
+      <div class="addrow">
+        <input id="todoInput" placeholder="할 일 추가 (예: 정보처리기사 1과목)" />
+        <button class="btn sm" id="todoAdd">추가</button>
+      </div>
+    </div>
+  </div>
 
-    function buildRoutine(a) {
-      const sens = a.sensitive === 'yes';
-      const morning = [
-        { h: '약산성 클렌저', p: '미온수로 부드럽게 세안' },
-        { h: '토너 / 수분층', p: a.type === 'oily' ? '산뜻한 워터 타입' : '보습 토너로 결 정돈' },
-      ];
-      const evening = [
-        { h: a.type === 'oily' || a.type === 'combo' ? '오일+폼 이중세안' : '순한 클렌징',
-          p: '자외선차단·메이크업을 꼼꼼히 제거' },
-        { h: '토너 / 수분층', p: '피부결 정돈 및 다음 단계 흡수 도움' },
-      ];
+  <!-- ===== SKIN ===== -->
+  <div class="view" data-view="skin">
+    <div class="card">
+      <h2>🌸 스킨케어 체크</h2>
+      <div class="cdesc">아침·저녁 기본 관리를 챙겼는지 체크하세요.</div>
+      <div id="skinCheckAM"></div>
+      <div id="skinCheckPM"></div>
+    </div>
+    <div class="card" id="skinSurveyCard">
+      <h2>🔍 피부 진단</h2>
+      <div class="cdesc">한 번 진단하면 맞춤 성분·루틴을 저장해둬요.</div>
+      <div id="skinSurvey">
+        <div class="qgrp" data-key="type" data-multi="false">
+          <div class="qt">1. 피부 타입</div>
+          <div class="opts">
+            <div class="opt" data-val="dry">건성</div>
+            <div class="opt" data-val="oily">지성</div>
+            <div class="opt" data-val="combo">복합성</div>
+            <div class="opt" data-val="normal">중성</div>
+          </div>
+        </div>
+        <div class="qgrp" data-key="concerns" data-multi="true">
+          <div class="qt">2. 고민 (복수, 최대 3개)</div>
+          <div class="opts">
+            <div class="opt" data-val="acne">트러블</div>
+            <div class="opt" data-val="pores">모공</div>
+            <div class="opt" data-val="wrinkle">주름·탄력</div>
+            <div class="opt" data-val="pigment">색소·잡티</div>
+            <div class="opt" data-val="dull">칙칙함</div>
+            <div class="opt" data-val="dehydrate">속건조</div>
+          </div>
+        </div>
+        <div class="qgrp" data-key="sensitive" data-multi="false">
+          <div class="qt">3. 예민도</div>
+          <div class="opts">
+            <div class="opt" data-val="yes">예민</div>
+            <div class="opt" data-val="some">보통</div>
+            <div class="opt" data-val="no">튼튼</div>
+          </div>
+        </div>
+        <button class="btn pink" id="skinAnalyze" style="width:100%">✨ 진단받기</button>
+      </div>
+      <div id="skinResult" style="display:none"></div>
+    </div>
+  </div>
 
-      // 고민 기반 세럼
-      if (a.concerns.includes('wrinkle') || a.concerns.includes('pores')) {
-        evening.push({ h: '레티놀 세럼 (주 2~3회)', p: sens ? '저농도부터 천천히' : '탄력·모공 집중 케어' });
-      }
-      if (a.concerns.includes('pigment') || a.concerns.includes('dull')) {
-        morning.push({ h: '비타민C 세럼', p: '항산화 + 톤 개선, 자차 전에' });
-      }
-      if (a.concerns.includes('acne') || a.concerns.includes('pores')) {
-        evening.push({ h: 'BHA 세럼 (주 2~3회)', p: '피지·각질 정리' });
-      }
-      if (a.concerns.includes('dehydrate')) {
-        morning.push({ h: '히알루론산 세럼', p: '속수분 충전' });
-        evening.push({ h: '히알루론산 세럼', p: '속수분 충전' });
-      }
+  <!-- ===== JOURNAL ===== -->
+  <div class="view" data-view="journal">
+    <div class="card">
+      <h2>📔 오늘의 일지</h2>
+      <div class="cdesc">오늘 하루, 기분과 한 줄 기록.</div>
+      <div class="row" style="margin-bottom:10px" id="moodRow">
+        <span class="mood" data-m="😄">😄</span><span class="mood" data-m="🙂">🙂</span>
+        <span class="mood" data-m="😐">😐</span><span class="mood" data-m="😔">😔</span>
+        <span class="mood" data-m="😤">😤</span>
+      </div>
+      <textarea id="jInput" placeholder="오늘 있었던 일, 느낀 점..."></textarea>
+      <div style="margin-top:10px"><button class="btn" id="jSave">저장</button></div>
+    </div>
+    <div class="card">
+      <h2>🗂️ 지난 기록</h2>
+      <div id="jList"></div>
+    </div>
+  </div>
 
-      // 보습
-      const cream = a.type === 'oily' ? '가벼운 젤 수분크림'
-        : a.type === 'dry' ? '리치한 보습크림(세라마이드)'
-        : '밸런스 수분크림';
-      morning.push({ h: cream, p: '수분 마무리' });
-      evening.push({ h: cream, p: '수분 마무리 (건조하면 페이셜 오일 한 방울)' });
+</div>
 
-      // 아침 필수 자차
-      morning.push({ h: '자외선 차단제 SPF50', p: '모든 관리의 마지막이자 핵심! 2~3시간마다 덧발라요' });
+<!-- BOTTOM NAV -->
+<nav class="tabs"><div class="wrapt">
+  <button class="tab active" data-tab="home"><span class="ic">🏠</span>홈</button>
+  <button class="tab" data-tab="body"><span class="ic">💪</span>몸</button>
+  <button class="tab" data-tab="study"><span class="ic">📚</span>공부</button>
+  <button class="tab" data-tab="skin"><span class="ic">🌸</span>피부</button>
+  <button class="tab" data-tab="journal"><span class="ic">📔</span>일지</button>
+</div></nav>
 
-      return { morning, evening };
-    }
+<div class="toast" id="toast"></div>
 
-    function analyze() {
-      if (!answers.type || !answers.sensitive || !answers.age || answers.concerns.length === 0) {
-        document.getElementById('err').style.display = 'block';
-        return;
-      }
-      const a = answers;
+<script>
+/* =========================================================
+   JARVIS - 개인 관리 대시보드 (localStorage 기반)
+========================================================= */
+const KEY='jarvis_v1';
+const DEFAULT={
+  name:'병사', dischargeDate:null, motto:'',
+  routines:[{t:'물 2L 마시기',d:false},{t:'스트레칭 10분',d:false},{t:'단어 30개',d:false}],
+  routineDate:null,
+  study:{today:0,total:0,date:null}, todos:[],
+  body:{date:null,pushup:0,situp:0,squat:0,run:0}, bodyHist:[], weight:[],
+  skin:{profile:null, am:null, pm:null, date:null},
+  journal:[], lastMood:'🙂'
+};
+let S=load();
+function load(){try{const r=JSON.parse(localStorage.getItem(KEY));return r?{...structuredClone(DEFAULT),...r}:structuredClone(DEFAULT);}catch(e){return structuredClone(DEFAULT);}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));}
+const todayKey=()=>new Date().toISOString().slice(0,10);
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1600);}
 
-      // 헤더
-      document.getElementById('rType').textContent =
-        `${TYPE_LABEL[a.type]} 피부 · ${a.concerns.map(c => CONCERN_LABEL[c]).join(', ')} 집중`;
-      document.getElementById('rDesc').textContent = TYPE_DESC[a.type];
+/* ---- daily reset ---- */
+function dailyReset(){
+  const tk=todayKey();
+  if(S.routineDate!==tk){S.routines.forEach(r=>r.d=false);S.routineDate=tk;}
+  if(S.study.date!==tk){S.study.today=0;S.study.date=tk;}
+  if(S.body.date!==tk){
+    if(S.body.date&&(S.body.pushup||S.body.situp||S.body.squat||S.body.run))
+      S.bodyHist.unshift({date:S.body.date,...{pushup:S.body.pushup,situp:S.body.situp,squat:S.body.squat,run:S.body.run}});
+    S.body={date:tk,pushup:0,situp:0,squat:0,run:0};
+  }
+  if(S.skin.date!==tk){S.skin.am=null;S.skin.pm=null;S.skin.date=tk;}
+  save();
+}
 
-      // 루틴
-      const { morning, evening } = buildRoutine(a);
-      const render = (list, el) => {
-        el.innerHTML = list.map((s, i) => `
-          <div class="step">
-            <div class="num">${i + 1}</div>
-            <div class="body"><h4>${s.h}</h4><p>${s.p}</p></div>
-          </div>`).join('');
-      };
-      render(morning, document.getElementById('rMorning'));
-      render(evening, document.getElementById('rEvening'));
+/* ---- header ---- */
+function renderHeader(){
+  document.getElementById('uname').textContent=S.name;
+  const d=new Date();
+  const days=['일','월','화','수','목','금','토'];
+  document.getElementById('todayStr').textContent=`${d.getMonth()+1}월 ${d.getDate()}일 (${days[d.getDay()]}) · 오늘도 화이팅`;
+  const nn=document.getElementById('ddayNum'), ff=document.getElementById('ddayFoot');
+  if(S.dischargeDate){
+    const diff=Math.ceil((new Date(S.dischargeDate)-new Date(todayKey()))/86400000);
+    if(diff>0){nn.textContent='D-'+diff;ff.textContent=S.dischargeDate;}
+    else if(diff===0){nn.textContent='D-DAY';ff.textContent='전역!! 🎉';}
+    else{nn.textContent='전역 🎉';ff.textContent='+'+Math.abs(diff)+'일';}
+  }else{nn.textContent='D-?';ff.textContent='날짜 설정하기';}
+}
+document.getElementById('ddayBox').onclick=()=>{
+  const cur=S.dischargeDate||'';
+  const v=prompt('전역일을 입력하세요 (YYYY-MM-DD)',cur);
+  if(v===null)return;
+  if(v===''){S.dischargeDate=null;}
+  else if(/^\d{4}-\d{2}-\d{2}$/.test(v)){S.dischargeDate=v;}
+  else{toast('YYYY-MM-DD 형식으로!');return;}
+  save();renderHeader();renderBrief();
+};
+document.getElementById('uname').onclick=()=>{
+  const v=prompt('이름/호칭을 입력하세요',S.name);
+  if(v){S.name=v.trim()||'병사';save();renderHeader();renderBrief();}
+};
 
-      // 성분
-      const good = new Set(), avoid = new Set(), tips = new Set();
-      a.concerns.forEach(c => {
-        CONCERN_ADVICE[c].good.forEach(g => good.add(g));
-        CONCERN_ADVICE[c].avoid.forEach(g => avoid.add(g));
-        tips.add(CONCERN_ADVICE[c].tip);
-      });
-      if (a.type === 'dry') { good.add('세라마이드'); good.add('스쿠알란'); }
-      if (a.type === 'oily') avoid.add('무거운 미네랄 오일');
-      if (a.sensitive === 'yes') {
-        good.add('판테놀'); good.add('마데카소사이드');
-        avoid.add('인공향료'); avoid.add('고농도 산');
-        tips.add('새 제품은 팔 안쪽에 먼저 발라 하루 지켜본 뒤 얼굴에 사용하세요.');
-      }
-      if (a.age === '40s') { good.add('펩타이드'); good.add('레티놀'); }
+/* ---- briefing ---- */
+function renderBrief(){
+  const ul=document.getElementById('briefList');
+  const doneR=S.routines.filter(r=>r.d).length, totR=S.routines.length;
+  const doneT=S.todos.filter(t=>t.d).length, totT=S.todos.length;
+  const items=[];
+  if(S.dischargeDate){
+    const diff=Math.ceil((new Date(S.dischargeDate)-new Date(todayKey()))/86400000);
+    if(diff>0)items.push(`🎖️ 전역까지 <b>${diff}일</b> 남았어요.`);
+  }
+  items.push(`✅ 오늘 루틴 <b>${doneR}/${totR}</b> 완료`);
+  items.push(`📚 오늘 공부 <b>${S.study.today}분</b>`+(totT?` · 할 일 ${doneT}/${totT}`:''));
+  const b=S.body;
+  items.push(`💪 오늘 운동 — 팔${b.pushup} 윗${b.situp} 스${b.squat}`+(b.run?` · ${b.run}km`:''));
+  if(!S.skin.am||!S.skin.pm)items.push(`🌸 스킨케어 ${!S.skin.am?'아침':''}${(!S.skin.am&&!S.skin.pm)?'·':''}${!S.skin.pm?'저녁':''} 아직 안 챙겼어요`);
+  if(S.motto)items.push(`🎯 <b>${escapeHtml(S.motto)}</b>`);
+  ul.innerHTML=items.map(i=>`<li>${i}</li>`).join('');
+}
+function escapeHtml(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-      document.getElementById('rGood').innerHTML =
-        [...good].map(g => `<span class="chip good">${g}</span>`).join('');
-      document.getElementById('rAvoid').innerHTML =
-        [...avoid].map(g => `<span class="chip avoid">${g}</span>`).join('');
+/* ---- tabs ---- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.querySelector(`.view[data-view="${t.dataset.tab}"]`).classList.add('active');
+  document.getElementById('briefing').style.display=t.dataset.tab==='home'?'block':'none';
+  window.scrollTo({top:0});
+});
 
-      // 공통 팁
-      tips.add('충분한 수분 섭취와 7시간 이상 수면은 어떤 화장품보다 강력해요.');
-      tips.add('한 번에 여러 신제품을 시작하지 말고 하나씩 늘려 피부 반응을 확인하세요.');
-      document.getElementById('rTips').innerHTML =
-        [...tips].map(t => `<li>${t}</li>`).join('');
+/* ---- routines ---- */
+function renderRoutines(){
+  const list=document.getElementById('routList');
+  list.innerHTML=S.routines.map((r,i)=>`
+    <div class="check ${r.d?'done':''}" data-i="${i}">
+      <div class="box">${r.d?'✓':''}</div>
+      <div class="txt">${escapeHtml(r.t)}</div>
+      <button class="del" data-del="${i}">×</button>
+    </div>`).join('')||'<div class="muted" style="font-size:14px">루틴을 추가해보세요.</div>';
+  const done=S.routines.filter(r=>r.d).length;
+  document.getElementById('routProg').style.width=(S.routines.length?done/S.routines.length*100:0)+'%';
+}
+document.getElementById('routList').onclick=e=>{
+  const del=e.target.closest('[data-del]');
+  if(del){S.routines.splice(+del.dataset.del,1);save();renderRoutines();renderBrief();return;}
+  const c=e.target.closest('.check');
+  if(c){const i=+c.dataset.i;S.routines[i].d=!S.routines[i].d;save();renderRoutines();renderBrief();}
+};
+document.getElementById('routAdd').onclick=()=>{
+  const inp=document.getElementById('routInput');const v=inp.value.trim();
+  if(!v)return;S.routines.push({t:v,d:false});inp.value='';save();renderRoutines();renderBrief();
+};
 
-      // 화면 전환
-      document.getElementById('survey').style.display = 'none';
-      document.getElementById('result').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+/* ---- motto ---- */
+document.getElementById('motto').value=S.motto;
+document.getElementById('mottoSave').onclick=()=>{S.motto=document.getElementById('motto').value.trim();save();renderBrief();toast('저장했어요');};
 
-    document.getElementById('analyze').addEventListener('click', analyze);
-    document.getElementById('restart').addEventListener('click', () => {
-      document.getElementById('result').style.display = 'none';
-      document.getElementById('survey').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+/* ---- body ---- */
+function renderBody(){
+  const b=S.body;
+  document.getElementById('bodyStats').innerHTML=`
+    <div class="box"><div class="n">${b.pushup}</div><div class="l">팔굽혀펴기</div></div>
+    <div class="box"><div class="n">${b.situp}</div><div class="l">윗몸</div></div>
+    <div class="box"><div class="n">${b.squat}</div><div class="l">스쿼트</div></div>`;
+  const log=document.getElementById('bodyLog');
+  if(S.bodyHist.length){
+    log.innerHTML='<div style="margin-bottom:4px">최근 기록</div>'+S.bodyHist.slice(0,7).map(h=>
+      `<div class="li"><span>${h.date}</span><span>팔${h.pushup} 윗${h.situp} 스${h.squat}${h.run?' · '+h.run+'km':''}</span></div>`).join('');
+  }else log.innerHTML='';
+  const wl=document.getElementById('wLog');
+  wl.innerHTML=S.weight.length?('<div style="margin-bottom:4px">몸무게 추이</div>'+S.weight.slice(0,8).map(w=>
+    `<div class="li"><span>${w.date}</span><span>${w.kg} kg</span></div>`).join('')):'';
+}
+document.querySelectorAll('[data-ex]').forEach(btn=>btn.onclick=()=>{
+  S.body[btn.dataset.ex]+=10;save();renderBody();renderBrief();toast('+10 기록!');
+});
+document.getElementById('runAdd').onclick=()=>{
+  const inp=document.getElementById('runInput');const v=parseFloat(inp.value);
+  if(!v||v<=0)return;S.body.run=Math.round((S.body.run+v)*10)/10;inp.value='';save();renderBody();renderBrief();toast(v+'km 기록!');
+};
+document.getElementById('wAdd').onclick=()=>{
+  const inp=document.getElementById('wInput');const v=parseFloat(inp.value);
+  if(!v||v<=0)return;S.weight.unshift({date:todayKey(),kg:Math.round(v*10)/10});inp.value='';save();renderBody();toast('기록했어요');
+};
+
+/* ---- study timer ---- */
+let tRun=false,tStart=0,tAcc=0,tTick=null;
+function fmt(ms){const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function tUpdate(){document.getElementById('tDisp').textContent=fmt(tAcc+(tRun?Date.now()-tStart:0));}
+document.getElementById('tToggle').onclick=()=>{
+  const disp=document.getElementById('tDisp'),btn=document.getElementById('tToggle');
+  if(tRun){tAcc+=Date.now()-tStart;tRun=false;clearInterval(tTick);btn.textContent='시작';disp.classList.remove('run');}
+  else{tStart=Date.now();tRun=true;tTick=setInterval(tUpdate,500);btn.textContent='일시정지';disp.classList.add('run');}
+};
+document.getElementById('tSave').onclick=()=>{
+  if(tRun){tAcc+=Date.now()-tStart;tStart=Date.now();}
+  const mins=Math.round(tAcc/60000);
+  if(mins<1){toast('1분 이상부터 저장돼요');return;}
+  S.study.today+=mins;S.study.total+=mins;save();
+  tAcc=0;if(tRun){tStart=Date.now();}tUpdate();renderStudy();renderBrief();toast(mins+'분 저장!');
+};
+function renderStudy(){
+  document.getElementById('studyToday').textContent=S.study.today+'분';
+  document.getElementById('studyTotal').textContent=(S.study.total>=60?(Math.floor(S.study.total/60)+'시간 '+(S.study.total%60)+'분'):S.study.total+'분');
+  renderTodos();
+}
+function renderTodos(){
+  const l=document.getElementById('todoList');
+  l.innerHTML=S.todos.map((t,i)=>`
+    <div class="check ${t.d?'done':''}" data-i="${i}">
+      <div class="box">${t.d?'✓':''}</div><div class="txt">${escapeHtml(t.t)}</div>
+      <button class="del" data-del="${i}">×</button></div>`).join('')||'<div class="muted" style="font-size:14px">할 일을 추가해보세요.</div>';
+}
+document.getElementById('todoList').onclick=e=>{
+  const del=e.target.closest('[data-del]');
+  if(del){S.todos.splice(+del.dataset.del,1);save();renderTodos();renderBrief();return;}
+  const c=e.target.closest('.check');
+  if(c){const i=+c.dataset.i;S.todos[i].d=!S.todos[i].d;save();renderTodos();renderBrief();}
+};
+document.getElementById('todoAdd').onclick=()=>{
+  const inp=document.getElementById('todoInput');const v=inp.value.trim();
+  if(!v)return;S.todos.push({t:v,d:false});inp.value='';save();renderTodos();renderBrief();
+};
+
+/* ---- skincare ---- */
+const AM_STEPS=['약산성 세안','토너/수분','(세럼)','수분크림','☀️ 자외선차단'];
+const PM_STEPS=['클렌징','토너/수분','(세럼)','수분크림'];
+function renderSkinChecks(){
+  const am=document.getElementById('skinCheckAM'),pm=document.getElementById('skinCheckPM');
+  am.innerHTML='<div style="font-weight:700;color:var(--accent);margin:2px 0 8px">☀️ 아침</div>'+
+    `<div class="check ${S.skin.am?'done':''}" data-t="am"><div class="box">${S.skin.am?'✓':''}</div><div class="txt">아침 스킨케어 완료</div></div>`;
+  pm.innerHTML='<div style="font-weight:700;color:var(--accent);margin:12px 0 8px">🌙 저녁</div>'+
+    `<div class="check ${S.skin.pm?'done':''}" data-t="pm"><div class="box">${S.skin.pm?'✓':''}</div><div class="txt">저녁 스킨케어 완료</div></div>`;
+}
+document.getElementById('skinCheckAM').onclick=e=>{const c=e.target.closest('[data-t]');if(c){S.skin.am=!S.skin.am;save();renderSkinChecks();renderBrief();}};
+document.getElementById('skinCheckPM').onclick=e=>{const c=e.target.closest('[data-t]');if(c){S.skin.pm=!S.skin.pm;save();renderSkinChecks();renderBrief();}};
+
+const skinAns={type:null,concerns:[],sensitive:null};
+document.querySelectorAll('#skinSurvey .qgrp').forEach(q=>{
+  const key=q.dataset.key,multi=q.dataset.multi==='true';
+  q.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    const v=o.dataset.val;
+    if(multi){const a=skinAns[key],i=a.indexOf(v);
+      if(i>-1){a.splice(i,1);o.classList.remove('sel');}else{if(a.length>=3)return;a.push(v);o.classList.add('sel');}}
+    else{skinAns[key]=v;q.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');}
+  });
+});
+const C_LABEL={acne:'트러블',pores:'모공',wrinkle:'주름·탄력',pigment:'색소·잡티',dull:'칙칙함',dehydrate:'속건조'};
+const T_LABEL={dry:'건성',oily:'지성',combo:'복합성',normal:'중성'};
+const C_ADV={
+  acne:{g:['살리실산(BHA)','나이아신아마이드','시카'],a:['코메도제닉 오일','두꺼운 유분']},
+  pores:{g:['나이아신아마이드','BHA','레티놀'],a:['과도한 스크럽']},
+  wrinkle:{g:['레티놀','펩타이드','비타민C'],a:['과한 각질제거']},
+  pigment:{g:['비타민C','나이아신아마이드','알부틴'],a:['자외선 노출']},
+  dull:{g:['비타민C','AHA'],a:['각질 방치']},
+  dehydrate:{g:['히알루론산','판테놀','세라마이드'],a:['뜨거운 물 세안']}
+};
+function renderSkinResult(p){
+  const good=new Set(),avoid=new Set();
+  p.concerns.forEach(c=>{C_ADV[c].g.forEach(x=>good.add(x));C_ADV[c].a.forEach(x=>avoid.add(x));});
+  if(p.type==='dry'){good.add('세라마이드');good.add('스쿠알란');}
+  if(p.type==='oily')avoid.add('무거운 오일');
+  if(p.sensitive==='yes'){good.add('판테놀');avoid.add('인공향료');avoid.add('고농도 산');}
+  const el=document.getElementById('skinResult');
+  el.style.display='block';
+  el.innerHTML=`
+    <div style="font-weight:800;font-size:16px;color:var(--pink);margin-bottom:4px">
+      ${T_LABEL[p.type]} · ${p.concerns.map(c=>C_LABEL[c]).join(', ')}</div>
+    <div class="muted" style="font-size:13px;margin-bottom:12px">아래 성분을 참고해 제품을 골라보세요.</div>
+    <div style="font-size:13px;margin-bottom:6px">💚 추천 성분</div>
+    <div style="margin-bottom:12px">${[...good].map(g=>`<span class="chip good">${g}</span>`).join('')}</div>
+    <div style="font-size:13px;margin-bottom:6px">⚠️ 주의 성분</div>
+    <div style="margin-bottom:12px">${[...avoid].map(g=>`<span class="chip avoid">${g}</span>`).join('')}</div>
+    <button class="btn ghost sm" id="skinReset">다시 진단</button>
+    <div class="disclaimer">참고용 정보이며 의료 진단이 아닙니다. 심한 트러블은 피부과 상담을 권해요.</div>`;
+  document.getElementById('skinSurvey').style.display='none';
+  document.getElementById('skinReset').onclick=()=>{
+    S.skin.profile=null;save();
+    document.getElementById('skinResult').style.display='none';
+    document.getElementById('skinSurvey').style.display='block';
+    skinAns.type=null;skinAns.concerns=[];skinAns.sensitive=null;
+    document.querySelectorAll('#skinSurvey .opt').forEach(o=>o.classList.remove('sel'));
+  };
+}
+document.getElementById('skinAnalyze').onclick=()=>{
+  if(!skinAns.type||!skinAns.sensitive||skinAns.concerns.length===0){toast('모든 항목을 선택해주세요');return;}
+  S.skin.profile={...skinAns,concerns:[...skinAns.concerns]};save();renderSkinResult(S.skin.profile);
+};
+
+/* ---- journal ---- */
+let curMood=S.lastMood;
+function highlightMood(){document.querySelectorAll('#moodRow .mood').forEach(m=>m.style.opacity=(m.dataset.m===curMood?'1':'.35'));}
+document.querySelectorAll('#moodRow .mood').forEach(m=>m.onclick=()=>{curMood=m.dataset.m;highlightMood();});
+document.getElementById('jSave').onclick=()=>{
+  const inp=document.getElementById('jInput');const v=inp.value.trim();
+  if(!v){toast('내용을 입력해주세요');return;}
+  S.journal.unshift({date:todayKey(),mood:curMood,text:v});S.lastMood=curMood;
+  inp.value='';save();renderJournal();toast('저장했어요');
+};
+function renderJournal(){
+  const l=document.getElementById('jList');
+  l.innerHTML=S.journal.length?S.journal.slice(0,30).map((j,i)=>`
+    <div class="journal-item">
+      <div class="date">${j.date} <button class="del" data-jdel="${i}" style="float:right;color:var(--muted);background:none;border:none;font-size:16px">×</button></div>
+      <div><span class="mood">${j.mood||''}</span>${escapeHtml(j.text)}</div>
+    </div>`).join(''):'<div class="muted" style="font-size:14px">아직 기록이 없어요.</div>';
+}
+document.getElementById('jList').onclick=e=>{
+  const d=e.target.closest('[data-jdel]');
+  if(d){if(confirm('이 기록을 삭제할까요?')){S.journal.splice(+d.dataset.jdel,1);save();renderJournal();}}
+};
+
+/* ---- init ---- */
+function initSkin(){
+  if(S.skin.profile){
+    skinAns.type=S.skin.profile.type;skinAns.concerns=[...S.skin.profile.concerns];skinAns.sensitive=S.skin.profile.sensitive;
+    renderSkinResult(S.skin.profile);
+  }
+}
+dailyReset();
+renderHeader();renderBrief();renderRoutines();renderBody();renderStudy();renderSkinChecks();initSkin();highlightMood();renderJournal();
+</script>
 </body>
 </html>
