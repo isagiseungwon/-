@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스킨케어 어드바이저 · 나만의 피부 관리사</title>
+  <style>
+    :root {
+      --bg: #fdf6f0;
+      --card: #ffffff;
+      --ink: #2f2a2e;
+      --muted: #8a7f86;
+      --accent: #d98a8a;
+      --accent-dark: #c06e6e;
+      --soft: #f6e7e0;
+      --line: #efe2da;
+      --ok: #7fae7f;
+      --shadow: 0 8px 30px rgba(180, 130, 120, 0.15);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+        "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      padding: 24px 16px 60px;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 28px; }
+    header .badge {
+      display: inline-block; font-size: 13px; letter-spacing: 2px;
+      color: var(--accent-dark); text-transform: uppercase; margin-bottom: 8px;
+    }
+    header h1 { font-size: 28px; font-weight: 800; }
+    header p { color: var(--muted); margin-top: 6px; font-size: 15px; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 18px; padding: 24px; box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .q { margin-bottom: 26px; }
+    .q:last-child { margin-bottom: 0; }
+    .q > label.title {
+      display: block; font-weight: 700; font-size: 16px; margin-bottom: 4px;
+    }
+    .q .hint { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+
+    .opts { display: flex; flex-wrap: wrap; gap: 10px; }
+    .opt {
+      border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 16px;
+      cursor: pointer; user-select: none; font-size: 14px; background: #fff;
+      transition: all .15s ease; color: var(--ink);
+    }
+    .opt:hover { border-color: var(--accent); }
+    .opt.sel {
+      background: var(--soft); border-color: var(--accent);
+      color: var(--accent-dark); font-weight: 600;
+    }
+
+    .btn {
+      display: block; width: 100%; border: none; cursor: pointer;
+      background: var(--accent-dark); color: #fff; font-size: 17px; font-weight: 700;
+      padding: 16px; border-radius: 14px; transition: background .15s;
+    }
+    .btn:hover { background: #a95c5c; }
+    .btn.secondary {
+      background: #fff; color: var(--accent-dark); border: 1.5px solid var(--accent);
+      margin-top: 12px; font-size: 15px;
+    }
+    .btn.secondary:hover { background: var(--soft); }
+
+    /* result */
+    #result { display: none; }
+    .result-head {
+      text-align: center; padding: 26px 20px; background: linear-gradient(135deg, #f7e3dc, #f3d9d9);
+      border-radius: 16px; margin-bottom: 22px;
+    }
+    .result-head .type { font-size: 26px; font-weight: 800; color: var(--accent-dark); }
+    .result-head .desc { color: #7a6a68; margin-top: 8px; font-size: 15px; }
+
+    .section-title {
+      font-size: 18px; font-weight: 800; margin: 4px 0 14px; display: flex;
+      align-items: center; gap: 8px;
+    }
+    .section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+    .routine { display: grid; gap: 14px; }
+    .step {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #fffdfc;
+    }
+    .step .num {
+      flex: 0 0 30px; height: 30px; background: var(--soft); color: var(--accent-dark);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+    }
+    .step .body h4 { font-size: 15px; }
+    .step .body p { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 520px) { .cols { grid-template-columns: 1fr; } }
+    .mini { border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+    .mini h4 { font-size: 14px; margin-bottom: 8px; }
+    .chip {
+      display: inline-block; font-size: 13px; padding: 5px 11px; border-radius: 20px;
+      margin: 0 6px 6px 0;
+    }
+    .chip.good { background: #e8f2e8; color: #4f7a4f; }
+    .chip.avoid { background: #f7e3e3; color: #b05c5c; }
+    ul.tips { list-style: none; }
+    ul.tips li { padding: 6px 0 6px 22px; position: relative; font-size: 14px; }
+    ul.tips li::before { content: "✽"; position: absolute; left: 0; color: var(--accent); }
+
+    .disclaimer { font-size: 12px; color: var(--muted); text-align: center; margin-top: 24px; }
+    footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">Skin Care Advisor</div>
+      <h1>🌸 나만의 피부 관리사</h1>
+      <p>몇 가지 질문에 답하면 맞춤 스킨케어 루틴을 알려드려요</p>
+    </header>
+
+    <!-- SURVEY -->
+    <div class="card" id="survey">
+      <div class="q" data-key="type" data-multi="false">
+        <label class="title">1. 평소 피부 타입은 어떤가요?</label>
+        <div class="hint">세안 후 아무것도 바르지 않았을 때를 떠올려보세요</div>
+        <div class="opts">
+          <div class="opt" data-val="dry">건성 (당김·각질)</div>
+          <div class="opt" data-val="oily">지성 (번들거림)</div>
+          <div class="opt" data-val="combo">복합성 (T존 유분·볼 건조)</div>
+          <div class="opt" data-val="normal">중성 (무난함)</div>
+        </div>
+      </div>
+
+      <div class="q" data-key="concerns" data-multi="true">
+        <label class="title">2. 가장 신경 쓰이는 고민은? (복수 선택)</label>
+        <div class="hint">최대 3개까지 골라주세요</div>
+        <div class="opts">
+          <div class="opt" data-val="acne">여드름·트러블</div>
+          <div class="opt" data-val="pores">모공·블랙헤드</div>
+          <div class="opt" data-val="wrinkle">주름·탄력</div>
+          <div class="opt" data-val="pigment">색소·기미·잡티</div>
+          <div class="opt" data-val="dull">칙칙함·톤</div>
+          <div class="opt" data-val="dehydrate">속건조·수분부족</div>
+        </div>
+      </div>
+
+      <div class="q" data-key="sensitive" data-multi="false">
+        <label class="title">3. 피부가 예민한 편인가요?</label>
+        <div class="hint">자극에 붉어지거나 따가운 경우가 잦은지</div>
+        <div class="opts">
+          <div class="opt" data-val="yes">예민해요</div>
+          <div class="opt" data-val="some">가끔 그래요</div>
+          <div class="opt" data-val="no">튼튼한 편</div>
+        </div>
+      </div>
+
+      <div class="q" data-key="age" data-multi="false">
+        <label class="title">4. 연령대는?</label>
+        <div class="opts">
+          <div class="opt" data-val="teen">~10대</div>
+          <div class="opt" data-val="20s">20대</div>
+          <div class="opt" data-val="30s">30대</div>
+          <div class="opt" data-val="40s">40대 이상</div>
+        </div>
+      </div>
+
+      <button class="btn" id="analyze">✨ 진단받기</button>
+      <div id="err" style="color:#c06e6e;font-size:13px;text-align:center;margin-top:12px;display:none;">
+        모든 질문에 답해주세요 🙏
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result">
+      <div class="result-head">
+        <div class="type" id="rType"></div>
+        <div class="desc" id="rDesc"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span class="dot"></span>추천 데일리 루틴</div>
+        <div style="font-weight:700;color:var(--accent-dark);margin-bottom:8px;">☀️ 아침</div>
+        <div class="routine" id="rMorning"></div>
+        <div style="font-weight:700;color:var(--accent-dark);margin:18px 0 8px;">🌙 저녁</div>
+        <div class="routine" id="rEvening"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span class="dot"></span>성분 가이드</div>
+        <div class="cols">
+          <div class="mini">
+            <h4>💚 추천 성분</h4>
+            <div id="rGood"></div>
+          </div>
+          <div class="mini">
+            <h4>⚠️ 주의 성분</h4>
+            <div id="rAvoid"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span class="dot"></span>관리 팁</div>
+        <ul class="tips" id="rTips"></ul>
+      </div>
+
+      <button class="btn secondary" id="restart">↺ 다시 진단하기</button>
+      <p class="disclaimer">
+        본 결과는 일반적인 참고용 정보이며 의료 진단이 아닙니다.<br />
+        심한 피부 트러블은 피부과 전문의와 상담하세요.
+      </p>
+    </div>
+
+    <footer>Skin Care Advisor · 맞춤 피부 관리 가이드</footer>
+  </div>
+
+  <script>
+    // ---- 선택 상태 관리 ----
+    const answers = { type: null, concerns: [], sensitive: null, age: null };
+
+    document.querySelectorAll('.q').forEach(q => {
+      const key = q.dataset.key;
+      const multi = q.dataset.multi === 'true';
+      q.querySelectorAll('.opt').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const val = opt.dataset.val;
+          if (multi) {
+            const arr = answers[key];
+            const i = arr.indexOf(val);
+            if (i > -1) { arr.splice(i, 1); opt.classList.remove('sel'); }
+            else {
+              if (arr.length >= 3) return; // 최대 3개
+              arr.push(val); opt.classList.add('sel');
+            }
+          } else {
+            answers[key] = val;
+            q.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+            opt.classList.add('sel');
+          }
+        });
+      });
+    });
+
+    // ---- 지식 베이스 ----
+    const TYPE_LABEL = {
+      dry: '건성', oily: '지성', combo: '복합성', normal: '중성'
+    };
+    const TYPE_DESC = {
+      dry: '수분과 유분이 모두 부족해 당김과 각질이 생기기 쉬워요. 보습 장벽 강화가 핵심입니다.',
+      oily: '피지 분비가 활발해 번들거림과 모공이 고민이에요. 유수분 밸런스와 가벼운 보습이 중요해요.',
+      combo: 'T존은 번들거리고 볼은 건조한 복합성이에요. 부위별 맞춤 관리가 필요합니다.',
+      normal: '유수분 밸런스가 좋은 편이에요. 지금의 균형을 지키는 꾸준한 기본 관리가 최고입니다.'
+    };
+
+    const CONCERN_ADVICE = {
+      acne: { good: ['살리실산(BHA)', '나이아신아마이드', '센텔라(시카)', '티트리'],
+              avoid: ['코메도제닉 오일', '고농도 향료', '두꺼운 유분크림'],
+              tip: '트러블 부위는 손으로 자주 만지지 말고, 살리실산은 주 2~3회부터 시작해 자극을 살펴보세요.' },
+      pores: { good: ['나이아신아마이드', 'BHA', '레티놀'],
+               avoid: ['과도한 스크럽', '알코올 과다'],
+               tip: '모공은 완전히 없앨 순 없지만 각질·피지 관리로 눈에 덜 띄게 만들 수 있어요.' },
+      wrinkle: { good: ['레티놀', '펩타이드', '비타민C', '아데노신'],
+                 avoid: ['과한 각질제거', '건조한 환경 방치'],
+                 tip: '레티놀은 저녁에만, 저농도부터. 낮에는 자외선차단이 주름 예방의 80%예요.' },
+      pigment: { good: ['비타민C', '나이아신아마이드', '알부틴', '트라넥삼산'],
+                 avoid: ['자외선 노출', '물리적 자극'],
+                 tip: '미백 성분보다 자외선 차단이 우선. SPF를 매일, 실내에서도 발라주세요.' },
+      dull: { good: ['비타민C', 'AHA', '나이아신아마이드'],
+              avoid: ['각질 방치', '수분 부족'],
+              tip: '주 1~2회 순한 AHA로 묵은 각질을 정리하면 톤이 한결 맑아 보여요.' },
+      dehydrate: { good: ['히알루론산', '판테놀', '세라마이드', '글리세린'],
+                   avoid: ['탈수 유발 알코올', '뜨거운 물 세안'],
+                   tip: '수분크림은 세안 후 3분 내, 촉촉할 때 발라 수분을 가둬주세요.' }
+    };
+
+    const CONCERN_LABEL = {
+      acne: '트러블', pores: '모공', wrinkle: '주름·탄력',
+      pigment: '색소·잡티', dull: '칙칙함', dehydrate: '속건조'
+    };
+
+    function buildRoutine(a) {
+      const sens = a.sensitive === 'yes';
+      const morning = [
+        { h: '약산성 클렌저', p: '미온수로 부드럽게 세안' },
+        { h: '토너 / 수분층', p: a.type === 'oily' ? '산뜻한 워터 타입' : '보습 토너로 결 정돈' },
+      ];
+      const evening = [
+        { h: a.type === 'oily' || a.type === 'combo' ? '오일+폼 이중세안' : '순한 클렌징',
+          p: '자외선차단·메이크업을 꼼꼼히 제거' },
+        { h: '토너 / 수분층', p: '피부결 정돈 및 다음 단계 흡수 도움' },
+      ];
+
+      // 고민 기반 세럼
+      if (a.concerns.includes('wrinkle') || a.concerns.includes('pores')) {
+        evening.push({ h: '레티놀 세럼 (주 2~3회)', p: sens ? '저농도부터 천천히' : '탄력·모공 집중 케어' });
+      }
+      if (a.concerns.includes('pigment') || a.concerns.includes('dull')) {
+        morning.push({ h: '비타민C 세럼', p: '항산화 + 톤 개선, 자차 전에' });
+      }
+      if (a.concerns.includes('acne') || a.concerns.includes('pores')) {
+        evening.push({ h: 'BHA 세럼 (주 2~3회)', p: '피지·각질 정리' });
+      }
+      if (a.concerns.includes('dehydrate')) {
+        morning.push({ h: '히알루론산 세럼', p: '속수분 충전' });
+        evening.push({ h: '히알루론산 세럼', p: '속수분 충전' });
+      }
+
+      // 보습
+      const cream = a.type === 'oily' ? '가벼운 젤 수분크림'
+        : a.type === 'dry' ? '리치한 보습크림(세라마이드)'
+        : '밸런스 수분크림';
+      morning.push({ h: cream, p: '수분 마무리' });
+      evening.push({ h: cream, p: '수분 마무리 (건조하면 페이셜 오일 한 방울)' });
+
+      // 아침 필수 자차
+      morning.push({ h: '자외선 차단제 SPF50', p: '모든 관리의 마지막이자 핵심! 2~3시간마다 덧발라요' });
+
+      return { morning, evening };
+    }
+
+    function analyze() {
+      if (!answers.type || !answers.sensitive || !answers.age || answers.concerns.length === 0) {
+        document.getElementById('err').style.display = 'block';
+        return;
+      }
+      const a = answers;
+
+      // 헤더
+      document.getElementById('rType').textContent =
+        `${TYPE_LABEL[a.type]} 피부 · ${a.concerns.map(c => CONCERN_LABEL[c]).join(', ')} 집중`;
+      document.getElementById('rDesc').textContent = TYPE_DESC[a.type];
+
+      // 루틴
+      const { morning, evening } = buildRoutine(a);
+      const render = (list, el) => {
+        el.innerHTML = list.map((s, i) => `
+          <div class="step">
+            <div class="num">${i + 1}</div>
+            <div class="body"><h4>${s.h}</h4><p>${s.p}</p></div>
+          </div>`).join('');
+      };
+      render(morning, document.getElementById('rMorning'));
+      render(evening, document.getElementById('rEvening'));
+
+      // 성분
+      const good = new Set(), avoid = new Set(), tips = new Set();
+      a.concerns.forEach(c => {
+        CONCERN_ADVICE[c].good.forEach(g => good.add(g));
+        CONCERN_ADVICE[c].avoid.forEach(g => avoid.add(g));
+        tips.add(CONCERN_ADVICE[c].tip);
+      });
+      if (a.type === 'dry') { good.add('세라마이드'); good.add('스쿠알란'); }
+      if (a.type === 'oily') avoid.add('무거운 미네랄 오일');
+      if (a.sensitive === 'yes') {
+        good.add('판테놀'); good.add('마데카소사이드');
+        avoid.add('인공향료'); avoid.add('고농도 산');
+        tips.add('새 제품은 팔 안쪽에 먼저 발라 하루 지켜본 뒤 얼굴에 사용하세요.');
+      }
+      if (a.age === '40s') { good.add('펩타이드'); good.add('레티놀'); }
+
+      document.getElementById('rGood').innerHTML =
+        [...good].map(g => `<span class="chip good">${g}</span>`).join('');
+      document.getElementById('rAvoid').innerHTML =
+        [...avoid].map(g => `<span class="chip avoid">${g}</span>`).join('');
+
+      // 공통 팁
+      tips.add('충분한 수분 섭취와 7시간 이상 수면은 어떤 화장품보다 강력해요.');
+      tips.add('한 번에 여러 신제품을 시작하지 말고 하나씩 늘려 피부 반응을 확인하세요.');
+      document.getElementById('rTips').innerHTML =
+        [...tips].map(t => `<li>${t}</li>`).join('');
+
+      // 화면 전환
+      document.getElementById('survey').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('analyze').addEventListener('click', analyze);
+    document.getElementById('restart').addEventListener('click', () => {
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('survey').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
