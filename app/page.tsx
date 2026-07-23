@@ -201,54 +201,94 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ───────── 브랜드 에세이 ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100">
+        {/* ───────── 브랜드 에세이: 마차의 기록 ───────── */}
+        <section className="px-6 py-20 bg-white border-y border-gray-100 overflow-hidden">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
                 Essay
               </p>
-              <h2 className="serif text-xl font-medium text-center mb-14 tracking-tight">
+              <h2 className="serif text-xl font-medium text-center mb-4 tracking-tight">
                 시간을 비싸게 쓰는 법
               </h2>
+              <p className="text-xs text-gray-400 text-center mb-12">
+                운영자 마차가 직접 쓴 기록
+              </p>
             </Reveal>
 
-            <div className="space-y-14 text-center">
+            {/* 마차의 실제 손글씨 카드 */}
+            <Reveal>
+              <figure className="mx-auto max-w-[280px] -rotate-2 bg-white p-2.5 pb-4 rounded-xl shadow-[0_16px_40px_rgba(233,196,106,0.35)] mb-14">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/story/insta/expensive.jpg"
+                  alt="시간을 비싸게 쓰는 법 — 마차의 손글씨 기록"
+                  loading="lazy"
+                  className="w-full rounded-lg block"
+                />
+                <figcaption className="text-[11px] text-gray-400 text-center mt-2.5 tracking-wide">
+                  @macha_ver._ 의 기록에서
+                </figcaption>
+              </figure>
+            </Reveal>
+
+            <div className="space-y-12 text-center mb-14">
               <Reveal>
                 <p className="text-[15px] leading-[2.05] text-gray-600">
                   일기를 쓰든, 오늘의 생각을 적든,<br />
-                  흩어진 아이디어를 정리하든, 책을 훑어보든 —<br />
+                  흩어진 아이디어를 적든, 책을 훑어보든 —<br />
                   <span className="text-[#1a1a2e]">
-                    그 순간부터 시간은 느리고 여유롭게 흐릅니다.
+                    어쨌든 그 순간부터 나의 시간은 느리게, 여유롭게 흘러갑니다.
                   </span>
                 </p>
               </Reveal>
-
-              <div className="max-w-[40px] mx-auto border-t border-gray-200" />
-
               <Reveal>
                 <p className="text-[15px] leading-[2.05] text-gray-600">
                   오로지 한 호흡에 하나를 몰입할 수 있는,<br />
                   <span className="text-[#1a1a2e] font-medium">
-                    누구도 값을 매길 수 없는 럭셔리한 시간.
+                    최고의 럭셔리 시간을 누릴 수 있다는 것.
                   </span>
                 </p>
               </Reveal>
             </div>
 
+            {/* 한 줄 요약 — 마차 카드의 구조 그대로 */}
             <Reveal>
-              <blockquote className="mt-16 mx-auto max-w-md rounded-2xl bg-[#f8f7f4] border border-gray-100 px-8 py-10 text-center relative">
-                <span className="serif absolute top-4 left-6 text-4xl text-[#e9c46a] leading-none" aria-hidden>
-                  &ldquo;
-                </span>
-                <p className="serif text-lg font-medium leading-relaxed tracking-tight text-[#1a1a2e]">
-                  오늘, 내가 할 수 있는<br />의도적 몰입은 무엇인가?
+              <div className="mx-auto max-w-md rounded-2xl bg-[#f8f7f4] border border-gray-100 px-7 py-8">
+                <p className="serif text-[15px] font-semibold text-center mb-6 tracking-tight">
+                  〈한 줄 요약〉
                 </p>
-              </blockquote>
+                <ol className="space-y-3.5 text-sm leading-relaxed text-gray-600">
+                  <li className="flex gap-3">
+                    <span className="shrink-0 text-gray-300">1.</span>
+                    몰입해야 한다.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="shrink-0 text-gray-300">2.</span>
+                    살아있는 느낌은 몰입에서 나오니까, 몰입을 쌓아가야 한다.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="shrink-0 text-gray-300">3.</span>
+                    현대인이 몰입을 하려면 환경 세팅이 필요하다.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="shrink-0 text-gray-300">4.</span>
+                    의도적인 몰입이 축적되면, 마침내 그 몰입은 나를 더 세련되게 잘
+                    사는 방향으로 밀어준다.
+                  </li>
+                  <li className="flex gap-3 text-[#1a1a2e] font-semibold">
+                    <span className="shrink-0 text-[#e9c46a]">5.</span>
+                    그래서, 오늘 내가 할 수 있는 의도적 몰입은 무엇인가?
+                  </li>
+                </ol>
+              </div>
             </Reveal>
 
             <Reveal>
-              <div className="mt-12 grid grid-cols-2 gap-3 max-w-md mx-auto">
+              <p className="text-center text-sm text-gray-500 mt-10 mb-6 leading-relaxed">
+                그 질문에 답하는 두 가지 방법 —
+              </p>
+              <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
                 <Link
                   href="/space"
                   className="py-3.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-medium text-center hover:bg-[#2d2d4e] transition"

@@ -268,6 +268,7 @@ export default function SpacePage() {
           <div className="max-w-md mx-auto text-center px-6 mt-8">
             <Reveal>
               <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
+                값비싼 몰입의 시간을 사는,<br />
                 〈몰입, 흐름 그리고 나〉는<br />
                 <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span>에서 도보 8분,<br />
                 조용한 골목에 있습니다.
