@@ -114,7 +114,7 @@ export default function CustomersPage() {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
         <p className="text-sm text-gray-500 mb-4">관리자 로그인이 필요해요.</p>
-        <a href="/admin" className="text-sm underline text-[#1a1a2e]">
+        <a href="/admin" className="text-sm underline text-[#3b2e21]">
           로그인하러 가기 →
         </a>
       </main>
@@ -126,7 +126,7 @@ export default function CustomersPage() {
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-[#1a1a2e]">🗂 고객 관리</h1>
+          <h1 className="text-xl font-bold text-[#3b2e21]">🗂 고객 관리</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             예약·리드·멤버십을 사람 단위로 모았어요
           </p>
@@ -149,9 +149,9 @@ export default function CustomersPage() {
                 { label: '단골', value: `${stats.regulars}명` },
                 { label: '누적 매출', value: `${(stats.revenue / 10000).toFixed(0)}만` },
               ].map((s) => (
-                <div key={s.label} className="bg-white rounded-2xl border border-gray-100 p-4">
+                <div key={s.label} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-4">
                   <div className="text-[11px] text-gray-400 mb-1">{s.label}</div>
-                  <div className="text-lg font-bold text-[#1a1a2e]">{s.value}</div>
+                  <div className="text-lg font-bold text-[#3b2e21]">{s.value}</div>
                 </div>
               ))}
             </div>
@@ -160,11 +160,11 @@ export default function CustomersPage() {
           {/* 오늘 할 일 */}
           <section className="mb-10">
             <div className="flex items-center gap-2 mb-3">
-              <h2 className="text-sm font-bold text-[#1a1a2e]">☀️ 오늘 챙길 사람</h2>
+              <h2 className="text-sm font-bold text-[#3b2e21]">☀️ 오늘 챙길 사람</h2>
               <span className="text-xs text-gray-400">{actions.length}건</span>
             </div>
             {actions.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-gray-200 bg-white p-6 text-center text-sm text-gray-400">
+              <div className="rounded-2xl border border-dashed border-gray-200 bg-[#fdfaf4] p-6 text-center text-sm text-gray-400">
                 지금 급히 챙길 고객은 없어요. 잘하고 계세요 🌿
               </div>
             ) : (
@@ -175,11 +175,11 @@ export default function CustomersPage() {
                   return (
                     <div
                       key={key}
-                      className="rounded-2xl border border-gray-100 bg-white p-4 flex items-start gap-3"
+                      className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-4 flex items-start gap-3"
                     >
                       <span className="text-xl shrink-0 mt-0.5">{a.emoji}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#1a1a2e]">{a.title}</p>
+                        <p className="text-sm font-semibold text-[#3b2e21]">{a.title}</p>
                         <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
                           {a.reason}
                         </p>
@@ -190,7 +190,7 @@ export default function CustomersPage() {
                               className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${
                                 copiedKey === key
                                   ? 'bg-green-600 text-white'
-                                  : 'bg-[#1a1a2e] text-white hover:bg-[#2d2d4e]'
+                                  : 'bg-[#3b2e21] text-white hover:bg-[#4d3c2b]'
                               }`}
                             >
                               {copiedKey === key ? '복사됨 ✓ 붙여넣으세요' : '📋 DM 문안 복사'}
@@ -228,8 +228,8 @@ export default function CustomersPage() {
                 onClick={() => setStageFilter(k)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                   stageFilter === k
-                    ? 'bg-[#1a1a2e] text-white'
-                    : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
+                    ? 'bg-[#3b2e21] text-white'
+                    : 'bg-[#fdfaf4] border border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
                 {label}
@@ -239,7 +239,7 @@ export default function CustomersPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="이름·번호 검색"
-              className="ml-auto rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs w-36 focus:outline-none focus:border-[#1a1a2e]"
+              className="ml-auto rounded-full border border-gray-200 bg-[#fdfaf4] px-4 py-1.5 text-xs w-36 focus:outline-none focus:border-[#3b2e21]"
             />
           </div>
 
@@ -252,7 +252,7 @@ export default function CustomersPage() {
                 const meta = STAGE_META[c.stage]
                 const open = expanded === c.phone
                 return (
-                  <div key={c.phone} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+                  <div key={c.phone} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 overflow-hidden">
                     <button
                       onClick={() => setExpanded(open ? null : c.phone)}
                       className="w-full text-left p-5"
@@ -260,7 +260,7 @@ export default function CustomersPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-[#1a1a2e]">{c.name}</span>
+                            <span className="font-semibold text-[#3b2e21]">{c.name}</span>
                             <span
                               className="text-[11px] px-2 py-0.5 rounded-full font-medium"
                               style={{ backgroundColor: `${meta.color}18`, color: meta.color }}
@@ -276,7 +276,7 @@ export default function CustomersPage() {
                           <div className="text-xs text-gray-500 mt-1">{c.phone}</div>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="text-sm font-semibold text-[#1a1a2e]">
+                          <div className="text-sm font-semibold text-[#3b2e21]">
                             {c.totalSpent.toLocaleString()}원
                           </div>
                           <div className="text-[11px] text-gray-400 mt-0.5">
@@ -334,13 +334,13 @@ export default function CustomersPage() {
                             }
                             rows={2}
                             placeholder="예: 새벽에 오심, 창가 자리 선호"
-                            className="w-full rounded-xl border border-gray-200 bg-[#f8f7f4] px-3 py-2 text-sm focus:outline-none focus:border-[#1a1a2e] resize-none"
+                            className="w-full rounded-xl border border-gray-200 bg-[#f3ece1] px-3 py-2 text-sm focus:outline-none focus:border-[#3b2e21] resize-none"
                           />
                           <div className="flex items-center gap-2 mt-2">
                             <button
                               onClick={() => saveNote(c.phone)}
                               disabled={savingNote === c.phone}
-                              className="text-xs px-3 py-1.5 rounded-full bg-[#1a1a2e] text-white font-medium hover:bg-[#2d2d4e] transition disabled:opacity-40"
+                              className="text-xs px-3 py-1.5 rounded-full bg-[#3b2e21] text-white font-medium hover:bg-[#4d3c2b] transition disabled:opacity-40"
                             >
                               {savingNote === c.phone ? '저장 중...' : '메모 저장'}
                             </button>

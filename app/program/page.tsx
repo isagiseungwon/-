@@ -22,14 +22,14 @@ export default function ProgramPage() {
   return (
     <>
       <Header />
-      <main className="text-[#1a1a2e]">
+      <main className="text-[#3b2e21]">
         <StickyCTA variant="program" />
 
         {/* ───────── Hero ───────── */}
         <section className="relative px-6 pt-16 pb-20 overflow-hidden">
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <div className="absolute left-1/2 -translate-x-1/2 -top-24 w-72 h-72 rounded-full blur-3xl opacity-25 bg-[#e9c46a]" />
-            <div className="absolute -left-20 top-40 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#2a9d8f]" />
+            <div className="absolute -left-20 top-40 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#7f8f5a]" />
             <div className="absolute -right-16 top-24 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#e76f51]" />
           </div>
           <div className="relative max-w-xl mx-auto text-center">
@@ -43,7 +43,7 @@ export default function ProgramPage() {
               <h1 className="serif text-[2.4rem] leading-[1.3] font-semibold tracking-tight mb-6">
                 요청을 현실로<br />만드는 4주
               </h1>
-              <p className="text-[17px] leading-[1.8] text-[#1a1a2e] font-medium mb-3">
+              <p className="text-[17px] leading-[1.8] text-[#3b2e21] font-medium mb-3">
                 혼자서는 4주를 못 버티니까,<br />같이 합니다.
               </p>
               <p className="text-[15px] leading-relaxed text-gray-500 mb-10">
@@ -52,7 +52,7 @@ export default function ProgramPage() {
               </p>
               <a
                 href="#apply"
-                className="inline-block px-8 py-3.5 rounded-full bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition"
+                className="inline-block px-8 py-3.5 rounded-full bg-[#3b2e21] text-white text-sm font-medium hover:bg-[#4d3c2b] transition"
               >
                 {PROGRAM.cohort} 신청하기
               </a>
@@ -73,7 +73,7 @@ export default function ProgramPage() {
         {/* ───────── 문제 제기 ───────── */}
         <section className="px-6 py-20 max-w-xl mx-auto text-center">
           <Reveal>
-            <p className="text-[17px] leading-[1.9] text-[#1a1a2e] font-medium">
+            <p className="text-[17px] leading-[1.9] text-[#3b2e21] font-medium">
               자기계발 콘텐츠는 넘치는데,<br />
               왜 실행은 안 될까요?
             </p>
@@ -81,13 +81,13 @@ export default function ProgramPage() {
           <Reveal delay={120}>
             <p className="text-[15px] leading-[2.1] text-gray-500 mt-8">
               의지가 부족해서가 아닙니다.<br />
-              <span className="text-[#1a1a2e]">환경과 동료</span>가 없었을 뿐.
+              <span className="text-[#3b2e21]">환경과 동료</span>가 없었을 뿐.
             </p>
           </Reveal>
         </section>
 
         {/* ───────── 프로그램 소개 ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -111,8 +111,8 @@ export default function ProgramPage() {
                 },
               ].map((c, i) => (
                 <Reveal key={c.n} delay={i * 120}>
-                  <div className="flex gap-4 items-start rounded-2xl border border-gray-100 bg-[#f8f7f4] p-5">
-                    <div className="serif text-2xl text-[#2a9d8f] leading-none shrink-0">
+                  <div className="flex gap-4 items-start rounded-2xl border border-gray-100 bg-[#f3ece1] p-5">
+                    <div className="serif text-2xl text-[#7f8f5a] leading-none shrink-0">
                       {c.n}
                     </div>
                     <div>
@@ -143,8 +143,8 @@ export default function ProgramPage() {
                 {CURRICULUM.map((w, i) => (
                   <Reveal key={w.week} delay={i * 100}>
                     <div className="relative">
-                      <div className="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full border-2 border-[#2a9d8f] bg-[#f8f7f4]" />
-                      <p className="text-xs tracking-wide text-[#2a9d8f] font-semibold mb-1">
+                      <div className="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full border-2 border-[#7f8f5a] bg-[#f3ece1]" />
+                      <p className="text-xs tracking-wide text-[#7f8f5a] font-semibold mb-1">
                         {w.week}
                       </p>
                       <h3 className="serif text-[17px] font-medium mb-1.5 tracking-tight">
@@ -158,11 +158,11 @@ export default function ProgramPage() {
             </div>
 
             <Reveal>
-              <div className="mt-16 rounded-2xl border border-gray-100 bg-white p-6 text-center">
+              <div className="mt-16 rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 text-center">
                 <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-3">
                   이런 분께
                 </p>
-                <p className="text-[15px] leading-[1.9] text-[#1a1a2e]">
+                <p className="text-[15px] leading-[1.9] text-[#3b2e21]">
                   자기계발 콘텐츠를 <span className="text-gray-400">소비만</span> 하다가,<br />
                   <span className="font-semibold">실행이 안 되는 분</span>
                 </p>
@@ -172,7 +172,7 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── 본질: 이 프로그램이 시작된 이야기 ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -187,7 +187,7 @@ export default function ProgramPage() {
               </p>
             </Reveal>
             <Reveal>
-              <div className="mx-auto max-w-md rounded-2xl overflow-hidden border border-gray-100 bg-[#f8f7f4] shadow-[0_12px_40px_rgba(26,26,46,0.08)]">
+              <div className="mx-auto max-w-md rounded-2xl overflow-hidden border border-gray-100 bg-[#f3ece1] shadow-[0_12px_40px_rgba(26,26,46,0.08)]">
                 <iframe
                   src="https://www.instagram.com/p/DYmfB1BEgA4/embed/captioned/"
                   title="요청을 현실로 만드는 4주 — 운영자의 이야기"
@@ -212,7 +212,7 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── 가격 ───────── */}
-        <section className="px-6 py-20 bg-[#12122a] text-white">
+        <section className="px-6 py-20 bg-[#2b2119] text-white">
           <div className="max-w-md mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-white/40 uppercase text-center mb-3">
@@ -242,7 +242,7 @@ export default function ProgramPage() {
               <ul className="space-y-3.5 mb-8">
                 {PROGRAM_INCLUDES.map((item) => (
                   <li key={item} className="flex gap-3 text-sm text-white/80">
-                    <span className="text-[#2a9d8f] shrink-0">✓</span>
+                    <span className="text-[#7f8f5a] shrink-0">✓</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -263,7 +263,7 @@ export default function ProgramPage() {
               <div className="text-center mt-8">
                 <a
                   href="#apply"
-                  className="inline-block px-8 py-3.5 rounded-full bg-white text-[#1a1a2e] text-sm font-semibold hover:bg-gray-100 transition"
+                  className="inline-block px-8 py-3.5 rounded-full bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
                 >
                   {PROGRAM.cohort} 신청하기
                 </a>
@@ -296,7 +296,7 @@ export default function ProgramPage() {
         </section>
 
         {/* ───────── FAQ ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -332,9 +332,9 @@ export default function ProgramPage() {
                 ].map((item) => (
                   <details
                     key={item.q}
-                    className="group rounded-2xl border border-gray-100 bg-[#f8f7f4] overflow-hidden"
+                    className="group rounded-2xl border border-gray-100 bg-[#f3ece1] overflow-hidden"
                   >
-                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#1a1a2e] py-4">
+                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#3b2e21] py-4">
                       {item.q}
                       <span className="text-gray-300 transition-transform group-open:rotate-45 text-lg leading-none">
                         +

@@ -19,12 +19,12 @@ export default function Header() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 bg-[#f8f7f4]/85 backdrop-blur border-b border-black/[0.06]">
+    <header className="sticky top-0 z-50 bg-[#f3ece1]/85 backdrop-blur border-b border-black/[0.06]">
       <div className="max-w-xl mx-auto px-5 h-14 flex items-center justify-between">
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-[#1a1a2e]"
+          className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-[#3b2e21]"
         >
           <span>🪑</span>
           <span className="serif">몰입, 흐름 그리고 나</span>
@@ -40,17 +40,17 @@ export default function Header() {
           <span className="sr-only">메뉴</span>
           <div className="flex flex-col gap-[5px] items-end">
             <span
-              className={`block h-[1.5px] bg-[#1a1a2e] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
                 open ? 'w-5 translate-y-[6.5px] rotate-45' : 'w-5'
               }`}
             />
             <span
-              className={`block h-[1.5px] bg-[#1a1a2e] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
                 open ? 'opacity-0 w-5' : 'w-4'
               }`}
             />
             <span
-              className={`block h-[1.5px] bg-[#1a1a2e] transition-all duration-300 ${
+              className={`block h-[1.5px] bg-[#3b2e21] transition-all duration-300 ${
                 open ? 'w-5 -translate-y-[6.5px] -rotate-45' : 'w-5'
               }`}
             />
@@ -78,8 +78,8 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     className={`flex items-center justify-between py-3.5 text-[15px] transition ${
                       active
-                        ? 'text-[#1a1a2e] font-semibold'
-                        : 'text-gray-500 hover:text-[#1a1a2e]'
+                        ? 'text-[#3b2e21] font-semibold'
+                        : 'text-gray-500 hover:text-[#3b2e21]'
                     }`}
                   >
                     {item.label}
@@ -94,7 +94,7 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between py-3.5 text-[15px] text-gray-500 hover:text-[#1a1a2e] transition"
+                className="flex items-center justify-between py-3.5 text-[15px] text-gray-500 hover:text-[#3b2e21] transition"
               >
                 <span className="inline-flex items-center gap-2">
                   <InstaIcon className="w-4 h-4" />

@@ -49,24 +49,24 @@ export default function ApplyForm() {
 
   if (done) {
     return (
-      <div className="rounded-2xl border border-[#2a9d8f]/30 bg-[#2a9d8f]/[0.06] p-8 text-center">
+      <div className="rounded-2xl border border-[#7f8f5a]/30 bg-[#7f8f5a]/[0.06] p-8 text-center">
         <div className="text-3xl mb-4">🪑</div>
-        <p className="text-[15px] leading-[1.9] text-[#1a1a2e] font-medium mb-2">
+        <p className="text-[15px] leading-[1.9] text-[#3b2e21] font-medium mb-2">
           신청이 접수되었어요.
         </p>
         <p className="text-sm leading-[1.9] text-gray-600 mb-6">
           24시간 안에 DM 또는 문자로 안내드립니다.
         </p>
-        <div className="rounded-xl bg-white border border-gray-100 p-5 text-left text-sm text-gray-600">
+        <div className="rounded-xl bg-[#fdfaf4] border border-gray-100 p-5 text-left text-sm text-gray-600">
           <p className="text-xs text-gray-400 mb-3">
             참가비 입금 계좌 (안내받으신 뒤 입금해 주세요)
           </p>
-          <p className="text-[#1a1a2e] font-medium leading-relaxed">
+          <p className="text-[#3b2e21] font-medium leading-relaxed">
             {BANK_INFO.bank} {BANK_INFO.account}
             <br />
             예금주 {BANK_INFO.holder}
           </p>
-          <p className="mt-3 text-[#1a1a2e] font-semibold">
+          <p className="mt-3 text-[#3b2e21] font-semibold">
             {PROGRAM.cohort} 한정 {PROGRAM.price.toLocaleString()}원
           </p>
           <p className="mt-1 text-xs text-gray-400">
@@ -86,7 +86,7 @@ export default function ApplyForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="홍길동"
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -97,7 +97,7 @@ export default function ApplyForm() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="010-0000-0000"
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -110,7 +110,7 @@ export default function ApplyForm() {
           value={instagram}
           onChange={(e) => setInstagram(e.target.value)}
           placeholder="@your_id"
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -123,7 +123,7 @@ export default function ApplyForm() {
           value={wish}
           onChange={(e) => setWish(e.target.value)}
           placeholder="예: 미루던 사이드 프로젝트를 4주 안에 시작하기"
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -135,7 +135,7 @@ export default function ApplyForm() {
         type="button"
         onClick={submit}
         disabled={!canSubmit}
-        className="w-full py-4 rounded-xl bg-[#1a1a2e] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2d2d4e] transition"
+        className="w-full py-4 rounded-xl bg-[#3b2e21] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#4d3c2b] transition"
       >
         {loading ? '접수 중...' : `${PROGRAM.cohort} 신청하기`}
       </button>

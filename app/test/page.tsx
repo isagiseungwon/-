@@ -18,11 +18,11 @@ export default function TestPage() {
   return (
     <>
       <Header />
-      <main className="text-[#1a1a2e]">
+      <main className="text-[#3b2e21]">
         <section className="relative px-6 pt-16 pb-24 overflow-hidden min-h-[80vh]">
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <div className="glow-breathe absolute left-1/2 -translate-x-1/2 -top-24 w-72 h-72 rounded-full blur-3xl bg-[#e9c46a]" />
-            <div className="glow-breathe-delay absolute -right-16 top-40 w-56 h-56 rounded-full blur-3xl bg-[#2a9d8f]" />
+            <div className="glow-breathe-delay absolute -right-16 top-40 w-56 h-56 rounded-full blur-3xl bg-[#7f8f5a]" />
           </div>
           <div className="relative max-w-md mx-auto">
             <Quiz />

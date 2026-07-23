@@ -12,12 +12,12 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main className="text-[#1a1a2e]">
+      <main className="text-[#3b2e21]">
         {/* ───────── 브랜드 히어로 ───────── */}
         <section className="relative px-6 pt-20 pb-14 overflow-hidden">
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <div className="glow-breathe absolute left-1/2 -translate-x-1/2 -top-24 w-80 h-80 rounded-full blur-3xl bg-[#e9c46a]" />
-            <div className="glow-breathe-delay absolute -left-20 top-40 w-60 h-60 rounded-full blur-3xl bg-[#2a9d8f]" />
+            <div className="glow-breathe-delay absolute -left-20 top-40 w-60 h-60 rounded-full blur-3xl bg-[#7f8f5a]" />
             <div className="glow-breathe absolute -right-16 top-24 w-60 h-60 rounded-full blur-3xl bg-[#e76f51]" />
           </div>
           <div className="relative max-w-xl mx-auto text-center">
@@ -34,19 +34,19 @@ export default function HomePage() {
                 온전히 나에게 집중하는 시간.
               </p>
               <p className="text-[15px] leading-[1.95] text-gray-500">
-                혼자 머무는 <span className="text-[#1a1a2e] font-medium">공간</span>부터,<br />
-                함께 해내는 <span className="text-[#1a1a2e] font-medium">4주 프로그램</span>까지.
+                혼자 머무는 <span className="text-[#3b2e21] font-medium">공간</span>부터,<br />
+                함께 해내는 <span className="text-[#3b2e21] font-medium">4주 프로그램</span>까지.
               </p>
               <div className="mt-10 flex flex-col items-center gap-3">
                 <Link
                   href="/test"
-                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition shadow-[0_8px_28px_rgba(26,26,46,0.25)]"
+                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full bg-[#3b2e21] text-white text-sm font-medium hover:bg-[#4d3c2b] transition shadow-[0_8px_28px_rgba(26,26,46,0.25)]"
                 >
                   🧭 나는 왜 몰입이 안 될까?
                 </Link>
                 <Link
                   href="/focus"
-                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full border border-[#1a1a2e]/25 bg-white/60 backdrop-blur text-[#1a1a2e] text-sm font-medium hover:border-[#1a1a2e] transition"
+                  className="inline-flex items-center justify-center gap-2 w-full max-w-[300px] py-4 rounded-full border border-[#3b2e21]/25 bg-[#fdfaf4]/60 backdrop-blur text-[#3b2e21] text-sm font-medium hover:border-[#3b2e21] transition"
                 >
                   🕯️ 지금 10분 몰입해 보기
                 </Link>
@@ -65,7 +65,7 @@ export default function HomePage() {
             <Reveal>
               <Link
                 href="/space"
-                className="group block rounded-[28px] overflow-hidden bg-white border border-gray-100 shadow-[0_12px_40px_rgba(26,26,46,0.08)] transition-all duration-300 hover:shadow-[0_20px_56px_rgba(26,26,46,0.14)] hover:-translate-y-0.5"
+                className="group block rounded-[28px] overflow-hidden bg-[#fdfaf4] border border-gray-100 shadow-[0_12px_40px_rgba(26,26,46,0.08)] transition-all duration-300 hover:shadow-[0_20px_56px_rgba(26,26,46,0.14)] hover:-translate-y-0.5"
               >
                 <div className="relative h-44 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -74,8 +74,8 @@ export default function HomePage() {
                     alt="오후의 창가, 몰입 공간"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-gray-600">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#fdfaf4] via-[#fdfaf4]/20 to-transparent" />
+                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-[#fdfaf4]/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-gray-600">
                     🕐 24시간 · 연중무휴
                   </span>
                 </div>
@@ -91,13 +91,13 @@ export default function HomePage() {
                     커피 한 잔 값으로 하루를 온전히 쓰는 공간.
                   </p>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-[#1a1a2e]">
+                    <p className="text-sm font-semibold text-[#3b2e21]">
                       {DAY_PASS.price.toLocaleString()}원
                       <span className="text-gray-400 font-normal text-xs ml-2">
                         · 월 무제한 49,000원
                       </span>
                     </p>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-all group-hover:text-[#1a1a2e] group-hover:gap-2.5">
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-all group-hover:text-[#3b2e21] group-hover:gap-2.5">
                       자세히 보기 <span aria-hidden>→</span>
                     </span>
                   </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
             <Reveal delay={120}>
               <Link
                 href="/program"
-                className="group block rounded-[28px] overflow-hidden bg-[#12122a] text-white shadow-[0_16px_48px_rgba(18,18,42,0.28)] transition-all duration-300 hover:shadow-[0_24px_64px_rgba(18,18,42,0.4)] hover:-translate-y-0.5"
+                className="group block rounded-[28px] overflow-hidden bg-[#2b2119] text-white shadow-[0_16px_48px_rgba(18,18,42,0.28)] transition-all duration-300 hover:shadow-[0_24px_64px_rgba(18,18,42,0.4)] hover:-translate-y-0.5"
               >
                 <div className="relative h-44 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -118,8 +118,8 @@ export default function HomePage() {
                     alt="저녁의 몰입 공간"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#12122a] via-[#12122a]/30 to-transparent" />
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-[#e76f51]/50 bg-[#12122a]/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-[#f4a58e]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2b2119] via-[#2b2119]/30 to-transparent" />
+                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-[#e76f51]/50 bg-[#2b2119]/70 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-[#f4a58e]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#e76f51] animate-pulse" />
                     {PROGRAM.cohort} 모집 중 · {PROGRAM.seatsTotal}명 한정
                   </span>
@@ -156,13 +156,13 @@ export default function HomePage() {
             <Reveal delay={200}>
               <Link
                 href="/test"
-                className="group block rounded-[28px] border border-[#2a9d8f]/25 bg-[#2a9d8f]/[0.05] p-7 transition-all duration-300 hover:border-[#2a9d8f]/50 hover:-translate-y-0.5"
+                className="group block rounded-[28px] border border-[#7f8f5a]/25 bg-[#7f8f5a]/[0.05] p-7 transition-all duration-300 hover:border-[#7f8f5a]/50 hover:-translate-y-0.5"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-5">
                     <span className="text-3xl">🧭</span>
                     <div>
-                      <p className="text-[11px] tracking-[0.18em] text-[#2a9d8f] uppercase mb-1.5 font-semibold">
+                      <p className="text-[11px] tracking-[0.18em] text-[#7f8f5a] uppercase mb-1.5 font-semibold">
                         1분 무료 테스트
                       </p>
                       <h2 className="serif text-lg font-semibold tracking-tight leading-snug mb-1">
@@ -173,7 +173,7 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <span className="shrink-0 text-[#2a9d8f] text-sm transition-transform group-hover:translate-x-1">→</span>
+                  <span className="shrink-0 text-[#7f8f5a] text-sm transition-transform group-hover:translate-x-1">→</span>
                 </div>
               </Link>
             </Reveal>
@@ -202,7 +202,7 @@ export default function HomePage() {
         </section>
 
         {/* ───────── 브랜드 에세이: 마차의 기록 ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100 overflow-hidden">
+        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100 overflow-hidden">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -218,7 +218,7 @@ export default function HomePage() {
 
             {/* 마차의 실제 손글씨 카드 */}
             <Reveal>
-              <figure className="mx-auto max-w-[280px] -rotate-2 bg-white p-2.5 pb-4 rounded-xl shadow-[0_16px_40px_rgba(233,196,106,0.35)] mb-14">
+              <figure className="mx-auto max-w-[280px] -rotate-2 bg-[#fdfaf4] p-2.5 pb-4 rounded-xl shadow-[0_16px_40px_rgba(233,196,106,0.35)] mb-14">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/story/insta/expensive.jpg"
@@ -237,7 +237,7 @@ export default function HomePage() {
                 <p className="text-[15px] leading-[2.05] text-gray-600">
                   일기를 쓰든, 오늘의 생각을 적든,<br />
                   흩어진 아이디어를 적든, 책을 훑어보든 —<br />
-                  <span className="text-[#1a1a2e]">
+                  <span className="text-[#3b2e21]">
                     어쨌든 그 순간부터 나의 시간은 느리게, 여유롭게 흘러갑니다.
                   </span>
                 </p>
@@ -245,7 +245,7 @@ export default function HomePage() {
               <Reveal>
                 <p className="text-[15px] leading-[2.05] text-gray-600">
                   오로지 한 호흡에 하나를 몰입할 수 있는,<br />
-                  <span className="text-[#1a1a2e] font-medium">
+                  <span className="text-[#3b2e21] font-medium">
                     최고의 럭셔리 시간을 누릴 수 있다는 것.
                   </span>
                 </p>
@@ -254,7 +254,7 @@ export default function HomePage() {
 
             {/* 한 줄 요약 — 마차 카드의 구조 그대로 */}
             <Reveal>
-              <div className="mx-auto max-w-md rounded-2xl bg-[#f8f7f4] border border-gray-100 px-7 py-8">
+              <div className="mx-auto max-w-md rounded-2xl bg-[#f3ece1] border border-gray-100 px-7 py-8">
                 <p className="serif text-[15px] font-semibold text-center mb-6 tracking-tight">
                   〈한 줄 요약〉
                 </p>
@@ -276,7 +276,7 @@ export default function HomePage() {
                     의도적인 몰입이 축적되면, 마침내 그 몰입은 나를 더 세련되게 잘
                     사는 방향으로 밀어준다.
                   </li>
-                  <li className="flex gap-3 text-[#1a1a2e] font-semibold">
+                  <li className="flex gap-3 text-[#3b2e21] font-semibold">
                     <span className="shrink-0 text-[#e9c46a]">5.</span>
                     그래서, 오늘 내가 할 수 있는 의도적 몰입은 무엇인가?
                   </li>
@@ -291,13 +291,13 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
                 <Link
                   href="/space"
-                  className="py-3.5 rounded-xl bg-[#1a1a2e] text-white text-sm font-medium text-center hover:bg-[#2d2d4e] transition"
+                  className="py-3.5 rounded-xl bg-[#3b2e21] text-white text-sm font-medium text-center hover:bg-[#4d3c2b] transition"
                 >
                   공간 이용하기 →
                 </Link>
                 <Link
                   href="/program"
-                  className="py-3.5 rounded-xl border border-[#1a1a2e]/20 text-[#1a1a2e] text-sm font-medium text-center hover:border-[#1a1a2e] transition"
+                  className="py-3.5 rounded-xl border border-[#3b2e21]/20 text-[#3b2e21] text-sm font-medium text-center hover:border-[#3b2e21] transition"
                 >
                   4주 프로그램 →
                 </Link>
@@ -307,7 +307,7 @@ export default function HomePage() {
         </section>
 
         {/* ───────── 인스타그램 ───────── */}
-        <section className="py-20 bg-[#12122a] text-white overflow-hidden">
+        <section className="py-20 bg-[#2b2119] text-white overflow-hidden">
           <div className="px-6 max-w-md mx-auto text-center mb-10">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-6">

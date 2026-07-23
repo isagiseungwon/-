@@ -25,14 +25,14 @@ export default function SpacePage() {
   return (
     <>
       <Header />
-      <main className="text-[#1a1a2e]">
+      <main className="text-[#3b2e21]">
         <StickyCTA variant="space" />
 
         {/* ───────── Hero ───────── */}
         <section className="relative px-6 pt-16 pb-20 overflow-hidden">
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <div className="absolute left-1/2 -translate-x-1/2 -top-24 w-72 h-72 rounded-full blur-3xl opacity-25 bg-[#e9c46a]" />
-            <div className="absolute -left-20 top-40 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#2a9d8f]" />
+            <div className="absolute -left-20 top-40 w-56 h-56 rounded-full blur-3xl opacity-20 bg-[#7f8f5a]" />
           </div>
           <div className="relative max-w-xl mx-auto text-center">
             <Reveal>
@@ -42,7 +42,7 @@ export default function SpacePage() {
               <h1 className="serif text-[2.4rem] leading-[1.3] font-semibold tracking-tight mb-6">
                 24시간<br />몰입 공간
               </h1>
-              <p className="text-[17px] leading-[1.8] text-[#1a1a2e] font-medium mb-3">
+              <p className="text-[17px] leading-[1.8] text-[#3b2e21] font-medium mb-3">
                 오늘, 3분 이상<br />무언가에 집중해 본 적 있나요?
               </p>
               <p className="text-[15px] leading-relaxed text-gray-500 mb-10">
@@ -51,7 +51,7 @@ export default function SpacePage() {
               </p>
               <a
                 href="#booking"
-                className="inline-block px-8 py-3.5 rounded-full bg-[#1a1a2e] text-white text-sm font-medium hover:bg-[#2d2d4e] transition"
+                className="inline-block px-8 py-3.5 rounded-full bg-[#3b2e21] text-white text-sm font-medium hover:bg-[#4d3c2b] transition"
               >
                 예약하기
               </a>
@@ -87,7 +87,7 @@ export default function SpacePage() {
             </p>
           </Reveal>
           <Reveal delay={200}>
-            <p className="text-[15px] leading-[2.1] text-[#1a1a2e] font-medium mt-8">
+            <p className="text-[15px] leading-[2.1] text-[#3b2e21] font-medium mt-8">
               의지가 약해서가 아닙니다.<br />
               몰입할 수 있는 <u className="underline-offset-4">환경</u>이 없었을 뿐.
             </p>
@@ -95,7 +95,7 @@ export default function SpacePage() {
         </section>
 
         {/* ───────── 해결책 (컨셉) ───────── */}
-        <section className="px-6 py-20 bg-white border-y border-gray-100">
+        <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
           <div className="max-w-xl mx-auto text-center">
             <Reveal>
               <h2 className="serif text-xl font-medium mb-5 tracking-tight">
@@ -109,7 +109,7 @@ export default function SpacePage() {
               <p className="text-[15px] leading-[1.9] text-gray-500 mt-6">
                 일기, 독서, 생각 정리, 아이디어 —<br />
                 무엇이든 좋습니다.{' '}
-                <span className="text-[#1a1a2e] font-medium">한 호흡에 하나만.</span>
+                <span className="text-[#3b2e21] font-medium">한 호흡에 하나만.</span>
               </p>
             </Reveal>
           </div>
@@ -151,7 +151,7 @@ export default function SpacePage() {
             ].map((f, i) => (
               <Reveal key={f.t} delay={i * 120}>
                 <div className="flex gap-5 items-start">
-                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1a1a2e] shrink-0" />
+                  <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#3b2e21] shrink-0" />
                   <div>
                     <h3 className="text-[15px] font-medium mb-1.5">{f.t}</h3>
                     <p className="text-sm text-gray-500 leading-relaxed">{f.d}</p>
@@ -163,7 +163,7 @@ export default function SpacePage() {
         </section>
 
         {/* ───────── 요금: 하루 vs 멤버십 ───────── */}
-        <section className="px-6 py-20 mt-8 bg-white border-y border-gray-100">
+        <section className="px-6 py-20 mt-8 bg-[#fdfaf4] border-y border-gray-100">
           <div className="max-w-xl mx-auto">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -176,7 +176,7 @@ export default function SpacePage() {
             <div className="grid gap-4 sm:grid-cols-2">
               {/* 하루 이용권 */}
               <Reveal>
-                <div className="h-full rounded-3xl border border-gray-200 bg-[#f8f7f4] p-7 flex flex-col">
+                <div className="h-full rounded-3xl border border-gray-200 bg-[#f3ece1] p-7 flex flex-col">
                   <p className="text-xs tracking-[0.15em] text-gray-400 uppercase mb-3">
                     가볍게
                   </p>
@@ -192,7 +192,7 @@ export default function SpacePage() {
                   </ul>
                   <a
                     href="#booking"
-                    className="block py-3.5 rounded-xl border border-[#1a1a2e]/25 text-center text-sm font-medium text-[#1a1a2e] hover:border-[#1a1a2e] transition"
+                    className="block py-3.5 rounded-xl border border-[#3b2e21]/25 text-center text-sm font-medium text-[#3b2e21] hover:border-[#3b2e21] transition"
                   >
                     하루 예약하기
                   </a>
@@ -201,8 +201,8 @@ export default function SpacePage() {
 
               {/* 멤버십 */}
               <Reveal delay={120}>
-                <div className="relative h-full rounded-3xl bg-[#12122a] text-white p-7 flex flex-col shadow-[0_16px_48px_rgba(18,18,42,0.25)]">
-                  <span className="absolute -top-3 left-6 rounded-full bg-[#e9c46a] text-[#1a1a2e] text-[11px] font-bold px-3 py-1">
+                <div className="relative h-full rounded-3xl bg-[#2b2119] text-white p-7 flex flex-col shadow-[0_16px_48px_rgba(18,18,42,0.25)]">
+                  <span className="absolute -top-3 left-6 rounded-full bg-[#e9c46a] text-[#3b2e21] text-[11px] font-bold px-3 py-1">
                     매일 오는 분께
                   </span>
                   <p className="text-xs tracking-[0.15em] text-white/40 uppercase mb-3">
@@ -220,7 +220,7 @@ export default function SpacePage() {
                   </ul>
                   <a
                     href="#membership"
-                    className="block py-3.5 rounded-xl bg-white text-center text-sm font-semibold text-[#1a1a2e] hover:bg-gray-100 transition"
+                    className="block py-3.5 rounded-xl bg-[#fdfaf4] text-center text-sm font-semibold text-[#3b2e21] hover:bg-gray-100 transition"
                   >
                     멤버십 시작하기
                   </a>
@@ -237,7 +237,7 @@ export default function SpacePage() {
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">🎁</span>
                   <div>
-                    <p className="text-[15px] font-medium text-[#1a1a2e]">
+                    <p className="text-[15px] font-medium text-[#3b2e21]">
                       소중한 사람에게 몰입을 선물하세요
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
@@ -252,7 +252,7 @@ export default function SpacePage() {
         </section>
 
         {/* ───────── 공간 & 위치 ───────── */}
-        <section className="py-20 mt-8 bg-white border-y border-gray-100 overflow-hidden">
+        <section className="py-20 mt-8 bg-[#fdfaf4] border-y border-gray-100 overflow-hidden">
           <div className="max-w-md mx-auto text-center px-6">
             <Reveal>
               <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-2">
@@ -270,7 +270,7 @@ export default function SpacePage() {
               <p className="text-[15px] leading-[1.9] text-gray-600 mb-6">
                 값비싼 몰입의 시간을 사는,<br />
                 〈몰입, 흐름 그리고 나〉는<br />
-                <span className="text-[#1a1a2e] font-medium">쌍문역 3번 출구</span>에서 도보 8분,<br />
+                <span className="text-[#3b2e21] font-medium">쌍문역 3번 출구</span>에서 도보 8분,<br />
                 조용한 골목에 있습니다.
               </p>
               <p className="text-sm leading-relaxed text-gray-500 mb-10">
@@ -278,12 +278,12 @@ export default function SpacePage() {
                 평온한 럭셔리를 누리시길 바라요.
               </p>
 
-              <div className="rounded-2xl border border-gray-100 bg-[#f8f7f4] p-6 text-left mb-8">
+              <div className="rounded-2xl border border-gray-100 bg-[#f3ece1] p-6 text-left mb-8">
                 <ul className="space-y-3.5 text-sm text-gray-600">
                   <li className="flex gap-3">
                     <span className="shrink-0">🕐</span>
                     <span>
-                      <strong className="text-[#1a1a2e] font-medium">24시간 영업</strong> · 연중무휴
+                      <strong className="text-[#3b2e21] font-medium">24시간 영업</strong> · 연중무휴
                     </span>
                   </li>
                   <li className="flex gap-3">
@@ -295,7 +295,7 @@ export default function SpacePage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="shrink-0">📶</span>
-                    <span>와이파이 <strong className="text-[#1a1a2e] font-medium">있습니다</strong></span>
+                    <span>와이파이 <strong className="text-[#3b2e21] font-medium">있습니다</strong></span>
                   </li>
                   <li className="flex gap-3">
                     <span className="shrink-0">🚪</span>
@@ -311,7 +311,7 @@ export default function SpacePage() {
               <div className="grid grid-cols-2 gap-3">
                 <a
                   href="tel:0507-1348-9410"
-                  className="py-3.5 rounded-xl border border-gray-200 bg-white text-sm font-medium text-[#1a1a2e] hover:border-gray-400 transition"
+                  className="py-3.5 rounded-xl border border-gray-200 bg-[#fdfaf4] text-sm font-medium text-[#3b2e21] hover:border-gray-400 transition"
                 >
                   📞 전화하기
                 </a>
@@ -327,7 +327,7 @@ export default function SpacePage() {
 
               <div className="mt-6 rounded-2xl border border-[#03c75a]/30 bg-[#03c75a]/[0.04] p-5 text-center">
                 <p className="text-sm text-gray-600 mb-1">
-                  다녀가셨다면, <strong className="text-[#1a1a2e]">첫 이야기</strong>를 남겨주세요
+                  다녀가셨다면, <strong className="text-[#3b2e21]">첫 이야기</strong>를 남겨주세요
                 </p>
                 <p className="text-xs text-gray-400 mb-4">
                   이제 막 문을 연 공간이라, 한 줄의 후기가 큰 힘이 됩니다
@@ -370,14 +370,14 @@ export default function SpacePage() {
                 ].map((u, i) => (
                   <div
                     key={u.t}
-                    className="rounded-2xl border border-gray-100 bg-white p-5 text-center"
+                    className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-5 text-center"
                   >
                     <div className="text-2xl mb-2">{u.e}</div>
-                    <p className="text-sm font-medium text-[#1a1a2e]">{u.t}</p>
+                    <p className="text-sm font-medium text-[#3b2e21]">{u.t}</p>
                   </div>
                 ))}
               </div>
-              <div className="rounded-2xl border border-gray-100 bg-white p-6 text-center">
+              <div className="rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6 text-center">
                 <p className="text-sm text-gray-500 leading-relaxed mb-5">
                   대관료는 인원·시간대에 따라 협의해요.<br />
                   원하는 날짜와 용도를 알려주시면 빠르게 안내드립니다.
@@ -385,7 +385,7 @@ export default function SpacePage() {
                 <div className="grid grid-cols-2 gap-3">
                   <a
                     href="tel:0507-1348-9410"
-                    className="py-3.5 rounded-xl border border-gray-200 bg-white text-sm font-medium text-[#1a1a2e] hover:border-gray-400 transition"
+                    className="py-3.5 rounded-xl border border-gray-200 bg-[#fdfaf4] text-sm font-medium text-[#3b2e21] hover:border-gray-400 transition"
                   >
                     📞 전화 문의
                   </a>
@@ -393,7 +393,7 @@ export default function SpacePage() {
                     href="https://www.instagram.com/macha_ver._"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3.5 rounded-xl bg-[#1a1a2e] text-sm font-medium text-white hover:bg-[#2d2d4e] transition"
+                    className="py-3.5 rounded-xl bg-[#3b2e21] text-sm font-medium text-white hover:bg-[#4d3c2b] transition"
                   >
                     DM으로 문의
                   </a>
@@ -405,7 +405,7 @@ export default function SpacePage() {
 
         {/* ───────── 방문자 후기 (실제 후기가 있을 때만 표시) ───────── */}
         {REVIEWS.length > 0 && (
-          <section className="px-6 py-20 bg-white border-y border-gray-100">
+          <section className="px-6 py-20 bg-[#fdfaf4] border-y border-gray-100">
             <div className="max-w-xl mx-auto">
               <Reveal>
                 <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-3">
@@ -421,7 +421,7 @@ export default function SpacePage() {
               <div className="space-y-4">
                 {REVIEWS.map((r, i) => (
                   <Reveal key={`${r.name}-${i}`} delay={i * 100}>
-                    <figure className="rounded-2xl border border-gray-100 bg-[#f8f7f4] p-6 relative">
+                    <figure className="rounded-2xl border border-gray-100 bg-[#f3ece1] p-6 relative">
                       <span
                         className="serif absolute top-3 left-5 text-3xl text-[#e9c46a] leading-none"
                         aria-hidden
@@ -495,9 +495,9 @@ export default function SpacePage() {
                 ].map((item) => (
                   <details
                     key={item.q}
-                    className="group rounded-2xl border border-gray-100 bg-[#f8f7f4] overflow-hidden"
+                    className="group rounded-2xl border border-gray-100 bg-[#f3ece1] overflow-hidden"
                   >
-                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#1a1a2e] py-4">
+                    <summary className="flex items-center justify-between gap-4 px-6 cursor-pointer list-none text-[15px] font-medium text-[#3b2e21] py-4">
                       {item.q}
                       <span className="text-gray-300 transition-transform group-open:rotate-45 text-lg leading-none">
                         +
@@ -514,7 +514,7 @@ export default function SpacePage() {
         </section>
 
         {/* ───────── 예약 폼 ───────── */}
-        <section id="booking" className="px-6 py-20 bg-white border-t border-gray-100 scroll-mt-16">
+        <section id="booking" className="px-6 py-20 bg-[#fdfaf4] border-t border-gray-100 scroll-mt-16">
           <div className="max-w-md mx-auto">
             <Reveal>
               <div className="text-center mb-10">

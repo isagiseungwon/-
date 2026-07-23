@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f7f4;
-  --foreground: #1a1a2e;
+  --background: #f3ece1;
+  --foreground: #3b2e21;
+  --wood-deep: #2b2119;
+  --wood-warm: #4d3c2b;
 }
 
 html {
@@ -10,7 +12,13 @@ html {
 }
 
 body {
-  background: var(--background);
+  /* 은은한 원목 결 느낌의 따뜻한 그라데이션 (이미지 없이 CSS로) */
+  background-color: var(--background);
+  background-image:
+    radial-gradient(1200px 600px at 15% -10%, rgba(233, 196, 106, 0.10), transparent 60%),
+    radial-gradient(1000px 500px at 110% 10%, rgba(231, 111, 81, 0.06), transparent 55%),
+    linear-gradient(180deg, #f5efe4 0%, #f2eadd 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans-kr), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -25,8 +33,8 @@ input, select, textarea {
 }
 
 ::selection {
-  background: #1a1a2e;
-  color: #f8f7f4;
+  background: #3b2e21;
+  color: #f3ece1;
 }
 
 /* 스크롤 등장 애니메이션 */

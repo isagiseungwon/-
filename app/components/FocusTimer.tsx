@@ -137,7 +137,7 @@ export default function FocusTimer() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="지금 할 것 한 가지 (선택)"
-          className="w-full max-w-xs mx-auto block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-center focus:outline-none focus:border-[#1a1a2e] transition mb-3"
+          className="w-full max-w-xs mx-auto block rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm text-center focus:outline-none focus:border-[#3b2e21] transition mb-3"
         />
         <div className="flex flex-wrap justify-center gap-2 max-w-xs mx-auto mb-6">
           {['📖 독서', '✍️ 글쓰기', '📚 공부', '💻 업무', '🗓️ 계획'].map((ex) => {
@@ -149,8 +149,8 @@ export default function FocusTimer() {
                 onClick={() => setTask(label)}
                 className={`text-xs px-3 py-1.5 rounded-full border transition ${
                   task === label
-                    ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
-                    : 'border-gray-200 bg-white text-gray-500 hover:border-gray-400'
+                    ? 'border-[#3b2e21] bg-[#3b2e21] text-white'
+                    : 'border-gray-200 bg-[#fdfaf4] text-gray-500 hover:border-gray-400'
                 }`}
               >
                 {ex}
@@ -161,7 +161,7 @@ export default function FocusTimer() {
         <button
           type="button"
           onClick={start}
-          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#1a1a2e] text-white font-medium text-base hover:bg-[#2d2d4e] transition"
+          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#3b2e21] text-white font-medium text-base hover:bg-[#4d3c2b] transition"
         >
           몰입 시작하기
         </button>
@@ -182,7 +182,7 @@ export default function FocusTimer() {
       <div className="text-center select-none">
         {task && (
           <p className="text-sm text-gray-400 mb-10 tracking-wide">
-            지금은 <span className="text-[#1a1a2e] font-medium">{task}</span> 에만
+            지금은 <span className="text-[#3b2e21] font-medium">{task}</span> 에만
           </p>
         )}
         {!task && (
@@ -196,7 +196,7 @@ export default function FocusTimer() {
               cy="150"
               r={R}
               fill="none"
-              stroke="#2a9d8f"
+              stroke="#7f8f5a"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={C}
@@ -241,19 +241,19 @@ export default function FocusTimer() {
         머리가 조용해지는 그 감각.
       </p>
       <p className="text-[15px] leading-[2] text-gray-600 mb-12">
-        <span className="text-[#1a1a2e] font-medium">그게 저희가 하는 일의 전부예요.</span>
+        <span className="text-[#3b2e21] font-medium">그게 저희가 하는 일의 전부예요.</span>
         <br />
         이걸 매일, 더 깊게 만드는 것.
       </p>
 
-      <div className="rounded-2xl bg-[#12122a] text-white p-7 text-center mb-6 max-w-sm mx-auto">
+      <div className="rounded-2xl bg-[#2b2119] text-white p-7 text-center mb-6 max-w-sm mx-auto">
         <p className="text-[15px] leading-[1.9] text-white/80 mb-6">
           집에서는 이 10분이 어려웠다면,<br />
           문제는 당신이 아니라 환경입니다.
         </p>
         <Link
           href="/space#booking"
-          className="block w-full py-4 rounded-xl bg-white text-[#1a1a2e] text-sm font-semibold hover:bg-gray-100 transition"
+          className="block w-full py-4 rounded-xl bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
         >
           몰입이 설계된 공간 써보기 · {DAY_PASS.price.toLocaleString()}원
         </Link>

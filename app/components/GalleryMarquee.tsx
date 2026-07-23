@@ -135,7 +135,7 @@ export default function GalleryMarquee() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div className="absolute -left-8 top-2 w-40 h-40 rounded-full blur-3xl opacity-50 bg-[#f4a261]" />
         <div className="absolute left-1/3 -top-6 w-44 h-44 rounded-full blur-3xl opacity-40 bg-[#e9c46a]" />
-        <div className="absolute right-1/4 top-8 w-40 h-40 rounded-full blur-3xl opacity-40 bg-[#2a9d8f]" />
+        <div className="absolute right-1/4 top-8 w-40 h-40 rounded-full blur-3xl opacity-40 bg-[#7f8f5a]" />
         <div className="absolute -right-8 -top-2 w-44 h-44 rounded-full blur-3xl opacity-35 bg-[#e76f51]" />
       </div>
 
@@ -148,7 +148,7 @@ export default function GalleryMarquee() {
           {items.map((p, i) => (
             <figure
               key={`${p.src}-${i}`}
-              className={`shrink-0 mr-5 bg-white p-2 pb-3 rounded-xl ${p.rot}`}
+              className={`shrink-0 mr-5 bg-[#fdfaf4] p-2 pb-3 rounded-xl ${p.rot}`}
               style={{ boxShadow: p.glow }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

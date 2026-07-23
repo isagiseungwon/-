@@ -111,8 +111,8 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-8 max-w-sm w-full">
-          <h1 className="text-lg font-bold text-[#1a1a2e] mb-1">관리자 로그인</h1>
+        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-8 max-w-sm w-full">
+          <h1 className="text-lg font-bold text-[#3b2e21] mb-1">관리자 로그인</h1>
           <p className="text-xs text-gray-400 mb-6">몰입, 흐름 그리고 나</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
@@ -121,12 +121,12 @@ export default function AdminPage() {
               onChange={(e) => setPw(e.target.value)}
               placeholder="비밀번호"
               autoFocus
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e]"
+              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21]"
             />
             <button
               type="submit"
               disabled={loggingIn || !pw}
-              className="w-full py-3 rounded-xl bg-[#1a1a2e] text-white font-bold text-sm disabled:opacity-40"
+              className="w-full py-3 rounded-xl bg-[#3b2e21] text-white font-bold text-sm disabled:opacity-40"
             >
               {loggingIn ? '확인 중...' : '로그인'}
             </button>
@@ -169,25 +169,25 @@ export default function AdminPage() {
     <main className="max-w-3xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl font-bold text-[#1a1a2e]">관리자 대시보드</h1>
+          <h1 className="text-xl font-bold text-[#3b2e21]">관리자 대시보드</h1>
           <p className="text-sm text-gray-500 mt-0.5">몰입, 흐름 그리고 나</p>
         </div>
         <div className="flex items-center gap-3">
           <a
             href="/admin/customers"
-            className="text-sm px-3 py-1.5 rounded-full bg-[#2a9d8f] text-white font-medium hover:bg-[#248277] transition"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#7f8f5a] text-white font-medium hover:bg-[#6b7a48] transition"
           >
             🗂 고객 관리
           </a>
           <a
             href="/admin/blog"
-            className="text-sm px-3 py-1.5 rounded-full bg-[#1a1a2e] text-white font-medium hover:bg-[#2d2d4e] transition"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#3b2e21] text-white font-medium hover:bg-[#4d3c2b] transition"
           >
             ✍️ 블로그 글 공장
           </a>
           <a
             href="/admin/templates"
-            className="text-sm px-3 py-1.5 rounded-full border border-[#1a1a2e] text-[#1a1a2e] font-medium hover:bg-[#1a1a2e] hover:text-white transition"
+            className="text-sm px-3 py-1.5 rounded-full border border-[#3b2e21] text-[#3b2e21] font-medium hover:bg-[#3b2e21] hover:text-white transition"
           >
             📋 DM 템플릿
           </a>
@@ -203,17 +203,17 @@ export default function AdminPage() {
 
       {/* 매출 요약 */}
       <div className="grid grid-cols-3 gap-3 mb-8">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
           <div className="text-xs text-gray-400 mb-1">총 매출</div>
-          <div className="text-xl font-bold text-[#1a1a2e]">{totalRevenue.toLocaleString()}원</div>
+          <div className="text-xl font-bold text-[#3b2e21]">{totalRevenue.toLocaleString()}원</div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
           <div className="text-xs text-gray-400 mb-1">오늘 매출</div>
-          <div className="text-xl font-bold text-[#1a1a2e]">{todayRevenue.toLocaleString()}원</div>
+          <div className="text-xl font-bold text-[#3b2e21]">{todayRevenue.toLocaleString()}원</div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
           <div className="text-xs text-gray-400 mb-1">총 예약</div>
-          <div className="text-xl font-bold text-[#1a1a2e]">
+          <div className="text-xl font-bold text-[#3b2e21]">
             {reservations.filter((r) => r.status === 'paid').length}건
           </div>
         </div>
@@ -227,8 +227,8 @@ export default function AdminPage() {
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
               filter === f
-                ? 'bg-[#1a1a2e] text-white'
-                : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
+                ? 'bg-[#3b2e21] text-white'
+                : 'bg-[#fdfaf4] border border-gray-200 text-gray-600 hover:border-gray-300'
             }`}
           >
             {f === 'all' ? '전체' : f === 'paid' ? '결제완료' : '대기'}
@@ -251,8 +251,8 @@ export default function AdminPage() {
             onClick={() => setKindFilter(k)}
             className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
               kindFilter === k
-                ? 'bg-[#2a9d8f] text-white'
-                : 'bg-white border border-gray-200 text-gray-500 hover:border-gray-300'
+                ? 'bg-[#7f8f5a] text-white'
+                : 'bg-[#fdfaf4] border border-gray-200 text-gray-500 hover:border-gray-300'
             }`}
           >
             {label}
@@ -268,13 +268,13 @@ export default function AdminPage() {
       ) : (
         <div className="space-y-3">
           {filtered.map((r) => (
-            <div key={r.id} className="bg-white rounded-2xl border border-gray-100 p-5">
+            <div key={r.id} className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-5">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-[#1a1a2e]">{r.name}</span>
+                    <span className="font-medium text-[#3b2e21]">{r.name}</span>
                     {r.kind === 'program' && (
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#2a9d8f]/10 text-[#2a9d8f] font-medium">
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#7f8f5a]/10 text-[#7f8f5a] font-medium">
                         🪑 4주 프로그램
                       </span>
                     )}
@@ -325,7 +325,7 @@ export default function AdminPage() {
                       className={`mt-1 px-3 py-1.5 rounded-full text-xs font-medium transition ${
                         copiedId === r.orderId
                           ? 'bg-green-600 text-white'
-                          : 'bg-[#1a1a2e] text-white hover:bg-[#2d2d4e]'
+                          : 'bg-[#3b2e21] text-white hover:bg-[#4d3c2b]'
                       }`}
                     >
                       {copiedId === r.orderId
@@ -340,7 +340,7 @@ export default function AdminPage() {
                 <div className="mt-3 space-y-1.5 text-xs text-gray-500">
                   <div className="flex flex-wrap gap-3">
                     <span>📅 신청 {r.date}</span>
-                    <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
+                    <span className="font-medium text-[#3b2e21]">💰 {r.amount.toLocaleString()}원</span>
                     {r.instagram && <span>📷 {r.instagram}</span>}
                   </div>
                   {r.wish && (
@@ -374,7 +374,7 @@ export default function AdminPage() {
                   <span>📅 {r.date}</span>
                   <span>🕐 {r.time} 입실</span>
                   <span>⏱ {r.duration}시간권</span>
-                  <span className="font-medium text-[#1a1a2e]">💰 {r.amount.toLocaleString()}원</span>
+                  <span className="font-medium text-[#3b2e21]">💰 {r.amount.toLocaleString()}원</span>
                   <span>{r.method === 'transfer' ? '🏦 계좌이체' : '💳 카드'}</span>
                 </div>
               )}

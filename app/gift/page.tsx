@@ -19,7 +19,7 @@ export default function GiftPage() {
   return (
     <>
       <Header />
-      <main className="text-[#1a1a2e]">
+      <main className="text-[#3b2e21]">
         <section className="relative px-6 pt-16 pb-24 overflow-hidden">
           <div className="pointer-events-none absolute inset-0" aria-hidden>
             <div className="glow-breathe absolute left-1/2 -translate-x-1/2 -top-24 w-72 h-72 rounded-full blur-3xl bg-[#e9c46a]" />
@@ -38,7 +38,7 @@ export default function GiftPage() {
                   번아웃이 온 동료에게,<br />
                   생각이 많아진 가족에게 —
                 </p>
-                <p className="text-[15px] leading-[1.95] text-[#1a1a2e] font-medium mt-4">
+                <p className="text-[15px] leading-[1.95] text-[#3b2e21] font-medium mt-4">
                   물건 대신, 조용한 시간을.
                 </p>
               </div>
@@ -49,7 +49,7 @@ export default function GiftPage() {
             </Reveal>
 
             <Reveal>
-              <div className="mt-10 rounded-2xl border border-gray-100 bg-white p-6">
+              <div className="mt-10 rounded-2xl border border-gray-100 bg-[#fdfaf4] p-6">
                 <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-4">
                   이렇게 진행돼요
                 </p>

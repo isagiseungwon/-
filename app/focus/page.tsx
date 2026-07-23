@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 // 몰입을 깨지 않도록 헤더 없이 최소한의 화면만 둔다.
 export default function FocusPage() {
   return (
-    <main className="relative min-h-screen flex flex-col text-[#1a1a2e] overflow-hidden">
+    <main className="relative min-h-screen flex flex-col text-[#3b2e21] overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="glow-breathe absolute left-1/2 -translate-x-1/2 -top-24 w-80 h-80 rounded-full blur-3xl bg-[#e9c46a]" />
-        <div className="glow-breathe-delay absolute -left-20 bottom-24 w-64 h-64 rounded-full blur-3xl bg-[#2a9d8f]" />
+        <div className="glow-breathe-delay absolute -left-20 bottom-24 w-64 h-64 rounded-full blur-3xl bg-[#7f8f5a]" />
       </div>
 
       <div className="relative px-6 pt-6">

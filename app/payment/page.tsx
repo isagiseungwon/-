@@ -68,13 +68,13 @@ function PaymentWidget() {
     <main className="max-w-lg mx-auto px-4 py-12">
       <div className="mb-8">
         <a href="/" className="text-sm text-gray-500 hover:text-gray-700">← 뒤로</a>
-        <h1 className="text-xl font-bold mt-4 text-[#1a1a2e]">결제하기</h1>
+        <h1 className="text-xl font-bold mt-4 text-[#3b2e21]">결제하기</h1>
         <p className="text-sm text-gray-500 mt-1">
           몰입공간 {duration}시간 이용권 · <strong>{amount.toLocaleString()}원</strong>
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
+      <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 p-6 mb-6">
         <div id="toss-payment-methods" ref={widgetRef} />
         <div id="toss-agreement" className="mt-4" />
       </div>
@@ -82,7 +82,7 @@ function PaymentWidget() {
       <button
         onClick={handlePay}
         disabled={!ready}
-        className="w-full py-4 rounded-xl bg-[#1a1a2e] text-white font-bold text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2d2d4e] transition"
+        className="w-full py-4 rounded-xl bg-[#3b2e21] text-white font-bold text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#4d3c2b] transition"
       >
         {ready ? `${amount.toLocaleString()}원 결제하기` : '결제 수단 불러오는 중...'}
       </button>

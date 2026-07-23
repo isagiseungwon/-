@@ -46,7 +46,7 @@ export default function BookingForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       {/* 요금제 */}
-      <div className="rounded-2xl p-6 border-2 border-[#1a1a2e] bg-[#1a1a2e] text-white text-center">
+      <div className="rounded-2xl p-6 border-2 border-[#3b2e21] bg-[#3b2e21] text-white text-center">
         <div className="text-sm font-medium mb-1 text-white/70">{DAY_PASS.label}</div>
         <div className="text-3xl font-semibold tracking-tight">
           {DAY_PASS.price.toLocaleString()}원
@@ -64,7 +64,7 @@ export default function BookingForm() {
           onChange={(e) => setName(e.target.value)}
           placeholder="홍길동"
           required
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function BookingForm() {
           onChange={(e) => setPhone(e.target.value)}
           placeholder="010-0000-0000"
           required
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -88,7 +88,7 @@ export default function BookingForm() {
           min={today}
           onChange={(e) => { setDate(e.target.value); setTime('') }}
           required
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a2e] transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -103,8 +103,8 @@ export default function BookingForm() {
                 onClick={() => setTime(slot)}
                 className={`py-2 rounded-lg text-sm transition-all ${
                   time === slot
-                    ? 'bg-[#1a1a2e] text-white'
-                    : 'bg-white border border-gray-200 text-gray-700 hover:border-gray-400'
+                    ? 'bg-[#3b2e21] text-white'
+                    : 'bg-[#fdfaf4] border border-gray-200 text-gray-700 hover:border-gray-400'
                 }`}
               >
                 {slot}
@@ -118,7 +118,7 @@ export default function BookingForm() {
       )}
 
       {time && (
-        <div className="rounded-xl bg-[#1a1a2e]/[0.03] border border-[#1a1a2e]/10 p-4 text-sm text-[#1a1a2e]">
+        <div className="rounded-xl bg-[#3b2e21]/[0.03] border border-[#3b2e21]/10 p-4 text-sm text-[#3b2e21]">
           <strong className="font-semibold">{date}</strong> {time} 입실 &nbsp;·&nbsp;{' '}
           {DAY_PASS.label} &nbsp;·&nbsp;{' '}
           <strong className="font-semibold">{DAY_PASS.price.toLocaleString()}원</strong>
@@ -134,8 +134,8 @@ export default function BookingForm() {
             onClick={() => setMethod('transfer')}
             className={`py-3.5 rounded-xl border text-sm font-medium transition-all ${
               method === 'transfer'
-                ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
-                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
+                ? 'border-[#3b2e21] bg-[#3b2e21] text-white'
+                : 'border-gray-200 bg-[#fdfaf4] text-gray-600 hover:border-gray-400'
             }`}
           >
             🏦 계좌이체
@@ -145,8 +145,8 @@ export default function BookingForm() {
             onClick={() => setMethod('card')}
             className={`py-3.5 rounded-xl border text-sm font-medium transition-all ${
               method === 'card'
-                ? 'border-[#1a1a2e] bg-[#1a1a2e] text-white'
-                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
+                ? 'border-[#3b2e21] bg-[#3b2e21] text-white'
+                : 'border-gray-200 bg-[#fdfaf4] text-gray-600 hover:border-gray-400'
             }`}
           >
             💳 카드결제
@@ -162,7 +162,7 @@ export default function BookingForm() {
       <button
         type="submit"
         disabled={!name || !phone || !date || !time || loading}
-        className="w-full py-4 rounded-xl bg-[#1a1a2e] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2d2d4e] transition"
+        className="w-full py-4 rounded-xl bg-[#3b2e21] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#4d3c2b] transition"
       >
         {loading
           ? '처리 중...'
