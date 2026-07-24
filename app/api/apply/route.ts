@@ -2,13 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createReservation } from '@/lib/db'
 import { notifyOwner } from '@/lib/notify'
 import { PROGRAM } from '@/lib/program'
+import { rateLimit, clean } from '@/lib/guard'
 
 // 4주 프로그램 신청 접수.
 // 공간 예약과 동일한 저장소(Reservation)를 재사용하되 kind='program' 으로 구분한다.
 // 결제는 신청 후 개별 안내(계좌이체)이므로 여기서는 접수만 하고 pending 으로 남긴다.
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { name, phone, instagram, wish } = body ?? {}
+  const limited = await rateLimit(req, 'apply', 8, 3600) // IP당 1시간 8회
+  if (limited) return limited
+
+  const body = await req.json().catch(() => ({}))
+  const name = clean(body?.name, 40)
+  const phone = clean(body?.phone, 30)
+  const instagram = clean(body?.instagram, 40)
+  const wish = clean(body?.wish, 300)
 
   if (!name || !phone) {
     return NextResponse.json(

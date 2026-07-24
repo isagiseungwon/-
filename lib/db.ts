@@ -320,6 +320,36 @@ export async function setCustomerNote(phone: string, note: string): Promise<void
   noteFileWriteAll(map)
 }
 
+// ═════════ 레이트 리미터 (고정 윈도우, 같은 백엔드 재사용) ═════════
+// key별 windowSec 동안 limit회 초과하면 false 반환.
+// - 로컬(file) 백엔드에선 항상 허용(개발 편의)
+// - 리미터 자체 오류 시 사이트를 막지 않도록 fail-open(허용)
+export async function rateLimitOk(
+  key: string,
+  limit: number,
+  windowSec: number
+): Promise<boolean> {
+  const rkey = `rl:${key}`
+  try {
+    if (backend === 'ioredis') {
+      const r = await getIoRedis()
+      const n = await r.incr(rkey)
+      if (n === 1) await r.expire(rkey, windowSec)
+      return n <= limit
+    }
+    if (backend === 'upstash') {
+      const r = await getUpstash()
+      const n = await r.incr(rkey)
+      if (n === 1) await r.expire(rkey, windowSec)
+      return n <= limit
+    }
+    return true // file 백엔드(로컬) → 제한 없음
+  } catch (e) {
+    console.error('[rateLimit] 오류(허용 처리):', e)
+    return true // fail-open
+  }
+}
+
 export async function getReservedSlots(date: string): Promise<string[]> {
   const rows = await getAllReservations()
   return rows

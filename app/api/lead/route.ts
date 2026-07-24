@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createReservation } from '@/lib/db'
 import { notifyOwner } from '@/lib/notify'
+import { rateLimit, clean } from '@/lib/guard'
 
 // 몰입 테스트 결과 리포트 신청 (리드 수집).
 // 예약과 같은 저장소를 재사용하되 kind='lead' 로 구분한다.
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { name, contact, resultTitle, resultEmoji, envPct, peerPct } = body ?? {}
+  const limited = await rateLimit(req, 'lead', 12, 3600) // IP당 1시간 12회
+  if (limited) return limited
+
+  const body = await req.json().catch(() => ({}))
+  const name = clean(body?.name, 40)
+  const contact = clean(body?.contact, 40)
+  const resultTitle = clean(body?.resultTitle, 40)
+  const resultEmoji = clean(body?.resultEmoji, 8)
+  const envPct = Number.isFinite(+body?.envPct) ? Math.round(+body.envPct) : undefined
+  const peerPct = Number.isFinite(+body?.peerPct) ? Math.round(+body.peerPct) : undefined
 
   if (!contact) {
     return NextResponse.json({ error: '연락처는 필수입니다.' }, { status: 400 })

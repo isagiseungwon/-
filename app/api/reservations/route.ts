@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createReservation, getReservedSlots } from '@/lib/db'
 import { notifyOwner } from '@/lib/notify'
+import { rateLimit, clean } from '@/lib/guard'
+import { DAY_PASS } from '@/lib/types'
 
 // 공개 엔드포인트: 특정 날짜의 "예약된 시간대"만 반환한다.
 // 개인정보(이름·연락처 등)는 절대 반환하지 않으며, 전체 목록은
@@ -17,10 +19,21 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { name, phone, date, time, duration, amount, orderId, method } = body
+  const limited = await rateLimit(req, 'reserve', 12, 3600)
+  if (limited) return limited
 
-  if (!name || !phone || !date || !time || !duration || !amount || !orderId) {
+  const body = await req.json().catch(() => ({}))
+  const name = clean(body?.name, 40)
+  const phone = clean(body?.phone, 30)
+  const date = clean(body?.date, 12)
+  const time = clean(body?.time, 8)
+  const duration = body?.duration
+  const orderId = clean(body?.orderId, 60)
+  const method = body?.method
+  // 금액은 클라이언트 값을 신뢰하지 않고 서버 요금제로 고정
+  const amount = DAY_PASS.price
+
+  if (!name || !phone || !date || !time || !duration || !orderId) {
     return NextResponse.json({ error: '필수 항목이 누락되었습니다.' }, { status: 400 })
   }
 

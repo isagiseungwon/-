@@ -2,13 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createReservation } from '@/lib/db'
 import { notifyOwner } from '@/lib/notify'
 import { GIFT_OPTIONS } from '@/lib/types'
+import { rateLimit, clean } from '@/lib/guard'
 
 // 몰입 선물권 신청 접수. 금액은 서버에서 옵션 키로 결정한다.
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { name, phone, giftKey, toName, message } = body ?? {}
+  const limited = await rateLimit(req, 'gift', 8, 3600)
+  if (limited) return limited
 
-  const option = GIFT_OPTIONS.find((o) => o.key === giftKey)
+  const body = await req.json().catch(() => ({}))
+  const name = clean(body?.name, 40)
+  const phone = clean(body?.phone, 30)
+  const toName = clean(body?.toName, 40)
+  const message = clean(body?.message, 200)
+
+  const option = GIFT_OPTIONS.find((o) => o.key === body?.giftKey)
   if (!name || !phone || !option) {
     return NextResponse.json(
       { error: '이름·연락처·선물 종류는 필수입니다.' },

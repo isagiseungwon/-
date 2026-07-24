@@ -2,11 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createReservation } from '@/lib/db'
 import { notifyOwner } from '@/lib/notify'
 import { MEMBERSHIP } from '@/lib/types'
+import { rateLimit, clean } from '@/lib/guard'
 
 // 월 몰입 멤버십 신청 접수. 금액은 서버에서 고정한다.
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { name, phone } = body ?? {}
+  const limited = await rateLimit(req, 'membership', 8, 3600)
+  if (limited) return limited
+
+  const body = await req.json().catch(() => ({}))
+  const name = clean(body?.name, 40)
+  const phone = clean(body?.phone, 30)
 
   if (!name || !phone) {
     return NextResponse.json(
