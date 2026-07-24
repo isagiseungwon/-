@@ -148,7 +148,7 @@ export default function GalleryMarquee() {
           {items.map((p, i) => (
             <figure
               key={`${p.src}-${i}`}
-              className={`shrink-0 mr-5 bg-[#332619] p-2 pb-3 rounded-xl ${p.rot}`}
+              className={`shrink-0 mr-5 bg-[#fdfaf4] p-2 pb-3 rounded-xl ${p.rot}`}
               style={{ boxShadow: p.glow }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -159,7 +159,7 @@ export default function GalleryMarquee() {
                 draggable={false}
                 className="w-[150px] h-[190px] object-cover object-top rounded-lg block pointer-events-none"
               />
-              <figcaption className="text-[11px] text-[#aa9a83] text-center mt-2 tracking-wide">
+              <figcaption className="text-[11px] text-gray-500 text-center mt-2 tracking-wide">
                 {p.cap}
               </figcaption>
             </figure>

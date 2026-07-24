@@ -41,7 +41,7 @@ function SuccessContent() {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4">
         <div className="text-4xl mb-4 animate-pulse">💳</div>
-        <p className="text-[#aa9a83] text-sm">결제 확인 중...</p>
+        <p className="text-gray-500 text-sm">결제 확인 중...</p>
       </main>
     )
   }
@@ -50,9 +50,9 @@ function SuccessContent() {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
         <div className="text-4xl mb-4">❌</div>
-        <h1 className="text-xl font-bold text-[#f0e7d7] mb-2">결제 확인 실패</h1>
-        <p className="text-sm text-[#aa9a83] mb-6">결제 처리 중 문제가 발생했습니다.</p>
-        <a href="/" className="px-6 py-3 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-medium">
+        <h1 className="text-xl font-bold text-[#3b2e21] mb-2">결제 확인 실패</h1>
+        <p className="text-sm text-gray-500 mb-6">결제 처리 중 문제가 발생했습니다.</p>
+        <a href="/" className="px-6 py-3 rounded-xl bg-[#3b2e21] text-white text-sm font-medium">
           처음으로
         </a>
       </main>
@@ -62,41 +62,41 @@ function SuccessContent() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen px-4 text-center">
       <div className="text-5xl mb-5">✅</div>
-      <h1 className="text-2xl font-bold text-[#f0e7d7] mb-2">예약 완료!</h1>
-      <p className="text-sm text-[#aa9a83] mb-8">몰입공간 예약이 확정되었습니다.</p>
+      <h1 className="text-2xl font-bold text-[#3b2e21] mb-2">예약 완료!</h1>
+      <p className="text-sm text-gray-500 mb-8">몰입공간 예약이 확정되었습니다.</p>
 
       {reservation && (
-        <div className="bg-[#332619] rounded-2xl border border-white/10 px-8 py-6 text-left max-w-sm w-full mb-8">
+        <div className="bg-[#fdfaf4] rounded-2xl border border-gray-100 px-8 py-6 text-left max-w-sm w-full mb-8">
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-[#aa9a83]">이름</span>
+              <span className="text-gray-500">이름</span>
               <span className="font-medium">{reservation.name}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#aa9a83]">날짜</span>
+              <span className="text-gray-500">날짜</span>
               <span className="font-medium">{reservation.date}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#aa9a83]">입실 시간</span>
+              <span className="text-gray-500">입실 시간</span>
               <span className="font-medium">{reservation.time}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#aa9a83]">이용권</span>
+              <span className="text-gray-500">이용권</span>
               <span className="font-medium">{reservation.duration}시간 이용권</span>
             </div>
             <div className="border-t pt-3 flex justify-between">
-              <span className="text-[#aa9a83]">결제금액</span>
-              <span className="font-bold text-[#f0e7d7]">{amount.toLocaleString()}원</span>
+              <span className="text-gray-500">결제금액</span>
+              <span className="font-bold text-[#3b2e21]">{amount.toLocaleString()}원</span>
             </div>
           </div>
         </div>
       )}
 
-      <a href="/" className="px-6 py-3 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-medium hover:bg-[#d9b45a] transition">
+      <a href="/" className="px-6 py-3 rounded-xl bg-[#3b2e21] text-white text-sm font-medium hover:bg-[#4d3c2b] transition">
         처음으로
       </a>
 
-      <p className="text-xs text-[#8f7e69] mt-8 leading-relaxed">
+      <p className="text-xs text-gray-400 mt-8 leading-relaxed">
         이용 후 좋으셨다면,{' '}
         <a
           href="https://map.naver.com/p/search/%EB%AA%B0%EC%9E%85%2C%20%ED%9D%90%EB%A6%84%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20%EB%82%98"
@@ -114,7 +114,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-sm text-[#8f7e69]">불러오는 중...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-sm text-gray-400">불러오는 중...</div>}>
       <SuccessContent />
     </Suspense>
   )

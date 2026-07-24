@@ -1,26 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #241a10;
-  --foreground: #f0e7d7;
-  --wood-deep: #160f08;
-  --wood-panel: #332619;
+  --background: #f3ece1;
+  --foreground: #3b2e21;
+  --wood-deep: #2b2119;
+  --wood-warm: #4d3c2b;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 body {
-  /* 어두운 원목(오크) 배경 + 은은한 나무결 질감 (이미지 없이 CSS로) */
+  /* 은은한 원목 결 느낌의 따뜻한 그라데이션 (이미지 없이 CSS로) */
   background-color: var(--background);
   background-image:
-    radial-gradient(1100px 560px at 50% -8%, rgba(233, 196, 106, 0.12), transparent 60%),
-    radial-gradient(900px 500px at 112% 18%, rgba(231, 111, 81, 0.07), transparent 55%),
-    repeating-linear-gradient(93deg, rgba(255, 245, 225, 0.018) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 9px),
-    linear-gradient(178deg, #2b1f13 0%, #1e150c 100%);
+    radial-gradient(1200px 600px at 15% -10%, rgba(233, 196, 106, 0.10), transparent 60%),
+    radial-gradient(1000px 500px at 110% 10%, rgba(231, 111, 81, 0.06), transparent 55%),
+    linear-gradient(180deg, #f5efe4 0%, #f2eadd 100%);
   background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans-kr), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -29,9 +26,6 @@ body {
 input, select, textarea {
   font-family: inherit;
 }
-::placeholder {
-  color: #8f7e69;
-}
 
 /* 프리미엄 세리프 헤드라인 */
 .serif {
@@ -39,8 +33,8 @@ input, select, textarea {
 }
 
 ::selection {
-  background: #e9c46a;
-  color: #241a10;
+  background: #3b2e21;
+  color: #f3ece1;
 }
 
 /* 스크롤 등장 애니메이션 */

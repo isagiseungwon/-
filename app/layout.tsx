@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`h-full ${sansKr.variable} ${serifKr.variable}`}>
-      <body className="min-h-full flex flex-col bg-[#2b2018] text-[#f0e7d7]">
+      <body className="min-h-full flex flex-col bg-[#f3ece1] text-[#3b2e21]">
         {children}
         <Analytics />
       </body>

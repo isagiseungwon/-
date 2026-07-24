@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 // 몰입을 깨지 않도록 헤더 없이 최소한의 화면만 둔다.
 export default function FocusPage() {
   return (
-    <main className="relative min-h-screen flex flex-col text-[#f0e7d7] overflow-hidden">
+    <main className="relative min-h-screen flex flex-col text-[#3b2e21] overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="glow-breathe absolute left-1/2 -translate-x-1/2 -top-24 w-80 h-80 rounded-full blur-3xl bg-[#e9c46a]" />
         <div className="glow-breathe-delay absolute -left-20 bottom-24 w-64 h-64 rounded-full blur-3xl bg-[#7f8f5a]" />
@@ -24,7 +24,7 @@ export default function FocusPage() {
       <div className="relative px-6 pt-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-[#8f7e69] hover:text-[#d0c3ad] transition"
+          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition"
         >
           ← 몰입, 흐름 그리고 나
         </Link>

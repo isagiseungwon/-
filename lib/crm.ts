@@ -259,7 +259,7 @@ export const STAGE_META: Record<
 > = {
   lead: { label: '리드', emoji: '🧭', color: '#b8860b' },
   new: { label: '신규', emoji: '🌱', color: '#7f8f5a' },
-  regular: { label: '단골', emoji: '🪑', color: '#d8b878' },
+  regular: { label: '단골', emoji: '🪑', color: '#3b2e21' },
   member: { label: '멤버', emoji: '💳', color: '#2563eb' },
   dormant: { label: '휴면', emoji: '😴', color: '#9ca3af' },
 }

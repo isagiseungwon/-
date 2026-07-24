@@ -127,7 +127,7 @@ export default function FocusTimer() {
         <h1 className="serif text-[1.9rem] leading-[1.35] font-semibold tracking-tight mb-6">
           지금, {durationLabel}만<br />몰입해 볼까요?
         </h1>
-        <div className="text-[15px] leading-[2] text-[#aa9a83] mb-10 space-y-1">
+        <div className="text-[15px] leading-[2] text-gray-500 mb-10 space-y-1">
           <p>1. 폰을 뒤집어 무음으로 두세요.</p>
           <p>2. 지금 할 것, 딱 하나만 정하세요.</p>
           <p>3. 시작을 누르면 — 한 호흡에 하나만.</p>
@@ -137,7 +137,7 @@ export default function FocusTimer() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="지금 할 것 한 가지 (선택)"
-          className="w-full max-w-xs mx-auto block rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm text-center focus:outline-none focus:border-[#e9c46a]/55 transition mb-3"
+          className="w-full max-w-xs mx-auto block rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm text-center focus:outline-none focus:border-[#3b2e21] transition mb-3"
         />
         <div className="flex flex-wrap justify-center gap-2 max-w-xs mx-auto mb-6">
           {['📖 독서', '✍️ 글쓰기', '📚 공부', '💻 업무', '🗓️ 계획'].map((ex) => {
@@ -149,8 +149,8 @@ export default function FocusTimer() {
                 onClick={() => setTask(label)}
                 className={`text-xs px-3 py-1.5 rounded-full border transition ${
                   task === label
-                    ? 'border-[#e9c46a]/55 bg-[#e9c46a] text-[#241a10]'
-                    : 'border-white/15 bg-[#332619] text-[#aa9a83] hover:border-white/30'
+                    ? 'border-[#3b2e21] bg-[#3b2e21] text-white'
+                    : 'border-gray-200 bg-[#fdfaf4] text-gray-500 hover:border-gray-400'
                 }`}
               >
                 {ex}
@@ -161,11 +161,11 @@ export default function FocusTimer() {
         <button
           type="button"
           onClick={start}
-          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#e9c46a] text-[#241a10] font-medium text-base hover:bg-[#d9b45a] transition"
+          className="w-full max-w-xs mx-auto block py-4 rounded-full bg-[#3b2e21] text-white font-medium text-base hover:bg-[#4d3c2b] transition"
         >
           몰입 시작하기
         </button>
-        <p className="text-xs text-[#6b5e4e] mt-5">
+        <p className="text-xs text-gray-300 mt-5">
           화면이 꺼지지 않고, 1분마다 몰입 명언이 함께해요
         </p>
       </div>
@@ -181,16 +181,16 @@ export default function FocusTimer() {
     return (
       <div className="text-center select-none">
         {task && (
-          <p className="text-sm text-[#8f7e69] mb-10 tracking-wide">
-            지금은 <span className="text-[#f0e7d7] font-medium">{task}</span> 에만
+          <p className="text-sm text-gray-400 mb-10 tracking-wide">
+            지금은 <span className="text-[#3b2e21] font-medium">{task}</span> 에만
           </p>
         )}
         {!task && (
-          <p className="text-sm text-[#8f7e69] mb-10 tracking-wide">한 호흡에 하나만</p>
+          <p className="text-sm text-gray-400 mb-10 tracking-wide">한 호흡에 하나만</p>
         )}
         <div className="relative w-[300px] h-[300px] mx-auto mb-12">
           <svg viewBox="0 0 300 300" className="w-full h-full -rotate-90">
-            <circle cx="150" cy="150" r={R} fill="none" stroke="#46392b" strokeWidth="6" />
+            <circle cx="150" cy="150" r={R} fill="none" stroke="#e8e6e1" strokeWidth="6" />
             <circle
               cx="150"
               cy="150"
@@ -212,16 +212,16 @@ export default function FocusTimer() {
         </div>
         {/* 1분마다 넘어가는 몰입 명언 */}
         <div key={quote.by + quote.text} className="quote-fade max-w-sm mx-auto mb-10 min-h-[96px]">
-          <p className="serif text-[15px] leading-[1.9] text-[#d0c3ad] whitespace-pre-line">
+          <p className="serif text-[15px] leading-[1.9] text-gray-600 whitespace-pre-line">
             &ldquo;{quote.text}&rdquo;
           </p>
-          <p className="text-xs text-[#8f7e69] mt-3 tracking-wide">— {quote.by}</p>
+          <p className="text-xs text-gray-400 mt-3 tracking-wide">— {quote.by}</p>
         </div>
 
         <button
           type="button"
           onClick={quit}
-          className="text-xs text-[#6b5e4e] hover:text-[#aa9a83] underline underline-offset-4 transition"
+          className="text-xs text-gray-300 hover:text-gray-500 underline underline-offset-4 transition"
         >
           멈추기
         </button>
@@ -236,24 +236,24 @@ export default function FocusTimer() {
       <h1 className="serif text-[1.8rem] leading-[1.4] font-semibold tracking-tight mb-6">
         방금, {durationLabel} 몰입에<br />성공하셨어요.
       </h1>
-      <p className="text-[15px] leading-[2] text-[#aa9a83] mb-4">
+      <p className="text-[15px] leading-[2] text-gray-500 mb-4">
         방금 그 느낌 — 시간이 느리게 흐르고,<br />
         머리가 조용해지는 그 감각.
       </p>
-      <p className="text-[15px] leading-[2] text-[#d0c3ad] mb-12">
-        <span className="text-[#f0e7d7] font-medium">그게 저희가 하는 일의 전부예요.</span>
+      <p className="text-[15px] leading-[2] text-gray-600 mb-12">
+        <span className="text-[#3b2e21] font-medium">그게 저희가 하는 일의 전부예요.</span>
         <br />
         이걸 매일, 더 깊게 만드는 것.
       </p>
 
-      <div className="rounded-2xl bg-[#160f08] text-white p-7 text-center mb-6 max-w-sm mx-auto">
+      <div className="rounded-2xl bg-[#2b2119] text-white p-7 text-center mb-6 max-w-sm mx-auto">
         <p className="text-[15px] leading-[1.9] text-white/80 mb-6">
           집에서는 이 10분이 어려웠다면,<br />
           문제는 당신이 아니라 환경입니다.
         </p>
         <Link
           href="/space#booking"
-          className="block w-full py-4 rounded-xl bg-[#e9c46a] text-[#241a10] text-sm font-semibold hover:bg-white/10 transition"
+          className="block w-full py-4 rounded-xl bg-[#fdfaf4] text-[#3b2e21] text-sm font-semibold hover:bg-gray-100 transition"
         >
           몰입이 설계된 공간 써보기 · {DAY_PASS.price.toLocaleString()}원
         </Link>
@@ -268,7 +268,7 @@ export default function FocusTimer() {
       <button
         type="button"
         onClick={() => setPhase('prep')}
-        className="text-xs text-[#8f7e69] hover:text-[#d0c3ad] underline underline-offset-4 transition"
+        className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-4 transition"
       >
         한 번 더 하기
       </button>

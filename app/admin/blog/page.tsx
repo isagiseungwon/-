@@ -254,10 +254,10 @@ export default function BlogFactoryPage() {
   }
 
   const inputCls =
-    'w-full rounded-xl border border-white/10 bg-[#332619]/[0.06] px-4 py-3.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#e9c46a]/60 focus:bg-[#332619]/[0.09] transition'
+    'w-full rounded-xl border border-white/10 bg-[#fdfaf4]/[0.06] px-4 py-3.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#e9c46a]/60 focus:bg-[#fdfaf4]/[0.09] transition'
 
   return (
-    <div className="min-h-screen bg-[#120b05] text-white">
+    <div className="min-h-screen bg-[#241a12] text-white">
       {/* 배경 글로우 */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
         <div className="absolute -top-32 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-[0.12] bg-[#e9c46a]" />
@@ -302,7 +302,7 @@ export default function BlogFactoryPage() {
 
         {/* 저장함 */}
         {draftsOpen && (
-          <div className="mb-10 rounded-2xl border border-white/10 bg-[#332619]/[0.04] p-5">
+          <div className="mb-10 rounded-2xl border border-white/10 bg-[#fdfaf4]/[0.04] p-5">
             <p className="text-xs text-white/40 mb-4">
               저장해 둔 초안 — 불러와서 이어서 다듬고 발행하세요
             </p>
@@ -317,7 +317,7 @@ export default function BlogFactoryPage() {
                 {drafts.map((d) => (
                   <div
                     key={d.id}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#332619]/[0.03] px-4 py-3"
+                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#fdfaf4]/[0.03] px-4 py-3"
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-white/85 truncate">{d.title}</p>
@@ -329,7 +329,7 @@ export default function BlogFactoryPage() {
                     </div>
                     <button
                       onClick={() => openDraft(d)}
-                      className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-[#332619] text-[#241a12] font-medium hover:bg-[#332619]/90 transition"
+                      className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-[#fdfaf4] text-[#241a12] font-medium hover:bg-[#fdfaf4]/90 transition"
                     >
                       불러오기
                     </button>
@@ -369,7 +369,7 @@ export default function BlogFactoryPage() {
                   className={`text-xs px-3 py-1.5 rounded-full border transition ${
                     keyword === k
                       ? 'border-[#e9c46a] bg-[#e9c46a]/15 text-[#e9c46a]'
-                      : 'border-white/10 bg-[#332619]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80'
+                      : 'border-white/10 bg-[#fdfaf4]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80'
                   }`}
                 >
                   {k}
@@ -414,7 +414,7 @@ export default function BlogFactoryPage() {
                     className={`w-full text-left rounded-xl border px-4 py-3 transition ${
                       title === idea.title
                         ? 'border-[#e9c46a] bg-[#e9c46a]/10'
-                        : 'border-white/10 bg-[#332619]/[0.04] hover:border-white/30'
+                        : 'border-white/10 bg-[#fdfaf4]/[0.04] hover:border-white/30'
                     }`}
                   >
                     <div
@@ -459,7 +459,7 @@ export default function BlogFactoryPage() {
                   className={`text-xs px-3 py-1.5 rounded-full border transition ${
                     topic === b.topic
                       ? 'border-[#7f8f5a] bg-[#7f8f5a]/15 text-[#7fd4c9]'
-                      : 'border-white/10 bg-[#332619]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80'
+                      : 'border-white/10 bg-[#fdfaf4]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80'
                   }`}
                 >
                   {b.label}
@@ -496,7 +496,7 @@ export default function BlogFactoryPage() {
                   className={`py-3 px-2 rounded-xl border text-center transition ${
                     type === t
                       ? 'border-[#e9c46a] bg-[#e9c46a]/15'
-                      : 'border-white/10 bg-[#332619]/[0.04] hover:border-white/30'
+                      : 'border-white/10 bg-[#fdfaf4]/[0.04] hover:border-white/30'
                   }`}
                 >
                   <div
@@ -590,7 +590,7 @@ export default function BlogFactoryPage() {
             </div>
 
             {/* 원고지 카드 */}
-            <div className="rounded-2xl bg-[#2b2018] text-[#f0e7d7] p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
+            <div className="rounded-2xl bg-[#f3ece1] text-[#3b2e21] p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
               <textarea
                 value={result}
                 onChange={(e) => setResult(e.target.value)}
@@ -601,7 +601,7 @@ export default function BlogFactoryPage() {
 
             {/* 발행 전 SEO 점검 */}
             {keyword && (
-              <div className="mt-4 rounded-2xl border border-white/10 bg-[#332619]/[0.04] p-5">
+              <div className="mt-4 rounded-2xl border border-white/10 bg-[#fdfaf4]/[0.04] p-5">
                 <p className="text-[11px] tracking-[0.2em] text-[#e9c46a] uppercase mb-3">
                   발행 전 점검
                 </p>
@@ -620,7 +620,7 @@ export default function BlogFactoryPage() {
             )}
 
             {/* AI 다듬기 */}
-            <div className="mt-4 rounded-2xl border border-white/10 bg-[#332619]/[0.04] p-5">
+            <div className="mt-4 rounded-2xl border border-white/10 bg-[#fdfaf4]/[0.04] p-5">
               <p className="text-[11px] tracking-[0.2em] text-[#e9c46a] uppercase mb-3">
                 한 마디로 다듬기
               </p>
@@ -631,7 +631,7 @@ export default function BlogFactoryPage() {
                     type="button"
                     onClick={() => refine(c)}
                     disabled={refining}
-                    className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-[#332619]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80 transition disabled:opacity-40"
+                    className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-[#fdfaf4]/[0.04] text-white/50 hover:border-white/30 hover:text-white/80 transition disabled:opacity-40"
                   >
                     {c}
                   </button>
@@ -663,7 +663,7 @@ export default function BlogFactoryPage() {
             <div className="grid grid-cols-3 gap-3 mt-4">
               <button
                 onClick={copyResult}
-                className="py-3.5 rounded-xl bg-[#332619] text-[#241a12] text-sm font-semibold hover:bg-[#332619]/90 transition"
+                className="py-3.5 rounded-xl bg-[#fdfaf4] text-[#241a12] text-sm font-semibold hover:bg-[#fdfaf4]/90 transition"
               >
                 {copied ? '✅ 복사됨!' : '📋 복사'}
               </button>

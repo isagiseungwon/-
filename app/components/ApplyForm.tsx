@@ -51,25 +51,25 @@ export default function ApplyForm() {
     return (
       <div className="rounded-2xl border border-[#7f8f5a]/30 bg-[#7f8f5a]/[0.06] p-8 text-center">
         <div className="text-3xl mb-4">🪑</div>
-        <p className="text-[15px] leading-[1.9] text-[#f0e7d7] font-medium mb-2">
+        <p className="text-[15px] leading-[1.9] text-[#3b2e21] font-medium mb-2">
           신청이 접수되었어요.
         </p>
-        <p className="text-sm leading-[1.9] text-[#d0c3ad] mb-6">
+        <p className="text-sm leading-[1.9] text-gray-600 mb-6">
           24시간 안에 DM 또는 문자로 안내드립니다.
         </p>
-        <div className="rounded-xl bg-[#332619] border border-white/10 p-5 text-left text-sm text-[#d0c3ad]">
-          <p className="text-xs text-[#8f7e69] mb-3">
+        <div className="rounded-xl bg-[#fdfaf4] border border-gray-100 p-5 text-left text-sm text-gray-600">
+          <p className="text-xs text-gray-400 mb-3">
             참가비 입금 계좌 (안내받으신 뒤 입금해 주세요)
           </p>
-          <p className="text-[#f0e7d7] font-medium leading-relaxed">
+          <p className="text-[#3b2e21] font-medium leading-relaxed">
             {BANK_INFO.bank} {BANK_INFO.account}
             <br />
             예금주 {BANK_INFO.holder}
           </p>
-          <p className="mt-3 text-[#f0e7d7] font-semibold">
+          <p className="mt-3 text-[#3b2e21] font-semibold">
             {PROGRAM.cohort} 한정 {PROGRAM.price.toLocaleString()}원
           </p>
-          <p className="mt-1 text-xs text-[#8f7e69]">
+          <p className="mt-1 text-xs text-gray-400">
             입금 순서대로 자리가 확정됩니다.
           </p>
         </div>
@@ -80,42 +80,42 @@ export default function ApplyForm() {
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-sm text-[#aa9a83] mb-1.5">이름</label>
+        <label className="block text-sm text-gray-500 mb-1.5">이름</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="홍길동"
-          className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
       <div>
-        <label className="block text-sm text-[#aa9a83] mb-1.5">연락처</label>
+        <label className="block text-sm text-gray-500 mb-1.5">연락처</label>
         <input
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="010-0000-0000"
-          className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
       <div>
-        <label className="block text-sm text-[#aa9a83] mb-1.5">
-          인스타그램 아이디 <span className="text-[#6b5e4e]">(선택)</span>
+        <label className="block text-sm text-gray-500 mb-1.5">
+          인스타그램 아이디 <span className="text-gray-300">(선택)</span>
         </label>
         <input
           type="text"
           value={instagram}
           onChange={(e) => setInstagram(e.target.value)}
           placeholder="@your_id"
-          className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
       <div>
-        <label className="block text-sm text-[#aa9a83] mb-1.5">
+        <label className="block text-sm text-gray-500 mb-1.5">
           이 프로그램에서 이루고 싶은 것 한 줄
         </label>
         <input
@@ -123,7 +123,7 @@ export default function ApplyForm() {
           value={wish}
           onChange={(e) => setWish(e.target.value)}
           placeholder="예: 미루던 사이드 프로젝트를 4주 안에 시작하기"
-          className="w-full rounded-xl border border-white/15 bg-[#332619] px-4 py-3 text-sm focus:outline-none focus:border-[#e9c46a]/55 transition"
+          className="w-full rounded-xl border border-gray-200 bg-[#fdfaf4] px-4 py-3 text-sm focus:outline-none focus:border-[#3b2e21] transition"
         />
       </div>
 
@@ -135,12 +135,12 @@ export default function ApplyForm() {
         type="button"
         onClick={submit}
         disabled={!canSubmit}
-        className="w-full py-4 rounded-xl bg-[#e9c46a] text-[#241a10] font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#d9b45a] transition"
+        className="w-full py-4 rounded-xl bg-[#3b2e21] text-white font-medium text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#4d3c2b] transition"
       >
         {loading ? '접수 중...' : `${PROGRAM.cohort} 신청하기`}
       </button>
 
-      <p className="text-center text-xs text-[#8f7e69] leading-relaxed">
+      <p className="text-center text-xs text-gray-400 leading-relaxed">
         신청 후 참가비 입금 방법을 개별 안내해 드려요.
         <br />
         결제가 확인되면 자리가 확정됩니다.
