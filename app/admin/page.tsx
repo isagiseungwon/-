@@ -186,6 +186,12 @@ export default function AdminPage() {
             ✍️ 블로그 글 공장
           </a>
           <a
+            href="/admin/reels"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#e76f51] text-white font-medium hover:bg-[#d15b3f] transition"
+          >
+            🎬 릴스 공장
+          </a>
+          <a
             href="/admin/templates"
             className="text-sm px-3 py-1.5 rounded-full border border-[#3b2e21] text-[#3b2e21] font-medium hover:bg-[#3b2e21] hover:text-white transition"
           >

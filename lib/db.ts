@@ -266,6 +266,88 @@ export async function deleteBlogDraft(id: string): Promise<boolean> {
   return true
 }
 
+// ═════════ 릴스 레퍼런스 저장소 (같은 백엔드 재사용) ═════════
+
+const REEL_KEY = 'reel_refs'
+const REEL_FILE = path.join(process.cwd(), 'data', 'reel-refs.json')
+
+export interface ReelReference {
+  id: string
+  url: string // 인스타 릴스 링크 (선택)
+  why: string // "왜 먹혔나" 한 줄 (필수)
+  need: string // 건드린 결핍 (선택)
+  formula: string[] // ['hook','proof','list','cta'] 중 해당
+  createdAt: number
+}
+
+function reelFileReadAll(): ReelReference[] {
+  try {
+    if (!fs.existsSync(REEL_FILE)) return []
+    return JSON.parse(fs.readFileSync(REEL_FILE, 'utf-8'))
+  } catch {
+    return []
+  }
+}
+function reelFileWriteAll(rows: ReelReference[]) {
+  const dir = path.dirname(REEL_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  fs.writeFileSync(REEL_FILE, JSON.stringify(rows, null, 2))
+}
+function parseReel(value: unknown): ReelReference {
+  if (typeof value === 'string') return JSON.parse(value) as ReelReference
+  return value as ReelReference
+}
+
+export async function listReels(): Promise<ReelReference[]> {
+  let rows: ReelReference[]
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const all = await r.hgetall(REEL_KEY)
+    rows = Object.values(all).map(parseReel)
+  } else if (backend === 'upstash') {
+    const r = await getUpstash()
+    const all = await r.hgetall<Record<string, unknown>>(REEL_KEY)
+    rows = all ? Object.values(all).map(parseReel) : []
+  } else {
+    rows = reelFileReadAll()
+  }
+  return rows.sort((a, b) => b.createdAt - a.createdAt)
+}
+
+export async function saveReel(ref: ReelReference): Promise<void> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    await r.hset(REEL_KEY, ref.id, JSON.stringify(ref))
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    await r.hset(REEL_KEY, { [ref.id]: ref })
+    return
+  }
+  const rows = reelFileReadAll()
+  const idx = rows.findIndex((x) => x.id === ref.id)
+  if (idx === -1) rows.push(ref)
+  else rows[idx] = ref
+  reelFileWriteAll(rows)
+}
+
+export async function deleteReel(id: string): Promise<boolean> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    return (await r.hdel(REEL_KEY, id)) > 0
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    return (await r.hdel(REEL_KEY, id)) > 0
+  }
+  const rows = reelFileReadAll()
+  const next = rows.filter((x) => x.id !== id)
+  if (next.length === rows.length) return false
+  reelFileWriteAll(next)
+  return true
+}
+
 // ═════════ 고객 메모 저장소 (전화번호 → 메모, 같은 백엔드 재사용) ═════════
 
 const NOTE_KEY = 'customer_notes'
