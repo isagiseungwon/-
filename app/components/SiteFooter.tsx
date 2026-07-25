@@ -31,9 +31,19 @@ export default function SiteFooter() {
           @macha_ver._
         </a>
       </p>
-      <p className="text-xs text-gray-300">
-        <a href="/admin" className="underline">관리자</a>
-      </p>
+      {/* 전자상거래법 사업자 정보 (온라인 판매 시 표기 의무) */}
+      <div className="mt-6 pt-5 border-t border-gray-100 max-w-md mx-auto">
+        <p className="text-[11px] leading-relaxed text-gray-300">
+          몰입, 흐름 그리고 나 · 대표 차신영
+          <br />
+          사업자등록번호 775-02-04007
+          <br />
+          서울 도봉구 도봉로103길 23-13 · 0507-1348-9410
+        </p>
+        <p className="text-[11px] text-gray-300 mt-3">
+          <a href="/admin" className="underline">관리자</a>
+        </p>
+      </div>
     </footer>
   )
 }
