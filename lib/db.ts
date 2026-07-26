@@ -266,6 +266,55 @@ export async function deleteBlogDraft(id: string): Promise<boolean> {
   return true
 }
 
+// ═════════ 고정비 설정 저장소 (채산표용, 같은 백엔드 재사용) ═════════
+
+const COST_KEY = 'cost_settings'
+const COST_FIELD = 'current'
+const COST_FILE = path.join(process.cwd(), 'data', 'cost-settings.json')
+
+export interface StoredCostSettings {
+  items: { label: string; amount: number }[]
+  updatedAt: number
+}
+
+export async function getCostSettings(): Promise<StoredCostSettings | null> {
+  try {
+    if (backend === 'ioredis') {
+      const r = await getIoRedis()
+      const row = await r.hget(COST_KEY, COST_FIELD)
+      return row ? (JSON.parse(row) as StoredCostSettings) : null
+    }
+    if (backend === 'upstash') {
+      const r = await getUpstash()
+      const row = await r.hget<unknown>(COST_KEY, COST_FIELD)
+      if (!row) return null
+      return typeof row === 'string'
+        ? (JSON.parse(row) as StoredCostSettings)
+        : (row as StoredCostSettings)
+    }
+    if (!fs.existsSync(COST_FILE)) return null
+    return JSON.parse(fs.readFileSync(COST_FILE, 'utf-8'))
+  } catch {
+    return null
+  }
+}
+
+export async function saveCostSettings(s: StoredCostSettings): Promise<void> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    await r.hset(COST_KEY, COST_FIELD, JSON.stringify(s))
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    await r.hset(COST_KEY, { [COST_FIELD]: s })
+    return
+  }
+  const dir = path.dirname(COST_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  fs.writeFileSync(COST_FILE, JSON.stringify(s, null, 2))
+}
+
 // ═════════ 릴스 레퍼런스 저장소 (같은 백엔드 재사용) ═════════
 
 const REEL_KEY = 'reel_refs'

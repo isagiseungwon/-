@@ -180,6 +180,12 @@ export default function AdminPage() {
             🗂 고객 관리
           </a>
           <a
+            href="/admin/finance"
+            className="text-sm px-3 py-1.5 rounded-full bg-[#e9c46a] text-[#3b2e21] font-semibold hover:bg-[#dbb35a] transition"
+          >
+            📊 채산표
+          </a>
+          <a
             href="/admin/blog"
             className="text-sm px-3 py-1.5 rounded-full bg-[#3b2e21] text-white font-medium hover:bg-[#4d3c2b] transition"
           >
