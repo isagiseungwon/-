@@ -275,6 +275,8 @@ const COST_FILE = path.join(process.cwd(), 'data', 'cost-settings.json')
 export interface StoredCostSettings {
   items: { label: string; amount: number }[]
   updatedAt: number
+  taxType?: 'simple' | 'general'
+  vatRate?: number
 }
 
 export async function getCostSettings(): Promise<StoredCostSettings | null> {
@@ -313,6 +315,89 @@ export async function saveCostSettings(s: StoredCostSettings): Promise<void> {
   const dir = path.dirname(COST_FILE)
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(COST_FILE, JSON.stringify(s, null, 2))
+}
+
+// ═════════ 직접 입력 거래 저장소 (채산표용) ═════════
+
+const ENTRY_KEY = 'manual_entries'
+const ENTRY_FILE = path.join(process.cwd(), 'data', 'manual-entries.json')
+
+export interface StoredEntry {
+  id: string
+  date: string
+  type: 'income' | 'expense'
+  label: string
+  amount: number
+  memo?: string
+  createdAt: number
+}
+
+function entryFileReadAll(): StoredEntry[] {
+  try {
+    if (!fs.existsSync(ENTRY_FILE)) return []
+    return JSON.parse(fs.readFileSync(ENTRY_FILE, 'utf-8'))
+  } catch {
+    return []
+  }
+}
+function entryFileWriteAll(rows: StoredEntry[]) {
+  const dir = path.dirname(ENTRY_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  fs.writeFileSync(ENTRY_FILE, JSON.stringify(rows, null, 2))
+}
+function parseEntry(v: unknown): StoredEntry {
+  if (typeof v === 'string') return JSON.parse(v) as StoredEntry
+  return v as StoredEntry
+}
+
+export async function listEntries(): Promise<StoredEntry[]> {
+  let rows: StoredEntry[]
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    const all = await r.hgetall(ENTRY_KEY)
+    rows = Object.values(all).map(parseEntry)
+  } else if (backend === 'upstash') {
+    const r = await getUpstash()
+    const all = await r.hgetall<Record<string, unknown>>(ENTRY_KEY)
+    rows = all ? Object.values(all).map(parseEntry) : []
+  } else {
+    rows = entryFileReadAll()
+  }
+  return rows.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+}
+
+export async function saveEntry(e: StoredEntry): Promise<void> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    await r.hset(ENTRY_KEY, e.id, JSON.stringify(e))
+    return
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    await r.hset(ENTRY_KEY, { [e.id]: e })
+    return
+  }
+  const rows = entryFileReadAll()
+  const idx = rows.findIndex((x) => x.id === e.id)
+  if (idx === -1) rows.push(e)
+  else rows[idx] = e
+  entryFileWriteAll(rows)
+}
+
+export async function deleteEntry(id: string): Promise<boolean> {
+  if (backend === 'ioredis') {
+    const r = await getIoRedis()
+    return (await r.hdel(ENTRY_KEY, id)) > 0
+  }
+  if (backend === 'upstash') {
+    const r = await getUpstash()
+    return (await r.hdel(ENTRY_KEY, id)) > 0
+  }
+  const rows = entryFileReadAll()
+  const next = rows.filter((x) => x.id !== id)
+  if (next.length === rows.length) return false
+  entryFileWriteAll(next)
+  return true
 }
 
 // ═════════ 릴스 레퍼런스 저장소 (같은 백엔드 재사용) ═════════
