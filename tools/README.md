@@ -18,3 +18,9 @@ python tools/competitor_analysis.py "쌍문 스터디카페" "쌍문역 무인 �
 ```
 
 키는 이 창에서만 유지되고 파일에는 저장되지 않는다. 키를 파일이나 GitHub에 올리지 말 것.
+
+### API 키 없이 쓰기 (파일 모드)
+네이버에서 "쌍문 스터디카페"를 검색해 **블로그 탭** 상위 제목을 복사해서 `titles.txt`에 한 줄에 하나씩 붙여넣는다.
+```
+python tools/competitor_analysis.py --file titles.txt
+```

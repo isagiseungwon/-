@@ -93,13 +93,32 @@ def render(query, result):
     return "\n".join(lines)
 
 
-def main(queries):
+def items_from_file(path):
+    """제목을 한 줄에 하나씩 적은 텍스트 파일을 API 결과와 같은 형태로 바꾼다."""
+    lines = Path(path).read_text(encoding="utf-8").splitlines()
+    cleaned = [re.sub(r"^\s*\d+[.)]\s*", "", ln).strip() for ln in lines]
+    return [{"title": t} for t in cleaned if t]
+
+
+def main(args):
+    if len(args) == 2 and args[0] == "--file":
+        # API 키 없이: 네이버에서 복사한 제목 목록 파일을 분석한다.
+        sections = [render(Path(args[1]).name, analyze(items_from_file(args[1])))]
+        return save(sections)
+    queries = args
     if not queries:
-        sys.exit('검색어를 하나 이상 넣으세요. 예: python tools/competitor_analysis.py "쌍문 스터디카페"')
+        sys.exit(
+            '검색어를 하나 이상 넣으세요. 예: python tools/competitor_analysis.py "쌍문 스터디카페"\n'
+            "API 키가 없으면: python tools/competitor_analysis.py --file titles.txt"
+        )
     sections = []
     for q in queries:
         data = call_api("blog", q)
         sections.append(render(q, analyze(data.get("items", []))))
+    save(sections)
+
+
+def save(sections):
     out_dir = Path(__file__).resolve().parent.parent / "reports"
     out_dir.mkdir(exist_ok=True)
     path = out_dir / f"competitor-{datetime.now():%Y%m%d-%H%M}.md"
